@@ -9,12 +9,14 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class TestController {
+public class welcomeController {
     
     @RequestMapping("/welcome")
-    public ModelAndView method() {
-        String message = "<br><div style='text-align:center;'>"
+	public ModelAndView helloWorld() {
+ 
+		String message = "<br><div style='text-align:center;'>"
 				+ "<h3>********** Hello World, Spring MVC Tutorial</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
-	return new ModelAndView("welcome", "message", message);
-    }
+		return new ModelAndView("welcome", "message", message);
+	}
+    
 }

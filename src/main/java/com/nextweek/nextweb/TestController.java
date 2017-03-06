@@ -2,6 +2,7 @@ package com.nextweek.nextweb;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  *
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class TestController {
     
-    @RequestMapping("/test")
-    public void method() {
-        
+    @RequestMapping("/welcome")
+    public ModelAndView method() {
+        String message = "<br><div style='text-align:center;'>"
+				+ "<h3>********** Hello World, Spring MVC Tutorial</h3>This message is coming from CrunchifyHelloWorld.java **********</div><br><br>";
+	return new ModelAndView("welcome", "message", message);
     }
 }

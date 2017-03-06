@@ -10,6 +10,7 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
+    
 
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
@@ -20,6 +21,7 @@
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
+                <prop key="welcome.htm">welcomeController</prop>
                 <prop key="main.htm">mainController</prop>
             </props>
         </property>
@@ -36,9 +38,10 @@
     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
-    
+    <bean name="welcomeController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="welcome" />
     <bean name="mainController"
               class="org.springframework.web.servlet.mvc.ParameterizableViewController"
               p:viewName="main" />
-
 </beans>

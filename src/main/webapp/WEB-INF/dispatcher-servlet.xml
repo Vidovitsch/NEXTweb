@@ -20,6 +20,7 @@
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
+                <prop key="main.htm">mainController</prop>
             </props>
         </property>
     </bean>
@@ -35,5 +36,9 @@
     <bean name="indexController"
           class="org.springframework.web.servlet.mvc.ParameterizableViewController"
           p:viewName="index" />
+    
+    <bean name="mainController"
+              class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+              p:viewName="main" />
 
 </beans>

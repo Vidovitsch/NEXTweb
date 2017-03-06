@@ -29,7 +29,6 @@
         <%
             out.println("Your IP address is " + request.getRemoteAddr());
         %>
-    </body>
     <p>
         <jsp:useBean id="testBean" scope="application" class="Controllers.TestController" />
         <jsp:setProperty name="testBean" 
@@ -90,4 +89,5 @@
     Chemistry
     <br />
     <input type="submit" value="Submit" />
+</body>
 </html>

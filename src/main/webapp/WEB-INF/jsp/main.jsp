@@ -31,8 +31,6 @@
                 }
             %>
         </table>
-        <jsp:useBean id="testBean" scope="application" class="Controllers.TestController" />
-        <jsp:getProperty name="testBean" property="message" />
     </center>
 </body>
 </html>

@@ -10,6 +10,18 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class welcomeController {
+
+    Dingetje d;
+
+    public Dingetje getD()
+    {
+        return d;
+    }
+    
+    public welcomeController(Dingetje d)
+    {
+        this.d = d;
+    }
     
     @RequestMapping("/welcome")
 	public ModelAndView helloWorld() {

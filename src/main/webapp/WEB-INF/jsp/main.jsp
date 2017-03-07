@@ -1,3 +1,4 @@
+<%@page import="Controllers.welcomeController"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%-- 
     Document   : main
@@ -6,14 +7,22 @@
 --%>
 
 <%@page import="java.util.Enumeration"%>
+<%@page import="Controllers.Dingetje"%>
+<%@page import="Controllers.welcomeController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
 <html>
     <head>
+        
         <title>Using GET and POST Method to Read Form Data</title>
     </head>
+    
     <body>
-    <center>
+        <% String myObjectId = request.getParameter("myObjectId");
+        welcomeController myObject = new welcomeController((Dingetje)request.getSession().getAttribute(myObjectId));
+        request.getSession().removeAttribute(myObjectId);
+        out.println(myObject.getD().getDing()); %>
         <h2>HTTP Header Request Example</h2>
         <table width="100%" border="1" align="center">
             <tr bgcolor="#949494">
@@ -21,7 +30,6 @@
             </tr>
             <%
                 Enumeration paramNames = request.getParameterNames();
-
                 while (paramNames.hasMoreElements())
                 {
                     String paramName = (String) paramNames.nextElement();
@@ -33,6 +41,7 @@
         </table>
         <jsp:useBean id="testBean" scope="application" class="Controllers.TestController" />
         <jsp:getProperty name="testBean" property="message" />
-    </center>
+    
 </body>
 </html>
+

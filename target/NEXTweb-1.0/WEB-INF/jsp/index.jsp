@@ -31,16 +31,6 @@
         <%
             out.println("Your IP address is " + request.getRemoteAddr());
         %>
-        <p>
-            <jsp:useBean id="testBean" scope="application" class="Controllers.TestController" />
-            <jsp:setProperty name="testBean" 
-                             property="message" 
-                             value="Hello JSP..." />
-        <p>Got message....</p>
-
-        <jsp:getProperty name="testBean" property="message" />
-
-    </p>
     <%while (fontSize <= maxfontSize)
     {%>
     <font color="green" size="<%= fontSize%>">

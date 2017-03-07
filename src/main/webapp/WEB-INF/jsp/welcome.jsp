@@ -4,7 +4,10 @@
     Author     : David
 --%>
 
+<%@page import="Controllers.Name"%>
+<%@page import="java.util.Map"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,12 +19,11 @@ body {
 }
 </style>
 </head>
-<body>${message}
- 
+<body>
+    ${name.string}
 	<br>
 	<br>
 	<div style="font-family: verdana; padding: 10px; border-radius: 10px; font-size: 12px; text-align:center;">
- 
 		Spring MCV Tutorial by <a href="http://crunchify.com">Crunchify</a>.
 		Click <a
 			href="http://crunchify.com/category/java-web-development-tutorial/"

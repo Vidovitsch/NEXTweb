@@ -7,6 +7,18 @@ and open the template in the editor.
     Created on : 8-mrt-2017, 12:35:31
     Author     : David
 */
+html, body {
+    margin:0;
+    padding:0;
+}
+
 #header {
     background-color: #000;
+    width: 100%;
+}
+
+#next_logo {
+    width: 172px;
+    height: 64px;
+    padding:1.5%;
 }

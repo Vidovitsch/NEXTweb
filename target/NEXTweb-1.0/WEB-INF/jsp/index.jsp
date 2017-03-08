@@ -1,4 +1,3 @@
-<%@page import="Controllers.welcomeController"%>
 <%@page import="java.util.GregorianCalendar"%>
 <%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -6,9 +5,7 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%! int fontSize;%> 
 <%! int maxfontSize = 3;%> 
-<%@page import="Controllers.Dingetje"%>
 <html>
-<<<<<<< HEAD
 <head>
 <title>Spring MVC Tutorial Series by Crunchify.com</title>
 <style type="text/css">
@@ -18,6 +15,7 @@
 </style>
 </head>
 <body>
+    <a href="workshops.htm">Open workshop screen</a><br>
 	<br>
 	<div style="text-align:center">
 		<h2>
@@ -28,7 +26,6 @@
 			check Spring MVC Controller... @RequestMapping("/welcome"))
 		</h3>
 	</div>
-=======
     <head>
         <title>Spring MVC Tutorial Series by Crunchify.com</title>
         <style type="text/css">
@@ -48,7 +45,6 @@
                 check Spring MVC Controller... @RequestMapping("/welcome"))
             </h3>
         </div>
->>>>>>> origin/master
         Hello World!<br/>
         <%
             out.println("Your IP address is " + request.getRemoteAddr());
@@ -61,30 +57,6 @@
     <%fontSize++;%>
     <%}%>
     <h2>Auto Refresh Header Example</h2>
-    <%
-        // Set refresh, autoload time as 5 seconds
-        //response.setIntHeader("Refresh", 5);
-        // Get current time
-        Calendar calendar = new GregorianCalendar();
-        String am_pm;
-        int hour = calendar.get(Calendar.HOUR);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
-        if (calendar.get(Calendar.AM_PM) == 0)
-        {
-            am_pm = "AM";
-        } else
-        {
-            am_pm = "PM";
-        }
-        String CT = hour + ":" + minute + ":" + second + " " + am_pm;
-        out.println("Current Time is: " + CT + "\n");
-        maxfontSize++;
-        Dingetje myObject = new Dingetje("tito");
-        String myObjectId = "object1";
-        request.getSession().setAttribute(myObjectId, myObject);
-        request.setAttribute("myObjectId", myObjectId);
-    %>
     <h1>Using GET Method to Read Form Data</h1>
     <ul>
 

@@ -17,18 +17,21 @@ public class Workshop {
     private String description;
     private String date;
     private String image = "/images/default_workshop.jpg";
-
-    public Workshop(String name, String description, String date, String image) {
+    private int maxStudents;
+    
+    public Workshop(String name, String description, String date, int maxStudents, String image) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.image = image;
+        this.maxStudents = maxStudents;
     }
     
-    public Workshop(String name, String description, String date) {
+    public Workshop(String name, String description, int maxStudents, String date) {
         this.name = name;
         this.description = description;
         this.date = date;
+        this.maxStudents = maxStudents;
     }
     
     /**
@@ -101,5 +104,23 @@ public class Workshop {
      */
     public void setImage(String image) {
         this.image = image;
+    }
+    
+    /**
+     * Get the value of maxStudents
+     *
+     * @return the value of maxStudents
+     */
+    public int getMaxStudents() {
+        return maxStudents;
+    }
+
+    /**
+     * Set the value of maxStudents
+     *
+     * @param maxStudents new value of maxStudents
+     */
+    public void setMaxStudents(int maxStudents) {
+        this.maxStudents = maxStudents;
     }
 }

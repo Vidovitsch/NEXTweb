@@ -28,7 +28,7 @@
         <property name="mappings">
             <props>
                 <prop key="index.htm">indexController</prop>
-                <prop key="welcome.htm">welcomeController</prop>
+                <prop key="user.htm">userController</prop>
                 <prop key="main.htm">mainController</prop>
             </props>
         </property>

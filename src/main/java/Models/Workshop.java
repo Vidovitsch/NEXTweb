@@ -16,7 +16,7 @@ public class Workshop {
     private String name;
     private String description;
     private String date;
-    private String image = "default image";
+    private String image = "/images/default_workshop.jpg";
 
     public Workshop(String name, String description, String date, String image) {
         this.name = name;

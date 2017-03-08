@@ -7,8 +7,6 @@
 --%>
 
 <%@page import="java.util.Enumeration"%>
-<%@page import="Controllers.Dingetje"%>
-<%@page import="Controllers.welcomeController"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 

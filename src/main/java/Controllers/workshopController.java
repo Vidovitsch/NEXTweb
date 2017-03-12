@@ -9,7 +9,6 @@ package Controllers;
 import Database.DBWorkshopModifier;
 import Models.Workshop;
 import java.util.ArrayList;
-import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,17 +43,47 @@ public class workshopController {
         dbMod.insertWorkshop(new Workshop("W3", "test", 5, "12-12-12"));
         dbMod.insertWorkshop(new Workshop("W4", "test", 5, "12-12-12"));
         dbMod.insertWorkshop(new Workshop("W5", "test", 5, "12-12-12"));
-        dbMod.insertWorkshop(new Workshop("W6", "test", 5, "12-12-12"));
     }
     
+    /**
+     * Fetching workshops from the database into a list.
+     * Each index of the list represents a row of workshops.
+     * This amount of workshops is defined in the variable ROWNUMBER.
+     * @return 
+     */
     private ArrayList<Workshop[]> getWorkshops() {
         ArrayList<Workshop[]> workshopsDivided = new ArrayList();
         ArrayList<Workshop> workshops = dbMod.getWorkshops();
         
-        for (int i = 0; i < workshops.size(); i = i + ROWNUMBER) {
-            workshopsDivided.add(new Workshop[]{workshops.get(i), workshops.get(i + 1), workshops.get(i + 2)});
+        Workshop[] row = new Workshop[ROWNUMBER];
+        int wsCounter = 0;
+        for (int i = 0; i < workshops.size(); i++) {
+            row[wsCounter] = workshops.get(i);
+            wsCounter++;
+            if (wsCounter == ROWNUMBER || workshops.size() - 1 == i) {
+                workshopsDivided.add(row);
+                row = new Workshop[remaining(i + 1, workshops.size())];
+                wsCounter = 0;
+            }
         }
         
         return workshopsDivided;
+    }
+    
+    /**
+     * Calculates the length of a row.
+     * Example: ROWNUMBER = 3. There are 7 workshops.
+     * This means there are 2 rows of 3 workshops and 1 row of 1 workshop.
+     * This method calculates the indexes of each row.
+     * @param current
+     * @param max
+     * @return 
+     */
+    private int remaining(int current, int max) {
+        if (max - current > ROWNUMBER) {
+            return ROWNUMBER;
+        } else {
+            return max - current;
+        }
     }
 }

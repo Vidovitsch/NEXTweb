@@ -6,10 +6,8 @@
 
 package Database;
 
-import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,7 +20,6 @@ import java.util.logging.Logger;
 public class DatabaseConnector {
     
     private static Connection con;
-    private static ResultSet myRs;
     private static String connectionstring = "jdbc:mysql://studmysql01.fhict.local/dbi329413";
     private static String user = "dbi329413";
     private static String pass = "Fontys123";

@@ -17,7 +17,7 @@ public class Workshop extends Event {
 
     private ArrayList<User> users;
     private String presenter;
-    private int maxUsers = 0;
+    private int maxUsers = 50;
     
     public Workshop(String eventName) {
         super(eventName);

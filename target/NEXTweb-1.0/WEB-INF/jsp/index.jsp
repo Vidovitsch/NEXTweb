@@ -15,7 +15,7 @@
 </style>
 </head>
 <body>
-    <a href="workshops.htm">Open workshop screen</a><br>
+    <a href="events.htm">Open workshop screen</a><br>
     <br>
     <a href="messageboard.htm">Open MessageBoard</a><br>
     <br>

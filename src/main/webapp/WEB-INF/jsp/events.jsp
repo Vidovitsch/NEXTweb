@@ -23,21 +23,20 @@
     <body>
         <div id="next-header">
             <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
-            <span>group</span>
         </div>
         <div id="spacer"></div>
-        <h1>WORKSHOPS</h1>
-        <div id="workshop-container">
-            <table class="workshop-table" cellpadding="25%">
-                <c:forEach var="row" items="${workshops}">
+        <h1>EVENTS</h1>
+        <div id="event-container">
+            <table class="event-table" cellpadding="25%">
+                <c:forEach var="row" items="${events}">
                     <tr>
                         <c:forEach var="ws" items="${row}">
                             <td>
-                                <div class="workshop-single">
+                                <div class="event-single">
                                     <div class="image">
-                                        <img src="${ws.image}" />
-                                        <span>${ws.date}</span>
-                                        <h2>${ws.name}</h2>
+                                        <img src="${ws.imageURL}" />
+                                        <div id="event-date">${ws.date}</div>
+                                        <h2>${ws.eventName}</h2>
                                     </div>
                                 </div>
                             </td> 

@@ -20,11 +20,11 @@ table {
     margin: auto;
 }
 
-.workshop-single {
+.event-single {
     width: 100%;
 }
 
-.workshop-single:hover {
+.event-single:hover {
     cursor: pointer;
 }
 
@@ -41,7 +41,7 @@ table {
     overflow: hidden;
 }
 
-span {
+#event-date {
     position: absolute;
     top: 0px;
     left: 0px;

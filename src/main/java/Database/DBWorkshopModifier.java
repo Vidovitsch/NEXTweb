@@ -18,6 +18,8 @@ import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -27,6 +29,8 @@ import java.util.Map;
 public class DBWorkshopModifier implements IModWorkshop {
     
     private static Firebase firebase;
+    private Object lock;
+    private boolean done = false;
 
     public DBWorkshopModifier() {
         FBConnector connector = FBConnector.getInstance();
@@ -76,6 +80,7 @@ public class DBWorkshopModifier implements IModWorkshop {
                     
                     events.add(event);
                 }
+                unlockFXThread();
             }
             
             @Override
@@ -84,6 +89,7 @@ public class DBWorkshopModifier implements IModWorkshop {
             }
         });
         
+        lockFXThread();
         return events;
     }
     
@@ -92,7 +98,7 @@ public class DBWorkshopModifier implements IModWorkshop {
         if (eventType.equals("Workshop")) {
             Workshop event = new Workshop((String) ds.child("EventName").getValue());
             String presenter = (String) ds.child("Presenter").getValue();
-            int maxUsers = (Integer) ds.child("MaxUsers").getValue();
+            int maxUsers = Integer.valueOf((String) ds.child("MaxUsers").getValue());
             event.setPresenter(presenter);
             event.setMaxUsers(maxUsers);
             
@@ -127,5 +133,33 @@ public class DBWorkshopModifier implements IModWorkshop {
     @Override
     public void insertUser(User user, Workshop workshop) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    /**
+     * Tells a random object to wait while in a loop.
+     * The loop stops, and won't cause any unnecessary cpu use.
+     */
+    private void lockFXThread() {
+        lock = new Object();
+        synchronized (lock) {
+            while (!done) {
+                try {
+                    lock.wait();
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(DBWorkshopModifier.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        }
+        done = false;
+    }
+    
+    /**
+     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed and break free.
+     */
+    private void unlockFXThread() {
+        synchronized (lock) {
+            done = true;
+            lock.notifyAll();
+        }
     }
 }

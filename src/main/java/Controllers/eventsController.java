@@ -8,6 +8,7 @@ package Controllers;
 
 import Database.DBWorkshopModifier;
 import Database.IModWorkshop;
+import Models.Event;
 import Models.Workshop;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
@@ -21,17 +22,17 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class workshopController {
+public class eventsController {
 
     private final static int ROWNUMBER = 3;
     private IModWorkshop dbMod = new DBWorkshopModifier();
             
-    @RequestMapping(value = "/workshops", method = RequestMethod.GET)
+    @RequestMapping(value = "/events", method = RequestMethod.GET)
     public ModelAndView initWorkshopScreen() {
         insertDummyWorkshops();
                 
-        ModelAndView modelView = new ModelAndView("workshop");
-        //modelView.addObject("workshops", getWorkshops());
+        ModelAndView modelView = new ModelAndView("events");
+        modelView.addObject("events", getWorkshops());
         
         return modelView;
     }
@@ -53,24 +54,24 @@ public class workshopController {
      * This amount of workshops is defined in the variable ROWNUMBER.
      * @return list of rows containing workshops
      */
-//    private ArrayList<Workshop[]> getWorkshops() {
-//        ArrayList<Workshop[]> workshopsDivided = new ArrayList();
-//        ArrayList<Workshop> workshops = dbMod.getWorkshops();
-//        
-//        Workshop[] row = new Workshop[ROWNUMBER];
-//        int wsCounter = 0;
-//        for (int i = 0; i < workshops.size(); i++) {
-//            row[wsCounter] = workshops.get(i);
-//            wsCounter++;
-//            if (wsCounter == ROWNUMBER || workshops.size() - 1 == i) {
-//                workshopsDivided.add(row);
-//                row = new Workshop[calcRowLength(i + 1, workshops.size())];
-//                wsCounter = 0;
-//            }
-//        }
-//        
-//        return workshopsDivided;
-//    }
+    private ArrayList<Event[]> getWorkshops() {
+        ArrayList<Event[]> eventsDivided = new ArrayList();
+        ArrayList<Event> events = dbMod.getEvents();
+        System.out.println(events.size());
+        Event[] row = new Workshop[ROWNUMBER];
+        int wsCounter = 0;
+        for (int i = 0; i < events.size(); i++) {
+            row[wsCounter] = events.get(i);
+            wsCounter++;
+            if (wsCounter == ROWNUMBER || events.size() - 1 == i) {
+                eventsDivided.add(row);
+                row = new Workshop[calcRowLength(i + 1, events.size())];
+                wsCounter = 0;
+            }
+        }
+        
+        return eventsDivided;
+    }
     
     /**
      * Calculates the length of a row.

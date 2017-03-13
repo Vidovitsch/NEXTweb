@@ -35,7 +35,11 @@
                                 <div class="event-single">
                                     <div class="image">
                                         <img src="${ws.imageURL}" />
-                                        <div id="event-date">${ws.date}</div>
+                                        <span id="event-dateTime">${ws.date}</br>
+                                            <span id="event-time">
+                                                ${ws.startTime} - ${ws.endTime}
+                                            </span>
+                                        </span>
                                         <h2>${ws.eventName}</h2>
                                     </div>
                                 </div>

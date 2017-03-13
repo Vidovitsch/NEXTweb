@@ -17,7 +17,7 @@ public abstract class Event {
     private String startTime;
     private String endTime;
     private String date;
-    private String imageURL = "/images/next_logo.png";
+    private String imageURL = "/images/default_workshop.jpg";
     private String locationName;
     private String id;
 

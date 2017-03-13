@@ -57,7 +57,7 @@ public class eventsController {
     private ArrayList<Event[]> getWorkshops() {
         ArrayList<Event[]> eventsDivided = new ArrayList();
         ArrayList<Event> events = dbMod.getEvents();
-        System.out.println(events.size());
+        
         Event[] row = new Workshop[ROWNUMBER];
         int wsCounter = 0;
         for (int i = 0; i < events.size(); i++) {

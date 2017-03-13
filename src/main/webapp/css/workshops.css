@@ -41,16 +41,20 @@ table {
     overflow: hidden;
 }
 
-#event-date {
+#event-dateTime {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 25%;
+    width: 30%;
     font-size: 20px;
     color: #FFF;
     background-color: #E22F91;
     padding: 2%;
     text-align: center;
+}
+
+#event-time {
+    font-size: 16px;
 }
 
 .image img { 

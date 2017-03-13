@@ -11,116 +11,29 @@ package Models;
  *
  * @author David
  */
-public class Workshop {
+public class Workshop extends Event {
+
+    private int maxUsers = 0;
     
-    private String name;
-    private String description;
-    private String date;
-    private String image = "/images/default_workshop.jpg";
-    private int maxStudents;
-    
-    public Workshop(String name, String description, String date, int maxStudents, String image) {
-        this.name = name;
-        this.description = description;
-        this.date = date;
-        this.image = image;
-        this.maxStudents = maxStudents;
-    }
-    
-    public Workshop(String name, String description, int maxStudents, String date) {
-        this.name = name;
-        this.description = description;
-        this.date = date;
-        this.maxStudents = maxStudents;
-    }
-    
-    /**
-     * Get the value of name
-     *
-     * @return the value of name
-     */
-    public String getName() {
-        return name;
+    public Workshop(String eventName) {
+        super(eventName);
     }
 
     /**
-     * Set the value of name
+     * Get the value of maxUsers
      *
-     * @param name new value of name
+     * @return the value of maxUsers
      */
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    /**
-     * Get the value of description
-     *
-     * @return the value of description
-     */
-    public String getDescription() {
-        return description;
+    public int getMaxUsers() {
+        return maxUsers;
     }
 
     /**
-     * Set the value of description
+     * Set the value of maxUsers
      *
-     * @param description new value of description
+     * @param maxUsers new value of maxUsers
      */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-    
-    /**
-     * Get the value of date
-     *
-     * @return the value of date
-     */
-    public String getDate() {
-        return date;
-    }
-
-    /**
-     * Set the value of date
-     *
-     * @param date new value of date
-     */
-    public void setDate(String date) {
-        this.date = date;
-    }
-    
-    /**
-     * Get the value of image
-     *
-     * @return the value of image
-     */
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * Set the value of image
-     *
-     * @param image new value of image
-     */
-    public void setImage(String image) {
-        this.image = image;
-    }
-    
-    /**
-     * Get the value of maxStudents
-     *
-     * @return the value of maxStudents
-     */
-    public int getMaxStudents() {
-        return maxStudents;
-    }
-
-    /**
-     * Set the value of maxStudents
-     *
-     * @param maxStudents new value of maxStudents
-     */
-    public void setMaxStudents(int maxStudents) {
-        this.maxStudents = maxStudents;
+    public void setMaxUsers(int maxUsers) {
+        this.maxUsers = maxUsers;
     }
 }

@@ -23,6 +23,7 @@
     <body>
         <div id="next-header">
             <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
+            <span>group</span>
         </div>
         <div id="spacer"></div>
         <h1>WORKSHOPS</h1>

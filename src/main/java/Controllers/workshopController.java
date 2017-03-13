@@ -31,7 +31,7 @@ public class workshopController {
         //insertDummyWorkshops();
                 
         ModelAndView modelView = new ModelAndView("workshop");
-        modelView.addObject("workshops", getWorkshops());
+        //modelView.addObject("workshops", getWorkshops());
         
         return modelView;
     }
@@ -51,24 +51,24 @@ public class workshopController {
      * This amount of workshops is defined in the variable ROWNUMBER.
      * @return list of rows containing workshops
      */
-    private ArrayList<Workshop[]> getWorkshops() {
-        ArrayList<Workshop[]> workshopsDivided = new ArrayList();
-        ArrayList<Workshop> workshops = dbMod.getWorkshops();
-        
-        Workshop[] row = new Workshop[ROWNUMBER];
-        int wsCounter = 0;
-        for (int i = 0; i < workshops.size(); i++) {
-            row[wsCounter] = workshops.get(i);
-            wsCounter++;
-            if (wsCounter == ROWNUMBER || workshops.size() - 1 == i) {
-                workshopsDivided.add(row);
-                row = new Workshop[calcRowLength(i + 1, workshops.size())];
-                wsCounter = 0;
-            }
-        }
-        
-        return workshopsDivided;
-    }
+//    private ArrayList<Workshop[]> getWorkshops() {
+//        ArrayList<Workshop[]> workshopsDivided = new ArrayList();
+//        ArrayList<Workshop> workshops = dbMod.getWorkshops();
+//        
+//        Workshop[] row = new Workshop[ROWNUMBER];
+//        int wsCounter = 0;
+//        for (int i = 0; i < workshops.size(); i++) {
+//            row[wsCounter] = workshops.get(i);
+//            wsCounter++;
+//            if (wsCounter == ROWNUMBER || workshops.size() - 1 == i) {
+//                workshopsDivided.add(row);
+//                row = new Workshop[calcRowLength(i + 1, workshops.size())];
+//                wsCounter = 0;
+//            }
+//        }
+//        
+//        return workshopsDivided;
+//    }
     
     /**
      * Calculates the length of a row.

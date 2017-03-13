@@ -28,7 +28,7 @@ public class workshopController {
     @RequestMapping(value = "/workshops", method = RequestMethod.GET)
     public ModelAndView initWorkshopScreen() {
         dbMod = new DBWorkshopModifier();
-        insertDummyWorkshops();
+        //insertDummyWorkshops();
                 
         ModelAndView modelView = new ModelAndView("workshop");
         modelView.addObject("workshops", getWorkshops());
@@ -36,20 +36,20 @@ public class workshopController {
         return modelView;
     }
     
-    //Test method
-    private void insertDummyWorkshops() {
-        dbMod.insertWorkshop(new Workshop("W1", "test", 5, "12-12-12"));
-        dbMod.insertWorkshop(new Workshop("W2", "test", 5, "12-12-12"));
-        dbMod.insertWorkshop(new Workshop("W3", "test", 5, "12-12-12"));
-        dbMod.insertWorkshop(new Workshop("W4", "test", 5, "12-12-12"));
-        dbMod.insertWorkshop(new Workshop("W5", "test", 5, "12-12-12"));
-    }
+//    //Test method
+//    private void insertDummyWorkshops() {
+//        dbMod.insertWorkshop(new Workshop("W1", "test", 5, "12-12-12"));
+//        dbMod.insertWorkshop(new Workshop("W2", "test", 5, "12-12-12"));
+//        dbMod.insertWorkshop(new Workshop("W3", "test", 5, "12-12-12"));
+//        dbMod.insertWorkshop(new Workshop("W4", "test", 5, "12-12-12"));
+//        dbMod.insertWorkshop(new Workshop("W5", "test", 5, "12-12-12"));
+//    }
     
     /**
      * Fetching workshops from the database into a list.
      * Each index of the list represents a row of workshops.
      * This amount of workshops is defined in the variable ROWNUMBER.
-     * @return 
+     * @return list of rows containing workshops
      */
     private ArrayList<Workshop[]> getWorkshops() {
         ArrayList<Workshop[]> workshopsDivided = new ArrayList();
@@ -62,7 +62,7 @@ public class workshopController {
             wsCounter++;
             if (wsCounter == ROWNUMBER || workshops.size() - 1 == i) {
                 workshopsDivided.add(row);
-                row = new Workshop[remaining(i + 1, workshops.size())];
+                row = new Workshop[calcRowLength(i + 1, workshops.size())];
                 wsCounter = 0;
             }
         }
@@ -77,9 +77,9 @@ public class workshopController {
      * This method calculates the indexes of each row.
      * @param current
      * @param max
-     * @return 
+     * @return the current row length.
      */
-    private int remaining(int current, int max) {
+    private int calcRowLength(int current, int max) {
         if (max - current > ROWNUMBER) {
             return ROWNUMBER;
         } else {

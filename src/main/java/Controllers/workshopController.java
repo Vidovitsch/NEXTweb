@@ -7,6 +7,7 @@
 package Controllers;
 
 import Database.DBWorkshopModifier;
+import Database.IModWorkshop;
 import Models.Workshop;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
@@ -23,12 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 public class workshopController {
 
     private final static int ROWNUMBER = 3;
-    private DBWorkshopModifier dbMod;
+    private IModWorkshop dbMod = new DBWorkshopModifier();
             
     @RequestMapping(value = "/workshops", method = RequestMethod.GET)
     public ModelAndView initWorkshopScreen() {
-        dbMod = new DBWorkshopModifier();
-        //insertDummyWorkshops();
+        insertDummyWorkshops();
                 
         ModelAndView modelView = new ModelAndView("workshop");
         //modelView.addObject("workshops", getWorkshops());
@@ -36,14 +36,16 @@ public class workshopController {
         return modelView;
     }
     
-//    //Test method
-//    private void insertDummyWorkshops() {
-//        dbMod.insertWorkshop(new Workshop("W1", "test", 5, "12-12-12"));
-//        dbMod.insertWorkshop(new Workshop("W2", "test", 5, "12-12-12"));
-//        dbMod.insertWorkshop(new Workshop("W3", "test", 5, "12-12-12"));
-//        dbMod.insertWorkshop(new Workshop("W4", "test", 5, "12-12-12"));
-//        dbMod.insertWorkshop(new Workshop("W5", "test", 5, "12-12-12"));
-//    }
+    //Test method
+    private void insertDummyWorkshops() {
+        Workshop ws = new Workshop("TestWorkshop");
+        ws.setStartTime("12:00");
+        ws.setEndTime("13:00");
+        ws.setDate("11-11-2017");
+        ws.setLocationName("Hier");
+        
+        dbMod.insertEvent(ws);
+    }
     
     /**
      * Fetching workshops from the database into a list.

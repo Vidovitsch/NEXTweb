@@ -19,47 +19,10 @@ public abstract class Event {
     private String date;
     private String imageURL = "/images/next_logo.png";
     private String locationName;
-    private String presenter;
-    private int maxUsers = 0;
+    private String id;
 
     public Event(String eventName) {
         this.eventName = eventName;
-    }
-    
-    /**
-     * Get the value of maxUsers
-     *
-     * @return the value of maxUsers
-     */
-    public int getMaxUsers() {
-        return maxUsers;
-    }
-
-    /**
-     * Set the value of maxUsers
-     *
-     * @param maxUsers new value of maxUsers
-     */
-    public void setMaxUsers(int maxUsers) {
-        this.maxUsers = maxUsers;
-    }
-
-    /**
-     * Get the value of presenter
-     *
-     * @return the value of presenter
-     */
-    public String getPresenter() {
-        return presenter;
-    }
-
-    /**
-     * Set the value of presenter
-     *
-     * @param presenter new value of presenter
-     */
-    public void setPresenter(String presenter) {
-        this.presenter = presenter;
     }
 
     /**
@@ -168,5 +131,23 @@ public abstract class Event {
      */
     public void setEventName(String eventName) {
         this.eventName = eventName;
+    }
+    
+    /**
+     * Get the value of id
+     *
+     * @return the value of id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param id new value of id
+     */
+    public void setId(String id) {
+        this.id = id;
     }
 }

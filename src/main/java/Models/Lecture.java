@@ -14,9 +14,28 @@ package Models;
 public class Lecture extends Event {
     
     private String presenter;
-    
+    private String eventType = "Lecture";
+
     public Lecture(String eventName) {
         super(eventName);
+    }
+        
+    /**
+     * Get the value of eventType
+     *
+     * @return the value of eventType
+     */
+    public String getEventType() {
+        return eventType;
+    }
+
+    /**
+     * Set the value of eventType
+     *
+     * @param eventType new value of eventType
+     */
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
     
     /**

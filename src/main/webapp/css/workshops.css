@@ -20,6 +20,10 @@ table {
     margin: auto;
 }
 
+table td {
+    padding: 5px;
+}
+
 .event-single {
     width: 100%;
 }
@@ -36,8 +40,13 @@ table {
 
 .image {
     position: relative;
-    width: 100%;
+    height: 305px;
+    width: 405px;
     display: inline-block;
+    overflow: hidden;
+}
+
+.image img {
     overflow: hidden;
 }
 
@@ -46,27 +55,32 @@ table {
     top: 0px;
     left: 0px;
     width: 30%;
-    font-size: 20px;
+    font-size: 18px;
     color: #FFF;
     background-color: #E22F91;
     padding: 2%;
     text-align: center;
 }
 
-#event-time {
-    font-size: 16px;
-}
-
 .image img { 
-    height: 400px;
-    width: 382px;
+    height: 305px;
+    width: 405px;
 }
 
-h2 {
+#event-name {
     position: absolute;
-    top: 250px;
+    top: 225px;
     left: 30px;
     width: 100%;
-    font-size: 45px;
+    font-size: 33px;
+    color: #FFF;
+}
+
+#event-type {
+    position: absolute;
+    top: 260px;
+    left: 35px;
+    width: 100%;
+    font-size: 18px;
     color: #FFF;
 }

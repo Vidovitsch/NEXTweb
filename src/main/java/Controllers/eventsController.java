@@ -9,6 +9,8 @@ package Controllers;
 import Database.DBWorkshopModifier;
 import Database.IModWorkshop;
 import Models.Event;
+import Models.Lecture;
+import Models.Performance;
 import Models.Workshop;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
@@ -29,7 +31,7 @@ public class eventsController {
             
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public ModelAndView initWorkshopScreen() {
-        insertDummyWorkshops();
+        //insertDummyWorkshops();
                 
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", getWorkshops());
@@ -44,8 +46,23 @@ public class eventsController {
         ws.setEndTime("13:00");
         ws.setDate("11-11-2017");
         ws.setLocationName("Hier");
+        ws.setImageURL("/images/dummyEvent1.jpg");
+        Lecture ws1 = new Lecture("TestWorkshop");
+        ws1.setStartTime("12:00");
+        ws1.setEndTime("13:00");
+        ws1.setDate("11-11-2017");
+        ws1.setLocationName("Hier");
+        ws1.setImageURL("/images/dummyEvent1.jpg");
+        Performance ws2 = new Performance("TestWorkshop");
+        ws2.setStartTime("12:00");
+        ws2.setEndTime("13:00");
+        ws2.setDate("11-11-2017");
+        ws2.setLocationName("Hier");
+        ws2.setImageURL("/images/dummyEvent1.jpg");
         
         dbMod.insertEvent(ws);
+        dbMod.insertEvent(ws1);
+        dbMod.insertEvent(ws2);
     }
     
     /**
@@ -58,7 +75,7 @@ public class eventsController {
         ArrayList<Event[]> eventsDivided = new ArrayList();
         ArrayList<Event> events = dbMod.getEvents();
         
-        Event[] row = new Workshop[ROWNUMBER];
+        Event[] row = new Event[ROWNUMBER];
         int wsCounter = 0;
         for (int i = 0; i < events.size(); i++) {
             row[wsCounter] = events.get(i);

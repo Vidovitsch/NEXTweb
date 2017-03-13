@@ -18,9 +18,28 @@ public class Workshop extends Event {
     private ArrayList<User> users;
     private String presenter;
     private int maxUsers = 50;
+    private String eventType = "Workshop";
     
     public Workshop(String eventName) {
         super(eventName);
+    }
+    
+    /**
+     * Get the value of eventType
+     *
+     * @return the value of eventType
+     */
+    public String getEventType() {
+        return eventType;
+    }
+
+    /**
+     * Set the value of eventType
+     *
+     * @param eventType new value of eventType
+     */
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
 
     /**

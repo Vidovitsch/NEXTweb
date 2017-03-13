@@ -13,7 +13,27 @@ package Models;
  */
 public class Performance extends Event {
 
+    private String eventType = "Performance";
+    
     public Performance(String eventName) {
         super(eventName);
+    }
+    
+    /**
+     * Get the value of eventType
+     *
+     * @return the value of eventType
+     */
+    public String getEventType() {
+        return eventType;
+    }
+
+    /**
+     * Set the value of eventType
+     *
+     * @param eventType new value of eventType
+     */
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
 }

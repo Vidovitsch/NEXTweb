@@ -46,19 +46,16 @@ public class eventsController {
         ws.setEndTime("13:00");
         ws.setDate("11-11-2017");
         ws.setLocationName("Hier");
-        ws.setImageURL("/images/dummyEvent1.jpg");
-        Lecture ws1 = new Lecture("TestWorkshop");
+        Lecture ws1 = new Lecture("TestLecture");
         ws1.setStartTime("12:00");
         ws1.setEndTime("13:00");
         ws1.setDate("11-11-2017");
         ws1.setLocationName("Hier");
-        ws1.setImageURL("/images/dummyEvent1.jpg");
-        Performance ws2 = new Performance("TestWorkshop");
+        Performance ws2 = new Performance("TestPerformance");
         ws2.setStartTime("12:00");
         ws2.setEndTime("13:00");
         ws2.setDate("11-11-2017");
         ws2.setLocationName("Hier");
-        ws2.setImageURL("/images/dummyEvent1.jpg");
         
         dbMod.insertEvent(ws);
         dbMod.insertEvent(ws1);

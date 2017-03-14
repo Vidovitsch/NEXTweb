@@ -6,6 +6,8 @@
 
 package Models;
 
+import Enums.EventType;
+
 
 /**
  *
@@ -13,7 +15,7 @@ package Models;
  */
 public class Performance extends Event {
 
-    private String eventType = "Performance";
+    private EventType eventType = EventType.Performance;
     
     public Performance(String eventName) {
         super(eventName);
@@ -24,7 +26,7 @@ public class Performance extends Event {
      *
      * @return the value of eventType
      */
-    public String getEventType() {
+    public EventType getEventType() {
         return eventType;
     }
 
@@ -33,7 +35,7 @@ public class Performance extends Event {
      *
      * @param eventType new value of eventType
      */
-    public void setEventType(String eventType) {
+    public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
 }

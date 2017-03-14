@@ -28,7 +28,7 @@ public class userController {
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ModelAndView userPage() {
         ModelAndView mv = new ModelAndView("user");
-        mv.addObject("users", getUsers());
+        //mv.addObject("users", getUsers());
         
         return mv;
     }
@@ -42,14 +42,5 @@ public class userController {
         
         return mv;
     }
-    
-    private List<User> getUsers() {
-        users = new ArrayList();
-        users.add(new User("User1", "User11", 10));
-        users.add(new User("User2", "User22", 20));
-        users.add(new User("User3", "User33", 30));
-        users.add(new User("User4", "User44", 40));
-        
-        return users;
-    }
+   
 }

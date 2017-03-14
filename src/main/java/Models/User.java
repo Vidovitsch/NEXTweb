@@ -6,6 +6,9 @@
 
 package Models;
 
+import Enums.UserRole;
+import Enums.UserStatus;
+
 
 /**
  *
@@ -13,68 +16,122 @@ package Models;
  */
 public class User {
 
-    private String firstName;
-    private String lastName;
-    private int age;
+    private String pcn;
+    private String name;
+    private String email;
+    private String image;
+    private UserRole userRole;
+    private UserStatus userStatus;
 
-    public User(String firstName, String lastName, int age) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.age = age;
+    public User(String pcn) {
+        this.pcn = pcn;
+    }
+        
+    /**
+     * Get the value of pcn
+     *
+     * @return the value of pcn
+     */
+    public String getPcn() {
+        return pcn;
+    }
+
+    /**
+     * Set the value of pcn
+     *
+     * @param pcn new value of pcn
+     */
+    public void setPcn(String pcn) {
+        this.pcn = pcn;
     }
     
     /**
-     * Get the value of age
+     * Get the value of name
      *
-     * @return the value of age
+     * @return the value of name
      */
-    public int getAge() {
-        return age;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Set the value of age
+     * Set the value of name
      *
-     * @param age new value of age
+     * @param name new value of name
      */
-    public void setAge(int age) {
-        this.age = age;
+    public void setName(String name) {
+        this.name = name;
+    }
+    
+    /**
+     * Get the value of email
+     *
+     * @return the value of email
+     */
+    public String getEmail() {
+        return email;
     }
 
     /**
-     * Get the value of lastName
+     * Set the value of email
      *
-     * @return the value of lastName
+     * @param email new value of email
      */
-    public String getLastName() {
-        return lastName;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+    /**
+     * Get the value of image
+     *
+     * @return the value of image
+     */
+    public String getImage() {
+        return image;
     }
 
     /**
-     * Set the value of lastName
+     * Set the value of image
      *
-     * @param lastName new value of lastName
+     * @param image new value of image
      */
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setImage(String image) {
+        this.image = image;
+    }
+    
+    /**
+     * Get the value of userRole
+     *
+     * @return the value of userRole
+     */
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-
     /**
-     * Get the value of firstName
+     * Set the value of userRole
      *
-     * @return the value of firstName
+     * @param userRole new value of userRole
      */
-    public String getFirstName() {
-        return firstName;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
+    
+    /**
+     * Get the value of userStatus
+     *
+     * @return the value of userStatus
+     */
+    public UserStatus getUserStatus() {
+        return userStatus;
     }
 
     /**
-     * Set the value of firstName
+     * Set the value of userStatus
      *
-     * @param firstName new value of firstName
+     * @param userStatus new value of userStatus
      */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setUserStatus(UserStatus userStatus) {
+        this.userStatus = userStatus;
     }
 }

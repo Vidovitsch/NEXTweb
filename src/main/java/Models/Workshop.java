@@ -6,6 +6,7 @@
 
 package Models;
 
+import Enums.EventType;
 import java.util.ArrayList;
 
 
@@ -18,7 +19,7 @@ public class Workshop extends Event {
     private ArrayList<User> users;
     private String presenter;
     private int maxUsers = 50;
-    private String eventType = "Workshop";
+    private EventType eventType= EventType.Workshop;
     
     public Workshop(String eventName) {
         super(eventName);
@@ -29,7 +30,7 @@ public class Workshop extends Event {
      *
      * @return the value of eventType
      */
-    public String getEventType() {
+    public EventType getEventType() {
         return eventType;
     }
 
@@ -38,7 +39,7 @@ public class Workshop extends Event {
      *
      * @param eventType new value of eventType
      */
-    public void setEventType(String eventType) {
+    public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
 

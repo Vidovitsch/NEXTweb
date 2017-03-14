@@ -6,6 +6,8 @@
 
 package Models;
 
+import Enums.EventType;
+
 
 /**
  *
@@ -14,7 +16,7 @@ package Models;
 public class Lecture extends Event {
     
     private String presenter;
-    private String eventType = "Lecture";
+    private EventType eventType = EventType.Lecture;
 
     public Lecture(String eventName) {
         super(eventName);
@@ -25,7 +27,7 @@ public class Lecture extends Event {
      *
      * @return the value of eventType
      */
-    public String getEventType() {
+    public EventType getEventType() {
         return eventType;
     }
 
@@ -34,7 +36,7 @@ public class Lecture extends Event {
      *
      * @param eventType new value of eventType
      */
-    public void setEventType(String eventType) {
+    public void setEventType(EventType eventType) {
         this.eventType = eventType;
     }
     

@@ -19,7 +19,7 @@ public class User {
     private String pcn;
     private String name;
     private String email;
-    private String image;
+    private String image = "/images/default_user.jpg";
     private UserRole userRole;
     private UserStatus userStatus;
 

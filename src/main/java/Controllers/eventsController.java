@@ -6,8 +6,12 @@
 
 package Controllers;
 
+import Database.DBUserModifier;
 import Database.DBWorkshopModifier;
+import Database.IModUser;
 import Database.IModWorkshop;
+import Enums.UserRole;
+import Enums.UserStatus;
 import Models.Event;
 import Models.Lecture;
 import Models.Performance;
@@ -28,12 +32,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class eventsController {
 
     private final static int ROWNUMBER = 3;
-    private IModWorkshop dbMod = new DBWorkshopModifier();
+    private IModWorkshop dbWorkshop = new DBWorkshopModifier();
+    private IModUser dbUser = new DBUserModifier();
             
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public ModelAndView initWorkshopScreen() {
+        
         //insertDummyWorkshops();
-                
+        
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", getWorkshops());
         
@@ -58,9 +64,9 @@ public class eventsController {
         ws2.setDate("11-11-2017");
         ws2.setLocationName("Hier");
         
-        dbMod.insertEvent(ws);
-        dbMod.insertEvent(ws1);
-        dbMod.insertEvent(ws2);
+        dbWorkshop.insertEvent(ws);
+        dbWorkshop.insertEvent(ws1);
+        dbWorkshop.insertEvent(ws2);
     }
     
     /**
@@ -71,8 +77,8 @@ public class eventsController {
      */
     private ArrayList<Event[]> getWorkshops() {
         ArrayList<Event[]> eventsDivided = new ArrayList();
-        ArrayList<Event> events = dbMod.getEvents();
-        dbMod.removeEvent(events.get(0));
+        ArrayList<Event> events = dbWorkshop.getEvents();
+        
         Event[] row = new Event[ROWNUMBER];
         int wsCounter = 0;
         for (int i = 0; i < events.size(); i++) {

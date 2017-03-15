@@ -14,7 +14,9 @@
     <br>
     <a href="messageboard.htm">Open MessageBoard</a><br>
     <br>
-    <a href="schedule.htm">Vieuw schedule</a><br>
+    <a href="schedule.htm">Open schedule</a><br>
+    <br>
+    <a href="group.htm">Open group</a><br>
     <br>
     
     <p>

@@ -60,4 +60,14 @@ public class Group {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
+
+    public ArrayList<User> getUsers()
+    {
+        return users;
+    }
+    
+    public void setUsers(ArrayList<User> users)
+    {
+        this.users = users;
+    }
 }

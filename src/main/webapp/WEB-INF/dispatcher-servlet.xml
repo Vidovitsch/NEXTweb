@@ -34,7 +34,6 @@
                 <prop key="main.htm">mainController</prop>
                 <prop key="events.htm">eventsController</prop>
                 <prop key="messageboard.htm">messageboardController</prop>
-                <prop key="group.htm">groupController</prop>
             </props>
         </property>
     </bean>

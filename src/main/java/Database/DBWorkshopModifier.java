@@ -45,6 +45,12 @@ public class DBWorkshopModifier implements IModWorkshop {
     }
     
     @Override
+    public void removeAttendingUser(Workshop event, User user) {
+        Firebase ref = firebase.child("Event").child(event.getId()).child("Attending").child(user.getPcn());
+        ref.removeValue();
+    }
+    
+    @Override
     public void insertEvent(Event event) {
         Map<String, String> data = new HashMap();
         data.put("EventName", event.getEventName());
@@ -57,6 +63,12 @@ public class DBWorkshopModifier implements IModWorkshop {
         
         Firebase ref = firebase.child("Event").push();
         ref.setValue(data);
+    }
+    
+    @Override
+    public void removeEvent(Event event) {
+        Firebase ref = firebase.child("Event").child(event.getId());
+        ref.removeValue();
     }
 
     @Override

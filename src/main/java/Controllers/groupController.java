@@ -9,7 +9,7 @@ import Enums.UserRole;
 import Enums.UserStatus;
 import Models.Group;
 import Models.User;
-import java.util.List;
+import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -54,7 +54,10 @@ public class groupController
         u2.setUserRole(UserRole.Student);
         u2.setUserStatus(UserStatus.Attending);
         
-        group.addUser(u);
-        group.addUser(u2);
+        ArrayList<User> users = new ArrayList();
+        users.add(u);
+        users.add(u2);
+        
+        group.setUsers(users);
     }
 }

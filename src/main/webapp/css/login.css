@@ -8,20 +8,66 @@ and open the template in the editor.
     Author     : David
 */
 
+html, body {
+    overflow: hidden; 
+}
+
+.login-page {
+    overflow-y: auto;
+    overflow-y: hidden;
+}
+
 #login-form {
-    width: 20%;
-    padding: 10px;
+    width: 25%;
+    float: left;
+    padding: 70px 12px 0px 65px;
+    position: absolute;
+}
+
+#login-image {
+    overflow: hidden;
+    background: #333333;
+}
+
+#login-form h2 {
+    font-size: 40px;
+    color: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.1;
 }
 
 #login-form span {
-    font-size: 40px;
+    color: #fff;
+    font-size: 14px;
+    line-height: 1.428571429;
+}
+
+#login-button {
+    color: white;
+    background-color: #333333;
+    border-radius: 3px;
+    font-size: 16px;
+    border: none;
+    font-weight: 400;
+    padding: 2px;
+    width: 30%;
+}
+
+#login-button:hover {
+    cursor: pointer;
+}
+
+.form-section {
+    padding: -20px;
 }
 
 .form-control {
     display: block;
-    width: 100%;
+    width: 80%;
     height: 30px;
-    padding: 0px 5px 0px 5px;
+    padding: 0px 10px 0px 10px;
     font-size: 14px;
     line-height: 1.428571429;
     color: #555555;
@@ -34,3 +80,4 @@ and open the template in the editor.
     -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
     transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
+

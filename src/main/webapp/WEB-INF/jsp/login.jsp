@@ -27,14 +27,21 @@
         
         <div class="login-page">
             <div id="login-form">
-                <span><b>Login</b></span></br>
+                <h2>Login</h2>
                 <form action="events.htm" method="POST">
-                    E-mail: </br>
-                    <input class="form-control" type="text" name="email"></br>
-                    Password: </br>
-                    <input class="form-control" type="password" name="email"></br>
-                    <input type="submit" value="Login" />
+                    <div class="form-section">
+                        <span>E-mail:</span> </br>
+                        <input class="form-control" type="text" name="email"></br>
+                    </div>
+                    <div class="form-section">
+                        <span>Password:</span> </br>
+                        <input class="form-control" type="password" name="email"></br>
+                        <input id="login-button" class="form-control" type="submit" value="Login" />
+                    </div>
                 </form>
+            </div>
+            <div id="login-image">
+                <img src="/images/next_wallpaper1.jpg" />
             </div>
         </div>
     </body>

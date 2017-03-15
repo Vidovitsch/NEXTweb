@@ -17,8 +17,8 @@ import java.util.ArrayList;
 public interface IModWorkshop {
     
     void insertEvent(Event event);
-    
-    void insertUser(User user, Workshop workshop);
-   
+
     ArrayList<Event> getEvents();
+    
+    void addAttendingUser(Workshop event, User user);
 }

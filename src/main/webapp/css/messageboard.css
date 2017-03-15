@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13-mrt-2017, 9:36:12
+    Author     : Bert
+*/
+#Messageboard-container {
+    width: 10%;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+}
+
+.ownMessagecss {
+    background-color: #f3a5d0;
+    color: white;
+    padding: 10px 5px;
+    display: inline-block;
+    position: relative;
+    right: 0%;
+}
+
+.otherMessagecss {
+    background-color: #E22F91;
+    color: white;
+    padding: 10px 5px;
+    display: inline-block;
+    position: relative;
+    left: 0%;
+}
+
+.username-label {
+    float: right;
+}
+
+.content-label {
+    float: left;
+}
+
+.date-label {
+    float: right;
+}

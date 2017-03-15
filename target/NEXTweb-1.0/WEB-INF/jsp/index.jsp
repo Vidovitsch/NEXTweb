@@ -5,21 +5,23 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%! int fontSize;%> 
 <%! int maxfontSize = 3;%> 
+
 <html>
 <head>
-<title>Spring MVC Tutorial Series by Crunchify.com</title>
-<style type="text/css">
-    body {
-            background-image: url('http://crunchify.com/bg.png');
-    }
-</style>
 </head>
 <body>
     <a href="events.htm">Open workshop screen</a><br>
     <br>
     <a href="messageboard.htm">Open MessageBoard</a><br>
     <br>
-    <a href="schedule.htm">Vieuw schedule</a><br>
+    <a href="schedule.htm">Open schedule</a><br>
     <br>
+    <a href="group.htm">Open group</a><br>
+    <br>
+    
+    <p>
+        <button ng-click="htmlgeneration(0)">auth</button>
+    </p>
+
 </body>
 </html>

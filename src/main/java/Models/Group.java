@@ -18,6 +18,7 @@ public class Group {
     private int groupNumber;
     private String groupName;
     private ArrayList<User> users;
+    private ArrayList<Message> messages;
     
     public Group(int groupNumber) {
         this.groupNumber = groupNumber;
@@ -59,12 +60,14 @@ public class Group {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-    
-    public void addUser(User user) {
-        users.add(user);
+
+    public ArrayList<User> getUsers()
+    {
+        return users;
     }
     
-    public void removeUser(User user) {
-        users.remove(user);
+    public void setUsers(ArrayList<User> users)
+    {
+        this.users = users;
     }
 }

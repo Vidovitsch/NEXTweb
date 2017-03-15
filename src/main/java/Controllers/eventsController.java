@@ -11,6 +11,7 @@ import Database.IModWorkshop;
 import Models.Event;
 import Models.Lecture;
 import Models.Performance;
+import Models.User;
 import Models.Workshop;
 import java.util.ArrayList;
 import org.springframework.stereotype.Controller;
@@ -72,6 +73,8 @@ public class eventsController {
         ArrayList<Event[]> eventsDivided = new ArrayList();
         ArrayList<Event> events = dbMod.getEvents();
         
+        dbMod.addAttendingUser((Workshop) events.get(0), new User("342925"));
+        
         Event[] row = new Event[ROWNUMBER];
         int wsCounter = 0;
         for (int i = 0; i < events.size(); i++) {
@@ -79,7 +82,7 @@ public class eventsController {
             wsCounter++;
             if (wsCounter == ROWNUMBER || events.size() - 1 == i) {
                 eventsDivided.add(row);
-                row = new Workshop[calcRowLength(i + 1, events.size())];
+                row = new Event[calcRowLength(i + 1, events.size())];
                 wsCounter = 0;
             }
         }

@@ -81,10 +81,20 @@ public class Workshop extends Event {
     
     /**
      * get the value of users
-     * @return 
+     * 
+     * @return users
      */
     public ArrayList<User> getUsers() {
         return users;
+    }
+    
+    /**
+     * set the value of users
+     * 
+     * @param users
+     */
+    public void setUsers(ArrayList<User> users) {
+        this.users = users;
     }
     
     /**

@@ -39,6 +39,12 @@ public class DBWorkshopModifier implements IModWorkshop {
     }
 
     @Override
+    public void addAttendingUser(Workshop event, User user) {
+        Firebase ref = firebase.child("Event").child(event.getId()).child("Attending").child(user.getPcn());
+        ref.setValue("Attending");
+    }
+    
+    @Override
     public void insertEvent(Event event) {
         Map<String, String> data = new HashMap();
         data.put("EventName", event.getEventName());
@@ -56,7 +62,6 @@ public class DBWorkshopModifier implements IModWorkshop {
     @Override
     public ArrayList<Event> getEvents() {
         final ArrayList<Event> events = new ArrayList();
-
         Firebase ref = firebase.child("Event");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             
@@ -99,8 +104,11 @@ public class DBWorkshopModifier implements IModWorkshop {
             Workshop event = new Workshop((String) ds.child("EventName").getValue());
             String presenter = (String) ds.child("Presenter").getValue();
             int maxUsers = Integer.valueOf((String) ds.child("MaxUsers").getValue());
+            ArrayList<User> users = attendantsToUsers(ds.child("Attending"));
+            
             event.setPresenter(presenter);
             event.setMaxUsers(maxUsers);
+            event.setUsers(users);
             
             return event;
         } else if (eventType.equals("Lecture")) {
@@ -129,10 +137,14 @@ public class DBWorkshopModifier implements IModWorkshop {
         }
         return data;
     }
-
-    @Override
-    public void insertUser(User user, Workshop workshop) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    
+    private ArrayList<User> attendantsToUsers(DataSnapshot snapshot) {
+        ArrayList<User> users = new ArrayList();
+        for (DataSnapshot ds : snapshot.getChildren()) {
+            String pcn = ds.getKey();
+            users.add(new User(pcn));
+        }
+        return users;
     }
     
     /**

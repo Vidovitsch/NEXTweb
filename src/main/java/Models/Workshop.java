@@ -96,12 +96,4 @@ public class Workshop extends Event {
     public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
-    
-    /**
-     * Adds a user to the users-list
-     * @param user 
-     */
-    public void addUser(User user) {
-      users.add(user);
-    }
 }

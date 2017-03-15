@@ -16,6 +16,7 @@ import com.firebase.client.Firebase;
 public class FBConnector implements IDatabase {
 
     private static FBConnector instance = null;
+    private String firebase_url = null;
     private Firebase firebase = null;
     
     public static FBConnector getInstance() {
@@ -27,8 +28,10 @@ public class FBConnector implements IDatabase {
     
     @Override
     public void connect() {
-        String firebase_url = "https://nextweek-b9a58.firebaseio.com/";
-        firebase = new Firebase(firebase_url);
+        if (firebase_url == null) {
+            firebase_url = "https://nextweek-b9a58.firebaseio.com/";
+            firebase = new Firebase(firebase_url);
+        }
     }
 
     @Override

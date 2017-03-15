@@ -18,7 +18,11 @@ public interface IModWorkshop {
     
     void insertEvent(Event event);
     
-    void insertUser(User user, Workshop workshop);
-   
+    void removeEvent(Event event);
+
     ArrayList<Event> getEvents();
+    
+    void addAttendingUser(Workshop event, User user);
+    
+    void removeAttendingUser(Workshop event, User user);
 }

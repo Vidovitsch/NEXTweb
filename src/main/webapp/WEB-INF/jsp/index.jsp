@@ -19,5 +19,7 @@
     <br>
     <a href="messageboard.htm">Open MessageBoard</a><br>
     <br>
+    <a href="group.htm">Open Group</a><br>
+    <br>
 </body>
 </html>

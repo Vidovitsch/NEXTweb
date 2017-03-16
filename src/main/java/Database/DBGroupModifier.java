@@ -59,13 +59,17 @@ public class DBGroupModifier implements IModGroup {
     }
 
     @Override
-    public void addUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void addUser(Group group, User user) {
+        Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
+                .child("Members").child(user.getPcn());
+        ref.setValue("Attending");
     }
 
     @Override
-    public void removeUser(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void removeUser(Group group, User user) {
+        Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
+                .child("Members").child(user.getPcn());
+        ref.removeValue();
     }
 
     @Override
@@ -74,7 +78,7 @@ public class DBGroupModifier implements IModGroup {
     }
 
     @Override
-    public void insertMessage(Message message) {
+    public void addMessage(Message message) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

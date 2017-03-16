@@ -16,15 +16,15 @@ import java.util.ArrayList;
  */
 public interface IModGroup {
     
-    void addUser(User user);
+    void addUser(Group group, User user);
     
-    void removeUser(User user);
+    void removeUser(Group group, User user);
             
     void insertGroup(Group group);
     
     Group getGroup(String pcn);
     
-    void insertMessage(Message message);
+    void addMessage(Message message);
     
     ArrayList<Message> getMessages(Group group);
 }

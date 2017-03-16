@@ -35,6 +35,7 @@ public class loginController
     
     //Test
     private IModGroup dbGroup = new DBGroupModifier();
+    User u1;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView LoginRequest()
@@ -54,7 +55,7 @@ public class loginController
     
     //Test method
     private Group createDummyGroup() {
-        User u1 = new User("234223");
+        u1 = new User("234223");
         u1.setEmail("iets@iets.nl");
         u1.setName("Frank");
         u1.setUserRole(UserRole.Student);

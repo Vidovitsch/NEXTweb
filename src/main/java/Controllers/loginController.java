@@ -3,24 +3,41 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Controllers;
 
+import Database.DBUserModifier;
+import Database.IModUser;
+import Models.LoginRequest;
+import Models.User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
 
 /**
  *
  * @author David
  */
 @Controller
-public class loginController {
+public class loginController
+{
+
+    private IModUser dbUser = new DBUserModifier();
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView initLoginScreen() {
-        return new ModelAndView("login");
+    public ModelAndView LoginRequest()
+    {
+        return new ModelAndView("login", "command", new LoginRequest());
+    }
+
+    @RequestMapping(value = "/requestlogin", method = RequestMethod.POST)
+    public String loginUser(@ModelAttribute("SpringWeb") LoginRequest loginRequest,
+            ModelMap model)
+    {
+        String result = dbUser.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
+        model.addAttribute("result", result);
+        return "loginresult";
     }
 }

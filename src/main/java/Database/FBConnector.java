@@ -17,13 +17,18 @@ public class FBConnector implements IDatabase {
 
     private static FBConnector instance = null;
     private String firebase_url = null;
-    private Firebase firebase = null;
+    private Firebase firebase;
     
     public static FBConnector getInstance() {
         if (instance == null) {
             instance = new FBConnector();
         }
         return instance;
+    }
+
+    public FBConnector()
+    {
+        this.firebase = null;
     }
     
     @Override

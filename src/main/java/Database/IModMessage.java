@@ -4,6 +4,10 @@
  * and open the template in the editor.
  */
 package Database;
+import Models.Group;
+import Models.Message;
+
+
 
 /**
  *

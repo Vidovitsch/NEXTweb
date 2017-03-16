@@ -14,6 +14,8 @@ import Models.User;
  */
 public interface IModUser {
     
+    String loginUser(String email, String password);
+    
     void insertUser(User user);
     
     void removeUser(User user);

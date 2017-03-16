@@ -34,6 +34,8 @@
                 <prop key="schedule.htm">scheduleController</prop>
                 <prop key="group.htm">groupController</prop>
                 <prop key="login.htm">loginController</prop>
+                <prop key="loginresult.htm">loginController</prop>
+                <prop key="/requestlogin">loginController</prop>
             </props>
         </property>
     </bean>
@@ -47,6 +49,6 @@
     The index controller.
     -->
     <bean name="indexController"
-        class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-        p:viewName="index" />
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="index" />
 </beans>

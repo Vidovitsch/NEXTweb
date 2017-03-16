@@ -6,10 +6,9 @@
 
 package Controllers;
 
+import Database.DBEventModifier;
 import Database.DBUserModifier;
-import Database.DBWorkshopModifier;
 import Database.IModUser;
-import Database.IModWorkshop;
 import Enums.UserRole;
 import Enums.UserStatus;
 import Models.Event;
@@ -22,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import Database.IModEvent;
 
 
 /**
@@ -32,7 +32,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class eventsController {
 
     private final static int ROWNUMBER = 3;
-    private IModWorkshop dbWorkshop = new DBWorkshopModifier();
+    private IModEvent dbEvent = new DBEventModifier();
     private IModUser dbUser = new DBUserModifier();
             
     @RequestMapping(value = "/events", method = RequestMethod.GET)
@@ -64,9 +64,9 @@ public class eventsController {
         ws2.setDate("11-11-2017");
         ws2.setLocationName("Hier");
         
-        dbWorkshop.insertEvent(ws);
-        dbWorkshop.insertEvent(ws1);
-        dbWorkshop.insertEvent(ws2);
+        dbEvent.insertEvent(ws);
+        dbEvent.insertEvent(ws1);
+        dbEvent.insertEvent(ws2);
     }
     
     /**
@@ -77,7 +77,7 @@ public class eventsController {
      */
     private ArrayList<Event[]> getWorkshops() {
         ArrayList<Event[]> eventsDivided = new ArrayList();
-        ArrayList<Event> events = dbWorkshop.getEvents();
+        ArrayList<Event> events = dbEvent.getEvents();
         
         Event[] row = new Event[ROWNUMBER];
         int wsCounter = 0;

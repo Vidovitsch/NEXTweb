@@ -70,4 +70,12 @@ public class Group {
     {
         this.users = users;
     }
+    
+    public ArrayList<Message> getMessages() {
+        return messages;
+    }
+    
+    public void setMessages(ArrayList<Message> messages) {
+        this.messages = messages;
+    }
 }

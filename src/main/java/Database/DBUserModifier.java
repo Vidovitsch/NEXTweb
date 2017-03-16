@@ -150,7 +150,7 @@ public class DBUserModifier implements IModUser
                     lock.wait();
                 } catch (InterruptedException ex)
                 {
-                    Logger.getLogger(DBWorkshopModifier.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(DBUserModifier.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }

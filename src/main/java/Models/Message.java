@@ -16,9 +16,9 @@ public class Message {
     private int groupNumber;
     private String pcn;
     private String content;
-    private Timestamp date;
+    private String date;
     
-    public Message(String pcn, int groupNumber, String content, Timestamp date)
+    public Message(String pcn, int groupNumber, String content, String date)
     {
         this.groupNumber = groupNumber;
         this.pcn = pcn;
@@ -52,12 +52,12 @@ public class Message {
         this.content = content;
     }
     
-    public Timestamp getDate()
+    public String getDate()
     {
         return date;
     }
     
-    public void setDate(Timestamp date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

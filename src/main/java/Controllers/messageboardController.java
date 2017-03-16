@@ -6,8 +6,6 @@
 
 package Controllers;
 
-import Database.DBMessageModifier;
-import Database.IModMessage;
 import Models.Message;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -25,7 +23,7 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
 @Controller
 public class messageboardController {
     
-    IModMessage modMessage = new DBMessageModifier();
+   // IModMessage modMessage = new DBMessageModifier();
     
     @RequestMapping(value = "/messageboard", method = RequestMethod.GET)
     public ModelAndView initWorkshopmessageboardScreen() {
@@ -40,8 +38,8 @@ public class messageboardController {
     public List<Message> getMessages()
     {
         List<Message> messages = new ArrayList<Message>();
-        messages.add(new Message("Gerard", 1, "wyd Gertie?", Timestamp.valueOf("2017-03-13 14:10:01")));
-        messages.add(new Message("Gertie", 1, "yes", Timestamp.valueOf("2017-03-13 14:50:38")));
+        messages.add(new Message("Gerard", 1, "wyd Gertie?", "2017-03-13 14:10:01"));
+        messages.add(new Message("Gertie", 1, "yes", "2017-03-13 14:50:38"));
         return messages;
     }
 }

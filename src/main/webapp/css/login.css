@@ -27,6 +27,7 @@ html, body {
 #login-image {
     overflow: hidden;
     background: #333333;
+    height: 100vh;
 }
 
 #login-form h2 {

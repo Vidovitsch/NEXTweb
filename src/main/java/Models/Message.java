@@ -12,20 +12,35 @@ import java.sql.Timestamp;
  * @author Bert
  */
 public class Message {
-    private String userName;
+    
+    private int groupNumber;
+    private String pcn;
     private String content;
     private Timestamp date;
     
-    public Message(String name, String content, Timestamp date)
+    public Message(String pcn, int groupNumber, String content, Timestamp date)
     {
-        this.userName = name;
+        this.groupNumber = groupNumber;
+        this.pcn = pcn;
         this.content = content;
         this.date = date;
     }
     
-    public String getUserName()
+    public int getGroupNumber() {
+        return groupNumber;
+    }
+    
+    public void setGroupNumber(int groupNumber) {
+        this.groupNumber = groupNumber;
+    }
+    
+    public String getPcn()
     {
-        return userName;
+        return pcn;
+    }
+    
+    public void setPcn(String pcn) {
+        this.pcn = pcn;
     }
     
     public String getContent()
@@ -33,8 +48,16 @@ public class Message {
         return content;
     }
     
+    public void setContent(String content) {
+        this.content = content;
+    }
+    
     public Timestamp getDate()
     {
         return date;
+    }
+    
+    public void setDate(Timestamp date) {
+        this.date = date;
     }
 }

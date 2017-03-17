@@ -16,13 +16,41 @@ import java.util.ArrayList;
  */
 public interface IModGroup {
     
+    /**
+     * Adds a member to a group
+     * 
+     * @param group
+     * @param user 
+     */
     void addUser(Group group, User user);
     
+    /**
+     * Removes a member from a group
+     * 
+     * @param group
+     * @param user 
+     */
     void removeUser(Group group, User user);
             
+    /**
+     * Creates a new group in Firbase
+     * 
+     * @param group 
+     */
     void insertGroup(Group group);
     
+    /**
+     * Gets the group of a member's pcn
+     * 
+     * @param pcn
+     * @return The member's group
+     */
     Group getGroup(String pcn);
     
+    /**
+     * Adds a message to a group
+     * 
+     * @param message 
+     */
     void addMessage(Message message);
 }

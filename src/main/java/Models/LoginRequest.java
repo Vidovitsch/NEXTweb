@@ -9,26 +9,17 @@ package Models;
  *
  * @author Michiel van Eijkeren
  */
-public class LoginRequest {
-    private String email;
-    private String password;
+public class LoginRequest
+{
+    private String result;
 
-    public String getEmail() {
-        return email;
+    public String getResult()
+    {
+        return result;
     }
 
-    public void setEmail(String email)
+    public void setResult(String result)
     {
-        this.email = email;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
+        this.result = result;
     }
 }

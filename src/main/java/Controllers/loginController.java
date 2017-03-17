@@ -38,9 +38,9 @@ public class loginController {
 
     @RequestMapping(value = "/requestlogin", method = RequestMethod.POST)
     public String loginUser(@ModelAttribute("SpringWeb") LoginRequest loginRequest,
-            ModelMap model) {
-        String result = dbUser.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
-        model.addAttribute("result", result);
+            ModelMap model)
+    {
+        model.addAttribute("result", loginRequest.getResult());
         return "loginresult";
     }
 }

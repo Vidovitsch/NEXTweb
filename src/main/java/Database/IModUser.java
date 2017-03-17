@@ -14,11 +14,34 @@ import Models.User;
  */
 public interface IModUser {
     
+    /**
+     * Logs in a user to the website
+     * 
+     * @param email
+     * @param password
+     * @return Pcn
+     */
     String loginUser(String email, String password);
     
+    /**
+     * Adds a new user into Firebase
+     * 
+     * @param user 
+     */
     void insertUser(User user);
     
+    /**
+     * Removes an user from Firebase
+     * 
+     * @param user 
+     */
     void removeUser(User user);
     
+    /**
+     * Fetch a user from Firbase with a pcn
+     * 
+     * @param pcn
+     * @return User
+     */
     User getUser(String pcn);
 }

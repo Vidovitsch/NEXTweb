@@ -16,13 +16,40 @@ import java.util.ArrayList;
  */
 public interface IModEvent {
     
+    /**
+     * Inserts a new event to firebase
+     * 
+     * @param event 
+     */
     void insertEvent(Event event);
     
+    /**
+     * Removes an existing event from firebase
+     * 
+     * @param event 
+     */
     void removeEvent(Event event);
 
+    /**
+     * Get all events from Firebase
+     * 
+     * @return All events
+     */
     ArrayList<Event> getEvents();
     
+    /**
+     * Adds an attendant to a event
+     * 
+     * @param event
+     * @param user 
+     */
     void addAttendingUser(Workshop event, User user);
     
+    /**
+     * Removes an attendant from a event
+     * 
+     * @param event
+     * @param user 
+     */
     void removeAttendingUser(Workshop event, User user);
 }

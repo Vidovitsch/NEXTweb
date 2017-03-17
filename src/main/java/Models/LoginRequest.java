@@ -9,13 +9,11 @@ package Models;
  *
  * @author Michiel van Eijkeren
  */
-public class LoginRequest
-{
+public class LoginRequest {
     private String email;
     private String password;
 
-    public String getEmail()
-    {
+    public String getEmail() {
         return email;
     }
 

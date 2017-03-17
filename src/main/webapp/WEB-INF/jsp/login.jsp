@@ -62,8 +62,6 @@
             };
             firebase.initializeApp(config);
         </script>
-
     </body>
-
 </html>
 

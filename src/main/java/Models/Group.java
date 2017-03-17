@@ -61,20 +61,38 @@ public class Group {
         this.groupName = groupName;
     }
 
-    public ArrayList<User> getUsers()
-    {
+    /**
+     * Get the value of users
+     * 
+     * @return the value of users
+     */
+    public ArrayList<User> getUsers() {
         return users;
     }
     
-    public void setUsers(ArrayList<User> users)
-    {
+    /**
+     * Set the value of users
+     * 
+     * @param users 
+     */
+    public void setUsers(ArrayList<User> users) {
         this.users = users;
     }
     
+    /**
+     * Get the value of messages
+     * 
+     * @return messages
+     */
     public ArrayList<Message> getMessages() {
         return messages;
     }
     
+    /**
+     * Set the value of messages
+     * 
+     * @param messages 
+     */
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
     }

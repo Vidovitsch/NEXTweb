@@ -16,7 +16,10 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +33,8 @@ public class DBGroupModifier implements IModGroup {
     private Firebase firebase;
     private Object lock;
     private boolean done = false;
-    private Group group;
+    private boolean groupFound = false;
+    private Group group = null;
     
     public DBGroupModifier() {
         FBConnector connector = FBConnector.getInstance();
@@ -80,41 +84,50 @@ public class DBGroupModifier implements IModGroup {
     }
 
     @Override
-    public Group getGroup(String pcn) {
+    public Group getGroup(final String pcn) {
         Firebase ref = firebase.child("Group");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    int groupNumber = Integer.valueOf((String) ds.getKey());
-                    String groupName = (String) ds.child("Name").getValue();
                     ArrayList<Message> messages = new ArrayList();
                     ArrayList<User> members = new ArrayList();
-                    
-                    //Fetching messages
-                    Message msg;
-                    for (DataSnapshot ds2 : ds.child("Messages").getChildren()) {
-                        String date = ds2.getKey();
-                        String content = (String) ds2.child("content").getValue();
-                        int group = Integer.valueOf((String) ds2.child("group").getValue());
-                        String pcn = (String) ds2.child("pcn").getValue();
-                        msg = new Message(pcn, group, content, date);
-                        messages.add(msg);
-                    }
                     
                     //Fetching members
                     User u;
                     for (DataSnapshot ds3 : ds.child("Members").getChildren()) {
-                        String pcn = ds3.getKey();
+                        String pcn2 = ds3.getKey();
+                        if (pcn2.equals(pcn)) {
+                            groupFound = true;
+                        }
                         u = new User(pcn);
                         members.add(u);
                     }
                     
-                    group = new Group(groupNumber);
-                    group.setGroupName(groupName);
-                    group.setMessages(messages);
-                    group.setUsers(members);
+                    if (!groupFound) {
+                        //Fetching other data
+                        int groupNumber = Integer.valueOf((String) ds.getKey());
+                        String groupName = (String) ds.child("Name").getValue();
+
+                        //Fetching messages
+                        Message msg;
+                        for (DataSnapshot ds2 : ds.child("Messages").getChildren()) {
+                            String date = ds2.getKey();
+                            String content = (String) ds2.child("content").getValue();
+                            int group = Integer.valueOf((String) ds2.child("group").getValue());
+                            String pcn = (String) ds2.child("pcn").getValue();
+                            msg = new Message(pcn, group, content, date);
+                            messages.add(msg);
+                        }
+
+                        group = new Group(groupNumber);
+                        group.setGroupName(groupName);
+                        group.setMessages(messages);
+                        group.setUsers(members);
+                        
+                        groupFound = false;
+                    }
                 }
                 unlockFXThread();
             }
@@ -138,6 +151,86 @@ public class DBGroupModifier implements IModGroup {
         msgData.put("group", String.valueOf(message.getGroupNumber()));
         msgData.put("content", message.getContent());
         ref.setValue(msgData);
+    }
+    
+    @Override
+    public ArrayList<Group> getGroups() {
+        final ArrayList<Group> groups = new ArrayList();
+        Firebase ref = firebase.child("Group");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Group g = null;
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    ArrayList<Message> messages = new ArrayList();
+                    ArrayList<User> members = new ArrayList();
+                    
+                    //Fetching members
+                    User u;
+                    for (DataSnapshot ds3 : ds.child("Members").getChildren()) {
+                        String pcn = ds3.getKey();
+                        u = new User(pcn);
+                        members.add(u);
+                    }
+                    
+                    //Fetching other data
+                    int groupNumber = Integer.valueOf((String) ds.getKey());
+                    String groupName = (String) ds.child("Name").getValue();
+
+                    //Fetching messages
+                    Message msg;
+                    for (DataSnapshot ds2 : ds.child("Messages").getChildren()) {
+                        String date = ds2.getKey();
+                        String content = (String) ds2.child("content").getValue();
+                        int group = Integer.valueOf((String) ds2.child("group").getValue());
+                        String pcn = (String) ds2.child("pcn").getValue();
+                        msg = new Message(pcn, group, content, date);
+                        messages.add(msg);
+                    }
+
+                    g = new Group(groupNumber);
+                    g.setGroupName(groupName);
+                    g.setMessages(messages);
+                    g.setUsers(members);
+                    
+                    groups.add(g);
+                }
+                unlockFXThread();
+            }
+            
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        
+        lockFXThread();
+        return groups;
+    }
+    
+    @Override
+    public int getMaxGroupNumber() {
+        final Set<Integer> groupNumbers = new TreeSet();
+        Firebase ref = firebase.child("Group");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    int groupNumber = Integer.valueOf((String) ds.getKey());
+                    groupNumbers.add(groupNumber);
+                }
+                unlockFXThread();
+            }
+            
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        List<Integer> numbers = new ArrayList(groupNumbers);
+        return numbers.get(numbers.size() - 1);
     }
     
     /**

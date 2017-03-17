@@ -53,4 +53,18 @@ public interface IModGroup {
      * @param message 
      */
     void addMessage(Message message);
+    
+    /**
+     * Fetch all groups from firebase
+     * 
+     * @return All groups
+     */
+    ArrayList<Group> getGroups();
+    
+    /**
+     * Getting max group number
+     * 
+     * @return Max group number
+     */
+    int getMaxGroupNumber();
 }

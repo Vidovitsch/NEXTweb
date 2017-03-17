@@ -5,6 +5,7 @@
  */
 package Database;
 
+import Enums.Course;
 import Enums.UserRole;
 import Enums.UserStatus;
 import Models.Event;
@@ -71,14 +72,15 @@ public class DBUserModifier implements IModUser
     }
 
     @Override
-    public void insertUser(User user)
-    {
+    public void insertUser(User user) {
         Map<String, String> data = new HashMap();
         data.put("Name", user.getName());
         data.put("Email", user.getEmail());
         data.put("Image", user.getImage());
         data.put("Role", user.getUserRole().toString());
         data.put("Status", user.getUserStatus().toString());
+        data.put("Course", user.getCourse().toString());
+        data.put("Semester", String.valueOf(user.getSemester()));
         Firebase ref = firebase.child("User").child(user.getPcn());
         ref.setValue(data);
     }
@@ -110,6 +112,8 @@ public class DBUserModifier implements IModUser
                         String image = (String) ds.child("Image").getValue();
                         UserRole userRole = UserRole.valueOf((String) ds.child("Role").getValue());
                         UserStatus userStatus = UserStatus.valueOf((String) ds.child("Status").getValue());
+                        Course course = Course.valueOf((String) ds.child("Course").getValue());
+                        int semester = Integer.valueOf((String) ds.child("Semester").getValue());
 
                         user = new User(pcn);
                         user.setName(name);
@@ -117,6 +121,8 @@ public class DBUserModifier implements IModUser
                         user.setImage(image);
                         user.setUserRole(userRole);
                         user.setUserStatus(userStatus);
+                        user.setCourse(course);
+                        user.setSemester(semester);
                         break;
                     }
                 }

@@ -38,7 +38,7 @@
                     <div class="form-section">
                         <span>Password:</span> </br>
                         <input class="form-control" type="password" name="password"></br>
-                        <input id="login-button" class="form-control" type="submit" value="Login" />
+                        <input id="login-button" class="form-control" type="submit" value="Login" /></br>
                     </div>
                 </form>
             </div>

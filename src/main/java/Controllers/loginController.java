@@ -28,59 +28,19 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class loginController
-{
-
+public class loginController {
     private IModUser dbUser = new DBUserModifier();
-    
-    //Test
-    private IModGroup dbGroup = new DBGroupModifier();
-    User u1;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView LoginRequest()
-    {
-        dbGroup.insertGroup(createDummyGroup());
+    public ModelAndView LoginRequest() {
         return new ModelAndView("login", "command", new LoginRequest());
     }
 
     @RequestMapping(value = "/requestlogin", method = RequestMethod.POST)
     public String loginUser(@ModelAttribute("SpringWeb") LoginRequest loginRequest,
-            ModelMap model)
-    {
+            ModelMap model) {
         String result = dbUser.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
         model.addAttribute("result", result);
         return "loginresult";
-    }
-    
-    //Test method
-    private Group createDummyGroup() {
-        u1 = new User("234223");
-        u1.setEmail("iets@iets.nl");
-        u1.setName("Frank");
-        u1.setUserRole(UserRole.Student);
-        u1.setUserStatus(UserStatus.Attending);
-        User u2 = new User("334223");
-        u2.setEmail("niets@iets.nl");
-        u2.setName("Henk");
-        u2.setUserRole(UserRole.Student);
-        u2.setUserStatus(UserStatus.Attending);
-        
-        Message m1 = new Message(u1.getPcn(), 1, "Hoi", "12-12-12:12:12");
-        Message m2 = new Message(u2.getPcn(), 1, "Hoi", "12-12-12:12:13");
-        
-        ArrayList<User> users = new ArrayList();
-        ArrayList<Message> messages = new ArrayList();
-        users.add(u1);
-        users.add(u2);
-        messages.add(m1);
-        messages.add(m2);
-        
-        Group group = new Group(1);
-        group.setGroupName("AH appeltaart");
-        group.setMessages(messages);
-        group.setUsers(users);
-        
-        return group;
     }
 }

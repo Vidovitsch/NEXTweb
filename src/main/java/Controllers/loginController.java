@@ -48,8 +48,8 @@ public class loginController
     public String loginUser(@ModelAttribute("SpringWeb") LoginRequest loginRequest,
             ModelMap model)
     {
-        String result = dbUser.loginUser(loginRequest.getEmail(), loginRequest.getPassword());
-        model.addAttribute("result", result);
+
+        model.addAttribute("result", loginRequest.getResult());
         return "loginresult";
     }
     

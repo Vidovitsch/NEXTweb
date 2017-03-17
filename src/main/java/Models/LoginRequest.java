@@ -11,26 +11,15 @@ package Models;
  */
 public class LoginRequest
 {
-    private String email;
-    private String password;
+    private String result;
 
-    public String getEmail()
+    public String getResult()
     {
-        return email;
+        return result;
     }
 
-    public void setEmail(String email)
+    public void setResult(String result)
     {
-        this.email = email;
-    }
-
-    public String getPassword()
-    {
-        return password;
-    }
-
-    public void setPassword(String password)
-    {
-        this.password = password;
+        this.result = result;
     }
 }

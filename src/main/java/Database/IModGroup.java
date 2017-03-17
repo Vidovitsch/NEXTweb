@@ -25,6 +25,4 @@ public interface IModGroup {
     Group getGroup(String pcn);
     
     void addMessage(Message message);
-    
-    ArrayList<Message> getMessages(Group group);
 }

@@ -26,8 +26,7 @@ public class FBConnector implements IDatabase {
         return instance;
     }
 
-    public FBConnector()
-    {
+    public FBConnector() {
         this.firebase = null;
     }
     

@@ -6,6 +6,7 @@
 
 package Models;
 
+import Enums.Course;
 import Enums.UserRole;
 import Enums.UserStatus;
 
@@ -22,6 +23,8 @@ public class User {
     private String image = "/images/default_user.jpg";
     private UserRole userRole;
     private UserStatus userStatus;
+    private Course course;
+    private int semester;
 
     public User(String pcn) {
         this.pcn = pcn;
@@ -133,5 +136,41 @@ public class User {
      */
     public void setUserStatus(UserStatus userStatus) {
         this.userStatus = userStatus;
+    }
+    
+    /**
+     * Get the value of course
+     *
+     * @return the value of course
+     */
+    public Course getCourse() {
+        return course;
+    }
+
+    /**
+     * Set the value of course
+     *
+     * @param course new value of course
+     */
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+    
+    /**
+     * Get the value of semester
+     *
+     * @return the value of semester
+     */
+    public int getSemester() {
+        return semester;
+    }
+
+    /**
+     * Set the value of semester
+     *
+     * @param semester new value of semester
+     */
+    public void setSemester(int semester) {
+        this.semester = semester;
     }
 }

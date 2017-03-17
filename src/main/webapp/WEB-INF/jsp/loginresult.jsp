@@ -14,7 +14,7 @@
 
    <body>
       <h2>tried to login</h2>
-      <p> Result: ${result}</p>
+      <p> logged in as: ${currentemail}</p>
    </body>
    
 </html>

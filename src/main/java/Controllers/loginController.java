@@ -12,7 +12,7 @@ import Database.IModUser;
 import Enums.UserRole;
 import Enums.UserStatus;
 import Models.Group;
-import Models.LoginRequest;
+import Models.LoginModel;
 import Models.Message;
 import Models.User;
 import java.util.ArrayList;
@@ -28,19 +28,30 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class loginController {
+public class loginController
+{
+
     private IModUser dbUser = new DBUserModifier();
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView LoginRequest() {
-        return new ModelAndView("login", "command", new LoginRequest());
+    public ModelAndView LoginRequest()
+    {
+        return new ModelAndView("login", "command", new LoginModel());
     }
 
     @RequestMapping(value = "/requestlogin", method = RequestMethod.POST)
-    public String loginUser(@ModelAttribute("SpringWeb") LoginRequest loginRequest,
+    public String loginUser(@ModelAttribute("SpringWeb") LoginModel loginModel,
             ModelMap model)
     {
-        model.addAttribute("result", loginRequest.getResult());
+        model.addAttribute("currentemail", loginModel.getCurrentemail());
         return "loginresult";
+    }
+
+    @RequestMapping(value = "/requestregistration", method = RequestMethod.POST)
+    public String registerUser(@ModelAttribute("SpringWeb") LoginModel loginModel,
+            ModelMap model)
+    {
+        model.addAttribute("currentemail", loginModel.getCurrentemail());
+        return "registeruser";
     }
 }

@@ -12,5 +12,6 @@ package Enums;
 public enum EventType {
     Workshop,
     Lecture,
-    Performance
+    Performance,
+    None
 };

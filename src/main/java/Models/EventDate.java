@@ -5,9 +5,11 @@
  */
 package Models;
 
+import Enums.EventType;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -111,15 +113,17 @@ public abstract class EventDate {
      */
     public void setDay(){
         try{
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE", Locale.ENGLISH);
             Date dateEvent = new SimpleDateFormat("dd-MM-yyyy").parse(date);
             day = simpleDateFormat.format(dateEvent);
         } catch (ParseException ex){
-            System.out.println("something went wrong whilst trying to set teh day of the event");
+            System.out.println("something went wrong whilst trying to set the day of the event");
         }
     }
     
     public String getDay(){
         return day;
     }
+    
+    public abstract EventType getEventType();
 }

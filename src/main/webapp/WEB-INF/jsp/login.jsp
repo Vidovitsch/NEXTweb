@@ -23,7 +23,7 @@
 
     <body>
         <div id="next-header">
-            <img src="/images/next_logo.png" />
+            <img id="next-logo" src="/images/next_logo.png" />
         </div>
         <div id="spacer"></div>
 

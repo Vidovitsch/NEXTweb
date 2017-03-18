@@ -65,14 +65,50 @@
             firebase.initializeApp(config);
         </script>
         <script>
+            event.stopImmediatePropagation();
+            firebase.auth().signOut().then(function () {
+                // Sign-out successful.
+            }).catch(function (error) {
+                // An error happened.
+            });
+            document.getElementById('login-button').onclick = function () {
+                firebase.auth().signOut().then(function () {
+                    // Sign-out successful.
+                }).catch(function (error) {
+                    // An error happened.
+                });
+                var email = document.getElementsByName("email")[0].value;
+                var password = document.getElementsByName("password")[0].value;
+                alert("login clicked");
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        alert("trying to login as: " + email);
+                        post('requestlogin', {currentemail: email});
+                    }
+                });
+                firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
+                    {
+
+                    } else
+                    {
+                        alert(errorMessage);
+                    }
+                });
+                return false;
+            }
+
             document.getElementById('register-button').onclick = function () {
                 var email = document.getElementsByName("email")[0].value;
                 var password = document.getElementsByName("password")[0].value;
                 alert("register clicked");
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
-                        alert("registered: " + email);
-                        post('requestregistration', {currentemail: email});
+                        alert("registered: " + user.email);
+                        post('requestregistration', {currentemail: user.email});
                     }
                 });
                 firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {

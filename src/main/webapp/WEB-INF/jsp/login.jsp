@@ -30,75 +30,6 @@
         <div class="login-page">
             <div id="login-form">
                 <h2>Login</h2>
-                <!--                <form onsubmit="return doSomething();" method="POST">
-                                    <div class="form-section">
-                                        <span>E-mail:</span> </br>
-                                        <input class="form-control" type="text" name="email"></br>
-                                    </div>
-                                    <div class="form-section">
-                                        <span>Password:</span> </br>
-                                        <input class="form-control" type="password" name="password"></br>
-                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                        <input id="login-button" class="form-control" type="submit" name="action" value="Login" />
-                                        <input id="login-button" class="form-control" type="submit" name="action" value="Register" />
-                                        </br>
-                                    </div>
-                                </form>-->
-                <form id='loginform'>
-                    <input type='submit' id='btn1' value='login'>
-                    <input type='button' id='btn2' value='register'>
-                </form>
-                <script>
-                    var form = document.getElementById('loginform');
-                    form.onsubmit = function () {
-                        form.target = '_self';
-                    };
-                    document.getElementById('btn2').onclick = function () {
-                        var email = document.getElementsByName("email")[0].value;
-                        var password = document.getElementsByName("password")[0].value;
-                        alert("register clicked");
-                        firebase.auth().onAuthStateChanged(function (user) {
-                            if (user) {
-                                post('requestregistration', {useremail: email});
-                            }
-                        });
-                        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                            // Handle Errors here.
-                            var errorCode = error.code;
-                            var errorMessage = error.message;
-                            if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
-                            {
-
-                            } else
-                            {
-                                alert(errorMessage);
-                            }
-                        });
-                        return false;
-                    }
-
-                    function post(path, params, method) {
-                        method = method || "post"; // Set method to post by default if not specified.
-
-                        // The rest of this code assumes you are not using a library.
-                        // It can be made less wordy if you use one.
-                        var form = document.createElement("form");
-                        form.setAttribute("method", method);
-                        form.setAttribute("action", path);
-                        for (var key in params) {
-                            if (params.hasOwnProperty(key)) {
-                                var hiddenField = document.createElement("input");
-                                hiddenField.setAttribute("type", "hidden");
-                                hiddenField.setAttribute("name", key);
-                                hiddenField.setAttribute("value", params[key]);
-                                form.appendChild(hiddenField);
-                            }
-                        }
-
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                </script>
                 <form>
                     <div class="form-section">
                         <span>E-mail:</span> </br>
@@ -112,54 +43,7 @@
                         </br>
                     </div>
                 </form>
-                <script>
-                    document.getElementById('register-button').onclick = function () {
-                        var email = document.getElementsByName("email")[0].value;
-                        var password = document.getElementsByName("password")[0].value;
-                        alert("register clicked");
-                        firebase.auth().onAuthStateChanged(function (user) {
-                            if (user) {
-                                alert("registered: " + email);
-                                post('requestregistration', {currentemail: email});
-                            }
-                        });
-                        firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                            // Handle Errors here.
-                            var errorCode = error.code;
-                            var errorMessage = error.message;
-                            if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
-                            {
 
-                            } else
-                            {
-                                alert(errorMessage);
-                            }
-                        });
-                        return false;
-                    }
-
-                    function post(path, params, method) {
-                        method = method || "post"; // Set method to post by default if not specified.
-
-                        // The rest of this code assumes you are not using a library.
-                        // It can be made less wordy if you use one.
-                        var form = document.createElement("form");
-                        form.setAttribute("method", method);
-                        form.setAttribute("action", path);
-                        for (var key in params) {
-                            if (params.hasOwnProperty(key)) {
-                                var hiddenField = document.createElement("input");
-                                hiddenField.setAttribute("type", "hidden");
-                                hiddenField.setAttribute("name", key);
-                                hiddenField.setAttribute("value", params[key]);
-                                form.appendChild(hiddenField);
-                            }
-                        }
-
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                </script>
             </div>
             <div id="login-image">
                 <img src="/images/next_wallpaper1.jpg" />
@@ -170,48 +54,40 @@
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
         <script>
-
-                    // Initialize Firebase
-                    var config = {
-                        apiKey: "AIzaSyCRi0Ma5ekQxhwg-BfQCa6684hMzvR3Z1o",
-                        authDomain: "nextweek-b9a58.firebaseapp.com",
-                        databaseURL: "https://nextweek-b9a58.firebaseio.com",
-                        storageBucket: "nextweek-b9a58.appspot.com",
-                        messagingSenderId: "488624254338"
-                    };
-                    firebase.initializeApp(config);
+            // Initialize Firebase
+            var config = {
+                apiKey: "AIzaSyCRi0Ma5ekQxhwg-BfQCa6684hMzvR3Z1o",
+                authDomain: "nextweek-b9a58.firebaseapp.com",
+                databaseURL: "https://nextweek-b9a58.firebaseio.com",
+                storageBucket: "nextweek-b9a58.appspot.com",
+                messagingSenderId: "488624254338"
+            };
+            firebase.initializeApp(config);
         </script>
         <script>
-            function doSomething() {
+            document.getElementById('register-button').onclick = function () {
                 var email = document.getElementsByName("email")[0].value;
                 var password = document.getElementsByName("password")[0].value;
-                alert("dosomething initiated");
-                if (type === 'Login') {
-                    alert("login clicked");
-                } else if (type === 'Register') {
-                    alert("register clicked");
-                    firebase.auth().onAuthStateChanged(function (user) {
-                        if (user) {
-                            post('requestregistration', {useremail: email});
-                        }
-                    });
-                    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                        // Handle Errors here.
-                        var errorCode = error.code;
-                        var errorMessage = error.message;
-//                    alert(errorMessage);
-                        if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
-                        {
+                alert("register clicked");
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        alert("registered: " + email);
+                        post('requestregistration', {currentemail: email});
+                    }
+                });
+                firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+                    // Handle Errors here.
+                    var errorCode = error.code;
+                    var errorMessage = error.message;
+                    if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
+                    {
 
-                        } else
-                        {
-                            alert(errorMessage);
-                        }
-                    });
-                    return false;
-                } else {
-                    //no button pressed
-                }
+                    } else
+                    {
+                        alert(errorMessage);
+                    }
+                });
+                return false;
             }
 
             function post(path, params, method) {

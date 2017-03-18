@@ -25,8 +25,7 @@ import java.util.logging.Logger;
  *
  * @author David
  */
-public class DBUserModifier implements IModUser
-{
+public class DBUserModifier implements IModUser {
 
     private static Firebase firebase;
     private Object lock;
@@ -35,8 +34,8 @@ public class DBUserModifier implements IModUser
     private boolean authenticated = false;
     String returnstring;
 
-    public DBUserModifier()
-    {
+    public DBUserModifier() {
+
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
         firebase = (Firebase) connector.getConnectionObject();
@@ -44,22 +43,18 @@ public class DBUserModifier implements IModUser
     }
 
     @Override
-    public String loginUser(String email, String password)
-    {
+    public String loginUser(String email, String password) {
         returnstring = "loginuser begonnen";
-        firebase.authWithPassword(email, password, new Firebase.AuthResultHandler()
-        {
+        firebase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
             @Override
-            public void onAuthenticated(AuthData ad)
-            {
+            public void onAuthenticated(AuthData ad) {
                 authenticated = true;
                 returnstring += "authenticatie gelukt";
                 unlockFXThread();
             }
 
             @Override
-            public void onAuthenticationError(FirebaseError fe)
-            {
+            public void onAuthenticationError(FirebaseError fe) {
                 authenticated = false;
                 returnstring += fe.getMessage();
                 unlockFXThread();
@@ -86,27 +81,21 @@ public class DBUserModifier implements IModUser
     }
 
     @Override
-    public void removeUser(User user)
-    {
+    public void removeUser(User user) {
         Firebase ref = firebase.child("User").child(user.getPcn());
         ref.removeValue();
     }
 
     @Override
-    public User getUser(final String pcn)
-    {
+    public User getUser(final String pcn) {
         user = null;
         Firebase ref = firebase.child("User");
-        ref.addListenerForSingleValueEvent(new ValueEventListener()
-        {
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
-            public void onDataChange(DataSnapshot snapshot)
-            {
-                for (DataSnapshot ds : snapshot.getChildren())
-                {
-                    if (ds.getKey().equals(pcn))
-                    {
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    if (ds.getKey().equals(pcn)) {
                         String name = (String) ds.child("Name").getValue();
                         String email = (String) ds.child("Email").getValue();
                         String image = (String) ds.child("Image").getValue();
@@ -130,8 +119,7 @@ public class DBUserModifier implements IModUser
             }
 
             @Override
-            public void onCancelled(FirebaseError fe)
-            {
+            public void onCancelled(FirebaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
@@ -144,18 +132,13 @@ public class DBUserModifier implements IModUser
      * Tells a random object to wait while in a loop. The loop stops, and won't
      * cause any unnecessary cpu use.
      */
-    private void lockFXThread()
-    {
+    private void lockFXThread() {
         lock = new Object();
-        synchronized (lock)
-        {
-            while (!done)
-            {
-                try
-                {
+        synchronized (lock) {
+            while (!done) {
+                try {
                     lock.wait();
-                } catch (InterruptedException ex)
-                {
+                } catch (InterruptedException ex) {
                     Logger.getLogger(DBUserModifier.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
@@ -167,10 +150,8 @@ public class DBUserModifier implements IModUser
      * Wakes the lock. The while loop in the method 'lockFXThread' will proceed
      * and break free.
      */
-    private void unlockFXThread()
-    {
-        synchronized (lock)
-        {
+    private void unlockFXThread() {
+        synchronized (lock) {
             done = true;
             lock.notifyAll();
         }

@@ -57,12 +57,6 @@
                                 <div class="top-info"><span>Monday</span></div>
 
                                 <ul>
-                                    <li class="single-event" data-start="9:45" data-end="16:45"  data-content="nothing Jon Snow" data-event="event-3">
-						<a href="#0">
-							<em class="event-name">yola les</em>
-						</a>
-					</li>
-                                    
                                     <c:forEach var="row" items="${Monday}">
                                         <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event=${row.eventType}>
                                                 <a href="#0">
@@ -80,8 +74,7 @@
                                         <c:forEach var="row" items="${Tuesday}">
                                         <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event="None">
                                                 <a href="#0">
-                                                    <%-- For debug purposes the line bellow is row.eventType and not row.eventName--%>
-                                                        <em class="event-name">${row.eventType}</em>
+                                                        <em class="event-name">${row.eventName}</em>
                                                 </a>
                                         </li>
                                     </c:forEach>  

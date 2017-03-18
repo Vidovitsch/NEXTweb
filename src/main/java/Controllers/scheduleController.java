@@ -31,16 +31,12 @@ public class scheduleController {
     
     @RequestMapping(value = "/schedule", method = RequestMethod.GET)
     public ModelAndView initWorkshopmessageboardScreen() {
-        System.out.println("crap");
         //insertDummySchedule();
         ModelAndView modelView = new ModelAndView("schedule");
         for(Map.Entry<String, List<EventDate>> e : getSchedule().entrySet()){
-            System.out.println(e.getValue().get(0).getEventType());
-            System.out.println(e.getKey());
             if("Monday".equals(e.getKey())){
                 modelView.addObject(e.getKey(), e.getValue());
             } else if("Tuesday".equals(e.getKey())) {
-                System.out.println("hello world");
                 modelView.addObject(e.getKey(), e.getValue());
             } else if("Wednesday".equals(e.getKey())) {
                 modelView.addObject(e.getKey(), e.getValue());

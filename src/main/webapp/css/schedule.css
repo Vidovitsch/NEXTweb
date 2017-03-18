@@ -309,11 +309,11 @@ Main Components
 .cd-schedule .single-event[data-event="None"],
 .cd-schedule [data-event="None"] .header-bg {
   /* this is used to set a background color for the event and the modal window */
-  background: red;
+  background: #577F92;
 }
 
 .cd-schedule .single-event[data-event="None"]:hover {
-  background: black;
+  background: #618da1;
 }
 
 .cd-schedule .single-event[data-event="Workshop"],

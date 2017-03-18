@@ -30,6 +30,9 @@ public class UserAllocation {
         this.groups = groupMod.getGroups();
     }
 
+    /**
+     * Allocates a user to a group
+     */
     public void allocate() {
         groups = getNonFullGroups();
         Map<Group, Double> scores = new HashMap();
@@ -41,8 +44,14 @@ public class UserAllocation {
         groupMod.addUser(group, user);
     }
     
+    /**
+     * Get a list of groups with room left for new members
+     * 
+     * @return A list of non-empty groups
+     */
     private ArrayList<Group> getNonFullGroups() {
         ArrayList<Group> nonFullGroups = new ArrayList();
+        //Filter the original list of groups on member size below the max
         for (Group group : groups) {
             if (group.getUsers().size() < MAX_MEMBERS) {
                 nonFullGroups.add(group);
@@ -51,12 +60,25 @@ public class UserAllocation {
         return nonFullGroups;
     }
     
+    /**
+     * Calculate the score of a group in which the user can be allocated
+     * Rules:
+     * Every semester represents points. (S1 = 1 point, S2 = 2 points, etc.).
+     * The avarage is calculated with a sum of the three courses the
+     * current user isn't following (this is callled the baseLine).
+     * At last the end score is the value of your own course + the user's current semester
+     * - the baseLine.
+     * 
+     * @param group
+     * @return A group with a score for that group
+     */
     private Map.Entry<Group, Double> calcScore(Group group) {
         ArrayList<User> users = group.getUsers();
         int m = 0;
         int s = 0;
         int t = 0;
         int b = 0;
+        //Calcule the value of each course
         for (User u : users) {
             switch (u.getCourse()) {
                 case Media_Design:
@@ -74,6 +96,7 @@ public class UserAllocation {
         }
         double baseLine = 0;
         double score = 0;
+        //Cacluate the baseLine of three couses combined (exc. user's course).
         switch (user.getCourse()) {
             case Media_Design:
                     baseLine = (s + t + b) / 3;

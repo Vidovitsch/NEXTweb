@@ -10,6 +10,8 @@
 <head>
 </head>
 <body>
+    <%@ include file="master.jsp" %>
+    
     <a href="events.htm">Open workshop screen</a><br>
     <br>
     <a href="messageboard.htm">Open MessageBoard</a><br>

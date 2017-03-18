@@ -11,20 +11,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <spring:url value="/css/container.css" var="containerCSS" />
         <spring:url value="/css/schedule.css" var="scheduleCSS" />
         
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
-        <link href="${containerCSS}" rel="stylesheet" />
         <link href="${scheduleCSS}" rel="stylesheet" />
         
         <title>De planning</title>
     </head>
     <body>
-        <div id="next-header">
-            <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
-        </div>
-        <div id="spacer"></div>
+        <%@ include file="master.jsp" %>
+        
         <h1>De planning</h1>
         
         <div class="cd-schedule loading">

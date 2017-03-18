@@ -11,10 +11,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <spring:url value="/css/schedule.css" var="scheduleCSS" />
+        <spring:url value="/css/schedulereset.css" var="scheduleresetCSS" />
         
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600" rel="stylesheet">
         <link href="${scheduleCSS}" rel="stylesheet" />
+        <link href="${scheduleresetCSS}" rel="stylesheet" />
         
         <title>De planning</title>
     </head>
@@ -54,14 +57,14 @@
                                 <div class="top-info"><span>Monday</span></div>
 
                                 <ul>
-                                    <li class="single-event" data-start="9:45" data-end="16:45"  data-content="event-yoga-1" data-event="event-3">
+                                    <li class="single-event" data-start="9:45" data-end="16:45"  data-content="nothing Jon Snow" data-event="event-3">
 						<a href="#0">
-							<em class="event-name">Yoga Level 1</em>
+							<em class="event-name">yola les</em>
 						</a>
 					</li>
                                     
                                     <c:forEach var="row" items="${Monday}">
-                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content="event-abs-circuit" data-event=${row.eventType}>
+                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event=${row.eventType}>
                                                 <a href="#0">
                                                         <em class="event-name">${row.eventName}</em>
                                                 </a>
@@ -75,8 +78,9 @@
 
                                 <ul>
                                         <c:forEach var="row" items="${Tuesday}">
-                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content="event-abs-circuit" data-event=${row.eventType}>
+                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event="None">
                                                 <a href="#0">
+                                                    <%-- For debug purposes the line bellow is row.eventType and not row.eventName--%>
                                                         <em class="event-name">${row.eventType}</em>
                                                 </a>
                                         </li>
@@ -88,7 +92,7 @@
                                 <div class="top-info"><span>Wednesday</span></div>
                                 <ul>
                                         <c:forEach var="row" items="${Wednesday}">
-                                            <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content="event-abs-circuit" data-event=${row.eventType}>
+                                            <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event=${row.eventType}>
                                                     <a href="#0">
                                                             <em class="event-name">${row.eventName}</em>
                                                     </a>
@@ -102,7 +106,7 @@
 
                                 <ul>
                                         <c:forEach var="row" items="${Thursday}">
-                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content="event-abs-circuit" data-event=${row.eventType}>
+                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description}data-event=${row.eventType}>
                                                 <a href="#0">
                                                         <em class="event-name">${row.eventName}</em>
                                                 </a>
@@ -116,7 +120,7 @@
 
                                 <ul>
                                         <c:forEach var="row" items="${Friday}">
-                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content="event-abs-circuit" data-event=${row.eventType}>
+                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event=${row.eventType}>
                                                 <a href="#0">
                                                         <em class="event-name">${row.eventName}</em>
                                                 </a>

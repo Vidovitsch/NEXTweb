@@ -13,7 +13,7 @@
     </head>
     <body>
         <div id="next-header">
-            <img id="nav-logo" src="/images/next_logo.png" />
+            <a href="index.htm"><img id="nav-logo" src="/images/next_logo.png" /></a>
             <ul class="nav-list">
                 <li class="nav-item"><a href="group.htm">Contact</a></li>
                 <li class="nav-item"><a href="events.htm">Events</a></li>

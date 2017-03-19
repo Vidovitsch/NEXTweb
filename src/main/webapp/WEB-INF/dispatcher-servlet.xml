@@ -35,6 +35,7 @@
                 <prop key="group.htm">groupController</prop>
                 <prop key="login.htm">loginController</prop>
                 <prop key="loginresult.htm">loginController</prop>
+                <prop key="index.htm">indexController</prop>
                 <prop key="registeruser.htm">loginController</prop>
                 <prop key="/requestlogin">loginController</prop>
                 <prop key="/requestregistration">loginController</prop>

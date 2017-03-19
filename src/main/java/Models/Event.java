@@ -6,43 +6,16 @@
 
 package Models;
 
-
 /**
  *
  * @author David
  */
-public abstract class Event {
-    
-    private String eventName;
-    private String startTime;
-    private String endTime;
-    private String date;
+public abstract class Event extends EventDate{
     private String imageURL = "/images/default_workshop.jpg";
-    private String locationName;
     private String id;
 
-    public Event(String eventName) {
-        this.eventName = eventName;
-    }
+    public Event(String eventName) { super(eventName); }
 
-    /**
-     * Get the value of locationName
-     *
-     * @return the value of locationName
-     */
-    public String getLocationName() {
-        return locationName;
-    }
-
-    /**
-     * Set the value of locationName
-     *
-     * @param locationName new value of locationName
-     */
-    public void setLocationName(String locationName) {
-        this.locationName = locationName;
-    }
- 
     /**
      * Get the value of imageURL
      *
@@ -61,78 +34,6 @@ public abstract class Event {
         this.imageURL = imageURL;
     }
 
-    /**
-     * Get the value of date
-     *
-     * @return the value of date
-     */
-    public String getDate() {
-        return date;
-    }
-
-    /**
-     * Set the value of date
-     *
-     * @param date new value of date
-     */
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    /**
-     * Get the value of endTime
-     *
-     * @return the value of endTime
-     */
-    public String getEndTime() {
-        return endTime;
-    }
-
-    /**
-     * Set the value of endTime
-     *
-     * @param endTime new value of endTime
-     */
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    /**
-     * Get the value of startTime
-     *
-     * @return the value of startTime
-     */
-    public String getStartTime() {
-        return startTime;
-    }
-
-    /**
-     * Set the value of startTime
-     *
-     * @param startTime new value of startTime
-     */
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    /**
-     * Get the value of eventName
-     *
-     * @return the value of eventName
-     */
-    public String getEventName() {
-        return eventName;
-    }
-
-    /**
-     * Set the value of eventName
-     *
-     * @param eventName new value of eventName
-     */
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
-    }
-    
     /**
      * Get the value of id
      *

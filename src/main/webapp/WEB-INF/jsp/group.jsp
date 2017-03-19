@@ -11,15 +11,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/container.css" />
         <link rel="stylesheet" type="text/css" href="css/group.css" />
         <title>Group</title>
     </head>
     <body>
-        <div id="next-header">
-            <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
-        </div>
-        <div id="spacer"></div>
+        <%@ include file="master.jsp" %>
 
         <h1>GROUP</h1>
                 

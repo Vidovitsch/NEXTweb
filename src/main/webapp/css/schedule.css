@@ -306,40 +306,40 @@ Main Components
   margin-bottom: .2em;
 }
 
-.cd-schedule .single-event[data-event="event-1"],
-.cd-schedule [data-event="event-1"] .header-bg {
+.cd-schedule .single-event[data-event="None"],
+.cd-schedule [data-event="None"] .header-bg {
   /* this is used to set a background color for the event and the modal window */
   background: #577F92;
 }
 
-.cd-schedule .single-event[data-event="event-1"]:hover {
+.cd-schedule .single-event[data-event="None"]:hover {
   background: #618da1;
 }
 
-.cd-schedule .single-event[data-event="event-2"],
-.cd-schedule [data-event="event-2"] .header-bg {
+.cd-schedule .single-event[data-event="Workshop"],
+.cd-schedule [data-event="Workshop"] .header-bg {
   background: #443453;
 }
 
-.cd-schedule .single-event[data-event="event-2"]:hover {
+.cd-schedule .single-event[data-event="Workshop"]:hover {
   background: #513e63;
 }
 
-.cd-schedule .single-event[data-event="event-3"],
-.cd-schedule [data-event="event-3"] .header-bg {
+.cd-schedule .single-event[data-event="Performance"],
+.cd-schedule [data-event="Performance"] .header-bg {
   background: #A2B9B2;
 }
 
-.cd-schedule .single-event[data-event="event-3"]:hover {
+.cd-schedule .single-event[data-event="Performance"]:hover {
   background: #b1c4be;
 }
 
-.cd-schedule .single-event[data-event="event-4"],
-.cd-schedule [data-event="event-4"] .header-bg {
-  background: #f6b067;
+.cd-schedule .single-event[data-event="Yolo"],
+.cd-schedule [data-event="Yolo"] .header-bg {
+  background: black;
 }
 
-.cd-schedule .single-event[data-event="event-4"]:hover {
+.cd-schedule .single-event[data-event="Yolo"]:hover {
   background: #f7bd7f;
 }
 

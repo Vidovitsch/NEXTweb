@@ -11,18 +11,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <spring:url value="/css/container.css" var="containerCSS" />
         <spring:url value="/css/messageboard.css" var="messageboardCSS" />
         
-        <link href="${containerCSS}" rel="stylesheet" />
         <link href="${messageboardCSS}" rel="stylesheet" />
         <title>MessageBoard</title>
     </head>
     <body>
-        <div id="next-header">
-            <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
-        </div>
-        <div id="spacer"></div>
+        <%@ include file="master.jsp" %>
+        
         <h1>Messages Group ${group}</h1>
         <div id="Messageboard-container">  
             <c:forEach var="msg" items="${messages}">

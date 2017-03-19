@@ -22,7 +22,10 @@
     </head>
 
     <body>
-        <%@ include file="master.jsp" %>
+        <div id="next-header">
+            <img id="next-logo" src="/images/next_logo.png" />
+        </div>
+        <div id="spacer"></div>
         <div class="login-page">
             <div id="login-form">
                 <h2>Login</h2>

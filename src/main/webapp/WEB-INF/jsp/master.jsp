@@ -9,11 +9,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/container.css" />
+        <link rel="stylesheet" type="text/css" href="css/containerMaster.css" />
     </head>
     <body>
         <div id="next-header">
-            <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
+            <img id="nav-logo" src="/images/next_logo.png" />
+            <ul class="nav-list">
+                <li class="nav-item"><a href="group.htm">Contact</a></li>
+                <li class="nav-item"><a href="events.htm">Events</a></li>
+                <li class="nav-item"><a href="group.htm">Group</a></li>
+                <li class="nav-item"><a href="schedule.htm">Schedule</a></li>
+            </ul>
         </div>
         <div id="spacer"></div>
     </body>

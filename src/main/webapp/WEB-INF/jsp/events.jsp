@@ -12,7 +12,6 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <spring:url value="/css/container.css" var="containerCSS" />
         <spring:url value="/css/workshops.css" var="workshopsCSS" />
         
         <link href="${containerCSS}" rel="stylesheet" />
@@ -21,10 +20,8 @@
         <title>Workshops</title>
     </head>
     <body>
-        <div id="next-header">
-            <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
-        </div>
-        <div id="spacer"></div>
+        <%@ include file="master.jsp" %>
+        
         <h1>EVENTS</h1>
         <div id="event-container">
             <table class="event-table" cellpadding="25%">

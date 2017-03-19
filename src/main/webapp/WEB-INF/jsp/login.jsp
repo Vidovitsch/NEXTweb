@@ -23,29 +23,30 @@
 
     <body>
         <%@ include file="master.jsp" %>
-
         <div class="login-page">
             <div id="login-form">
                 <h2>Login</h2>
                 <form>
                     <div class="form-section">
                         <span>E-mail:</span> </br>
-                        <input class="form-control" type="text" name="email"></br>
+                        <input class="form-control" type="text" id="email" name="email" required></br>
                     </div>
                     <div class="form-section">
                         <span>Password:</span> </br>
-                        <input class="form-control" type="password" name="password"></br>
-                        <input id="login-button" class="form-control" type="submit" value="Login" />
-                        <input id="register-button" class="form-control" type="submit" value="Register" />
+                        <input class="form-control" id="password" type="password" name="password" required></br>
+                        <div id="passwordwrapper">
+                            <input id="login-button" class="form-control" type="submit" value="Login" />
+                            <input id="register-button" class="form-control" type="submit" value="Register" />
+                        </div>
                         </br>
                     </div>
                 </form>
-
             </div>
             <div id="login-image">
                 <img src="/images/next_wallpaper1.jpg" />
             </div>
         </div>
+
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
@@ -62,66 +63,110 @@
             firebase.initializeApp(config);
         </script>
         <script>
-            event.stopImmediatePropagation();
             firebase.auth().signOut().then(function () {
                 // Sign-out successful.
             }).catch(function (error) {
                 // An error happened.
             });
-            document.getElementById('login-button').onclick = function () {
-                firebase.auth().signOut().then(function () {
-                    // Sign-out successful.
-                }).catch(function (error) {
-                    // An error happened.
-                });
-                var email = document.getElementsByName("email")[0].value;
-                var password = document.getElementsByName("password")[0].value;
-                alert("login clicked");
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        alert("trying to login as: " + email);
-                        post('requestlogin', {currentemail: email});
-                    }
-                });
-                firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
-                    {
 
-                    } else
-                    {
-                        alert(errorMessage);
-                    }
-                });
-                return false;
-            }
+            var password;
+            var email;
+            document.getElementById("login-button").onclick = function () {
+                password = document.getElementById("password");
+                email = document.getElementById("email");
+                if (password.checkValidity() === true && email.checkValidity() === true)
+                {
+                    firebase.auth().signOut().then(function () {
+                        // Sign-out successful.
+                    }).catch(function (error) {
+                        // An error happened.
+                    });
+                    var emailvalue = document.getElementsByName("email")[0].value;
+                    var passwordvalue = document.getElementsByName("password")[0].value;
+                    alert("login clicked");
+                    firebase.auth().onAuthStateChanged(function (user) {
+                        if (user) {
+                            alert("trying to login as: " + emailvalue);
+                            post("requestlogin", {currentemail: emailvalue});
+                        }
+                    });
+                    firebase.auth().signInWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {
+                        // Handle Errors here.
+                        var errorCode = error.code;
+                        var errorMessage = error.message;
+                        if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
+                        {
 
-            document.getElementById('register-button').onclick = function () {
-                var email = document.getElementsByName("email")[0].value;
-                var password = document.getElementsByName("password")[0].value;
-                alert("register clicked");
-                firebase.auth().onAuthStateChanged(function (user) {
-                    if (user) {
-                        alert("registered: " + user.email);
-                        post('requestregistration', {currentemail: user.email});
-                    }
-                });
-                firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-                    // Handle Errors here.
-                    var errorCode = error.code;
-                    var errorMessage = error.message;
-                    if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
-                    {
+                        } else
+                        {
+                            alert(errorMessage);
+                        }
+                    });
+                    return false;
+                } else {
+                    password.reportValidity();
+                    email.reportValidity();
+                }
+            };
 
-                    } else
-                    {
-                        alert(errorMessage);
+            document.getElementById("register-button").onclick = function () {
+                password = document.getElementById("password");
+                email = document.getElementById("email");
+                if (email.checkValidity() === true && password.checkValidity() === true)
+                {
+                    alert("register clicked");
+                    var confirmcontrols = '<span>Confirm password:</span> </br><input class="form-control" id="confirmpassword" type="password" name="confirmpassword" required> </br>\
+                                    <input id="confirm-button" class="form-control" type="submit" value="Confirm" />';
+                    document.getElementById('passwordwrapper').innerHTML = confirmcontrols;
+                    var confirm_password = document.getElementById("confirmpassword");
+
+                    function validatePassword() {
+                        if (password.value != confirm_password.value) {
+                            confirm_password.setCustomValidity("Passwords Don't Match");
+                        } else {
+                            confirm_password.setCustomValidity('');
+                        }
                     }
-                });
-                return false;
-            }
+                    password.onchange = validatePassword;
+                    confirm_password.onkeyup = validatePassword;
+
+                    document.getElementById('confirm-button').onclick = function () {
+                        var emailvalue = document.getElementsByName("email")[0].value;
+                        var passwordvalue = document.getElementsByName("password")[0].value;
+                        if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
+                            alert("register clicked");
+                            firebase.auth().onAuthStateChanged(function (user) {
+                                if (user) {
+                                    alert("registered: " + user.email);
+                                    post('requestregistration', {currentemail: user.email});
+                                }
+                            });
+                            firebase.auth().createUserWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {
+                                // Handle Errors here.
+                                var errorCode = error.code;
+                                var errorMessage = error.message;
+                                if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
+                                {
+
+                                } else
+                                {
+                                    alert(errorMessage);
+                                }
+                            });
+                        } else {
+                            confirm_password.reportValidity();
+                            password.reportValidity();
+                            email.reportValidity();
+
+                        }
+                        return false;
+                    };
+                } else
+                {
+                    password.reportValidity();
+                    email.reportValidity();
+                }
+            };
 
             function post(path, params, method) {
                 method = method || "post"; // Set method to post by default if not specified.

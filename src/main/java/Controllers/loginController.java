@@ -54,4 +54,12 @@ public class loginController
         model.addAttribute("currentemail", loginModel.getCurrentemail());
         return "registeruser";
     }
+
+    @RequestMapping(value = "/loggedin", method = RequestMethod.POST)
+    public String loggedIn(@ModelAttribute("SpringWeb") LoginModel loginModel,
+            ModelMap model)
+    {
+        model.addAttribute("currentemail", loginModel.getCurrentemail());
+        return "index";
+    }
 }

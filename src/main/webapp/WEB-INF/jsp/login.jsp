@@ -86,11 +86,9 @@
                     });
                     var emailvalue = document.getElementsByName("email")[0].value;
                     var passwordvalue = document.getElementsByName("password")[0].value;
-                    alert("login clicked");
                     firebase.auth().onAuthStateChanged(function (user) {
                         if (user) {
-                            alert("trying to login as: " + emailvalue);
-                            post("requestlogin", {currentemail: emailvalue});
+                            post("loggedin", {currentemail: user.email});
                         }
                     });
                     firebase.auth().signInWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {
@@ -117,7 +115,6 @@
                 email = document.getElementById("email");
                 if (email.checkValidity() === true && password.checkValidity() === true)
                 {
-                    alert("register clicked");
                     var confirmcontrols = '<span>Confirm password:</span> </br><input class="form-control" id="confirmpassword" type="password" name="confirmpassword" required> </br>\
                                     <input id="confirm-button" class="form-control" type="submit" value="Confirm" />';
                     document.getElementById('passwordwrapper').innerHTML = confirmcontrols;
@@ -137,11 +134,9 @@
                         var emailvalue = document.getElementsByName("email")[0].value;
                         var passwordvalue = document.getElementsByName("password")[0].value;
                         if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
-                            alert("register clicked");
                             firebase.auth().onAuthStateChanged(function (user) {
                                 if (user) {
-                                    alert("registered: " + user.email);
-                                    post('requestregistration', {currentemail: user.email});
+                                    post('loggedin', {currentemail: user.email});
                                 }
                             });
                             firebase.auth().createUserWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {
@@ -160,7 +155,6 @@
                             confirm_password.reportValidity();
                             password.reportValidity();
                             email.reportValidity();
-
                         }
                         return false;
                     };
@@ -188,7 +182,6 @@
                         form.appendChild(hiddenField);
                     }
                 }
-
                 document.body.appendChild(form);
                 form.submit();
             }

@@ -117,7 +117,8 @@ public class DBGroupModifier implements IModGroup {
                             String content = (String) ds2.child("content").getValue();
                             int group = Integer.valueOf((String) ds2.child("group").getValue());
                             String pcn = (String) ds2.child("pcn").getValue();
-                            msg = new Message(pcn, group, content, date);
+                            msg = new Message(pcn, pcn, group, content, date);
+                            // TODO: change to get name instead of double pcn
                             messages.add(msg);
                         }
 
@@ -185,7 +186,8 @@ public class DBGroupModifier implements IModGroup {
                         String content = (String) ds2.child("content").getValue();
                         int group = Integer.valueOf((String) ds2.child("group").getValue());
                         String pcn = (String) ds2.child("pcn").getValue();
-                        msg = new Message(pcn, group, content, date);
+                        // TODO: change to get name instead of double pcn
+                        msg = new Message(pcn, pcn, group, content, date);
                         messages.add(msg);
                     }
 

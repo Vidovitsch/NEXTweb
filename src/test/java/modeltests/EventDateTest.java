@@ -199,12 +199,12 @@ public class EventDateTest {
     @Test
     public void testDescription(){
         testDate.setDescription("first test");
-        assertEquals("The setDescription method did not assign the propper value to Description", "first test", testDay.getDescription());
+        assertEquals("The setDescription method did not assign the propper value to Description", "first test", testDate.getDescription());
     }
     
     @Test
     public void testDescriptionTwo(){
         testDate.setDescription("secondtest");
-        assertEquals("The setDescription method did not assign the propper value to Description", "secondtest", testDay.getDescription());
+        assertEquals("The setDescription method did not assign the propper value to Description", "secondtest", testDate.getDescription());
     }
 }

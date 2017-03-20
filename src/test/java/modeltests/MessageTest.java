@@ -33,7 +33,7 @@ public class MessageTest {
     
     @Before
     public void setUp() {
-        testMessage = new Message("testPCN", 1, "test message", "1-12-2017");
+        testMessage = new Message("testPCN", "naam", 1, "test message", "1-12-2017");
     }
     
     @After
@@ -50,7 +50,7 @@ public class MessageTest {
     
     @Test
     public void testConstructorTwo(){
-        testMessage = new Message("test PCN", 3, "test message for the second test", "30-10-2017");
+        testMessage = new Message("test PCN", "naam", 3, "test message for the second test", "30-10-2017");
         assertEquals("the constructor did not assign the propper value to pcn", "test PCN", testMessage.getPcn());
         assertEquals("the constructor did not assign the propper value to groupNumber", 3, testMessage.getGroupNumber());
         assertEquals("the constructor did not assign the propper value to content", "test message for the second test", testMessage.getContent());

@@ -90,7 +90,7 @@ public class GroupTest {
     @Test
     public void testMessage(){
         ArrayList<Message> testList = new ArrayList<Message>();
-        testList.add(new Message("testPCN", 1, "test message", "1-12-2017"));
+        testList.add(new Message("testPCN", "naam", 1, "test message", "1-12-2017"));
         testGroup.setMessages(testList);
         assertEquals("The setMessage method did not assign the propper value to Message", testList, testGroup.getMessages());
     }
@@ -98,10 +98,10 @@ public class GroupTest {
     @Test
     public void testGroupMessageTwo(){
         ArrayList<Message> testList = new ArrayList<Message>();
-        testList.add(new Message("testPCN", 1, "test message", "1-12-2017"));
-        testList.add(new Message("testPCN2", 1, "test message with content", "1-12-2017"));
-        testList.add(new Message("testPCN", 1, "test message with some more content", "1-12-2017"));
-        testList.add(new Message("testPCN3", 1, "test message", "1-12-2017"));
+        testList.add(new Message("testPCN", "naam", 1, "test message", "1-12-2017"));
+        testList.add(new Message("testPCN2", "naam", 1, "test message with content", "1-12-2017"));
+        testList.add(new Message("testPCN", "naam", 1, "test message with some more content", "1-12-2017"));
+        testList.add(new Message("testPCN3", "naam", 1, "test message", "1-12-2017"));
         testGroup.setMessages(testList);
         assertEquals("The setMessage method did not assign the propper value to Message", testList, testGroup.getMessages());
     }   

@@ -6,15 +6,17 @@
 
 package Controllers;
 
+import Database.DBGroupModifier;
+import Database.IModGroup;
+import Models.Group;
 import Models.Message;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.ParameterizableViewController;
 
 /**
  *
@@ -23,13 +25,16 @@ import org.springframework.web.servlet.mvc.ParameterizableViewController;
 @Controller
 public class messageboardController {
     
-   // IModMessage modMessage = new DBMessageModifier();
+    private IModGroup groupDB = new DBGroupModifier();
+    private Group group;
     
     @RequestMapping(value = "/messageboard", method = RequestMethod.GET)
-    public ModelAndView initWorkshopmessageboardScreen() {
+    public ModelAndView initWorkshopmessageboardScreen(HttpServletRequest request) {
         ModelAndView model = new ModelAndView("messageboard");
         
-        model.addObject("group", "BananenBoot (1)");
+        System.out.println(request.getParameter("userpcn"));
+        group = groupDB.getGroup(request.getParameter("userpcn"));
+        model.addObject("group", group.getGroupName());
         model.addObject("messages", getMessages());
         model.addObject("user", "Gerard");
         return model;
@@ -37,9 +42,6 @@ public class messageboardController {
     
     public List<Message> getMessages()
     {
-        List<Message> messages = new ArrayList<Message>();
-        messages.add(new Message("Gerard", 1, "wyd Gertie?", "2017-03-13 14:10:01"));
-        messages.add(new Message("Gertie", 1, "yes", "2017-03-13 14:50:38"));
-        return messages;
+        return group.getMessages();
     }
 }

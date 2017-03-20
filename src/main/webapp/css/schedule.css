@@ -334,12 +334,12 @@ Main Components
   background: #b1c4be;
 }
 
-.cd-schedule .single-event[data-event="Yolo"],
-.cd-schedule [data-event="Yolo"] .header-bg {
-  background: black;
+.cd-schedule .single-event[data-event="Lecture"],
+.cd-schedule [data-event="Lecture"] .header-bg {
+  background: #f6b067;
 }
 
-.cd-schedule .single-event[data-event="Yolo"]:hover {
+.cd-schedule .single-event[data-event="Lecture"]:hover {
   background: #f7bd7f;
 }
 

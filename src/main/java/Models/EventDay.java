@@ -12,18 +12,8 @@ import Enums.EventType;
  * @author Arno Dekkers Los
  */
 public class EventDay extends EventDate {
-    private String description;
-    
     public EventDay(String eventName){super(eventName);}
     
-    public String getDescription(){
-        return description;
-    }
-    
-    public void setDescription(String description){
-        this.description = description;
-    }
-
     /**
      * Get the value of eventType
      *

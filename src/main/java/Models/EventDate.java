@@ -22,6 +22,7 @@ public abstract class EventDate {
     private String date;
     private String day;
     private String locationName;
+    private String description;
     
     public EventDate(String eventName){
         this.eventName = eventName;
@@ -136,6 +137,14 @@ public abstract class EventDate {
     
     public String getDay(){
         return day;
+    }
+    
+    public String getDescription(){
+        return description;
+    }
+    
+    public void setDescription(String description){
+        this.description = description;
     }
     
     private boolean testTimeFormat(String time){

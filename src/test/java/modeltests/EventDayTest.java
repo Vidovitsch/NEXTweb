@@ -53,18 +53,6 @@ public class EventDayTest {
     }
 
     @Test
-    public void testDescription(){
-        testDay.setDescription("first test");
-        assertEquals("The setDescription method did not assign the propper value to Description", "first test", testDay.getDescription());
-    }
-    
-    @Test
-    public void testDescriptionTwo(){
-        testDay.setDescription("secondtest");
-        assertEquals("The setDescription method did not assign the propper value to Description", "secondtest", testDay.getDescription());
-    }
-    
-    @Test
     public void testGetEventType(){
         assertEquals("The eventType was not propperly returened", testDay.getEventType(), EventType.None);
     }

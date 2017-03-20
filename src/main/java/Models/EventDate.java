@@ -56,8 +56,13 @@ public abstract class EventDate {
      * @param date new value of date
      */
     public void setDate(String date) {
-        this.date = date;
-        setDay();
+        try{
+            Date dateEvent = new SimpleDateFormat("dd-MM-yyyy").parse(date);
+            this.date = date;
+            setDay();
+        } catch (ParseException ex){
+            throw new IllegalArgumentException("the date string had an invallid format. format should be dd-MM-yyyy");
+        }
     }
 
     /**
@@ -73,7 +78,11 @@ public abstract class EventDate {
      * @param endTime new value of endTime
      */
     public void setEndTime(String endTime) {
-        this.endTime = endTime;
+        if(testTimeFormat(endTime)){
+            this.endTime = endTime;
+        } else {
+            throw new IllegalArgumentException("The given time was not of a valid format, format should be HH:mm");
+        }
     }
 
     /**
@@ -89,7 +98,11 @@ public abstract class EventDate {
      * @param startTime new value of startTime
      */
     public void setStartTime(String startTime) {
-        this.startTime = startTime;
+        if(testTimeFormat(startTime)){
+            this.startTime = startTime;
+        } else {
+            throw new IllegalArgumentException("The given time was not of a valid format, format should be HH:mm");
+        }
     }
 
     /**
@@ -117,12 +130,22 @@ public abstract class EventDate {
             Date dateEvent = new SimpleDateFormat("dd-MM-yyyy").parse(date);
             day = simpleDateFormat.format(dateEvent);
         } catch (ParseException ex){
-            System.out.println("something went wrong whilst trying to set the day of the event");
+            throw new IllegalArgumentException("Failed to get the day from the date, is the format dd-MM-yyyy");
         }
     }
     
     public String getDay(){
         return day;
+    }
+    
+    private boolean testTimeFormat(String time){
+        try {
+            SimpleDateFormat result = new SimpleDateFormat("HH:mm");
+            result.parse(time);
+            return true;
+        } catch (ParseException ex) {
+            return false;
+        } 
     }
     
     public abstract EventType getEventType();

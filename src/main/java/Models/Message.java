@@ -5,7 +5,9 @@
  */
 package Models;
 
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -98,6 +100,11 @@ public class Message {
      * @param date 
      */
     public void setDate(String date) {
-        this.date = date;
+        try{
+            Date dateEvent = new SimpleDateFormat("dd-MM-yyyy").parse(date);
+            this.date = date;
+        } catch (ParseException ex){
+            throw new IllegalArgumentException("the date string had an invallid format. format should be dd-MM-yyyy");
+        }
     }
 }

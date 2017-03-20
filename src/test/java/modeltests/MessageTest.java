@@ -105,23 +105,27 @@ public class MessageTest {
         assertEquals("The setDate method did not assign the propper value to Date", "30-12-2018", testMessage.getDate());
     }
 	
-    /*@Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testDateThree(){
         testMessage.setDate("50-12-2018");
 	fail("an invallid argument exception should have been trown for having a invalid day");
     }
 	
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testDateFour(){
         testMessage.setDate("30-13-2018");
 	fail("an invallid argument exception should have been trown for having a invalid month");
     }
 	
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testDateFive(){
         testMessage.setDate("30-12-20185");
 	fail("an invallid argument exception should have been trown for having a invalid year");
-    }*/
+    }
     
-    
+    @Test(expected = IllegalArgumentException.class)
+    public void testDateSix(){
+        testMessage.setDate("string");
+	fail("an invallid argument exception should have been trown for having a invalid format");
+    }
 }

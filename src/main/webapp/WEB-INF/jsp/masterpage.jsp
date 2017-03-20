@@ -1,17 +1,29 @@
 <%-- 
-    Document   : master
-    Created on : 18-mrt-2017, 12:37:48
-    Author     : David
+    Document   : masterpage
+    Created on : Mar 20, 2017, 10:27:23 AM
+    Author     : mmjan
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib uri="http://www.opensymphony.com/sitemesh/decorator" prefix="decorator"%>
+<%@taglib uri="http://java.sun.com/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jstl/fmt" prefix="fn" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
+<html> 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <spring:url value="/css/containerMaster.css" var="masterCSS" />
-        <link href="${masterCSS}" rel="stylesheet" />
+        <spring:url value="/css/containerMaster.css" var="containerCSS" />
+        <link href="${containerCSS}" rel="stylesheet" />
+        
+        <decorator:head />
+                
+        <title>
+            <decorator:title />
+        </title>
+        
     </head>
     <body>
         <div id="next-header">
@@ -24,6 +36,8 @@
                 <li class="nav-item"><a href="/schedule.htm">Schedule</a></li>
             </ul>
         </div>
-        <div id="spacer"></div>
+        
+        <decorator:body />
+        
     </body>
 </html>

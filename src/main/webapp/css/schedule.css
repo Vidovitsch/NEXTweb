@@ -3,7 +3,11 @@
 Primary style
 
 -------------------------------- */
-li, li::after, li::before {
+img {
+    box-sizing: initial;
+}
+
+*, *::after, *::before {
   box-sizing: border-box;
 }
 

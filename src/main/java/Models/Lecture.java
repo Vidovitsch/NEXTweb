@@ -27,6 +27,7 @@ public class Lecture extends Event {
      *
      * @return the value of eventType
      */
+    @Override
     public EventType getEventType() {
         return eventType;
     }

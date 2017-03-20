@@ -18,6 +18,7 @@
                 <li class="nav-item"><a href="group.htm">Contact</a></li>
                 <li class="nav-item"><a href="events.htm">Events</a></li>
                 <li class="nav-item"><a href="group.htm">Group</a></li>
+                <li class="nav-item"><a href="map.htm">Map</a></li>
                 <li class="nav-item"><a href="schedule.htm">Schedule</a></li>
             </ul>
         </div>

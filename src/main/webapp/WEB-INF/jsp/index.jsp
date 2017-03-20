@@ -5,13 +5,16 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%! int fontSize;%> 
 <%! int maxfontSize = 3;%> 
-
+    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
     <head>
+        <spring:url value="/css/main.css" var="mainCSS" />
+        <link href="${mainCSS}" rel="stylesheet" />
     </head>
     <body>
         <%@ include file="master.jsp" %>
-
+        
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/wBqM2ytqHY4?autoplay=1" frameborder="0" allowfullscreen></iframe>
         <a href="events.htm">Open workshop screen</a><br>
         <br>
         <a href="messageboard.htm">Open MessageBoard</a><br>

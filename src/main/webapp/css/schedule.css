@@ -3,7 +3,7 @@
 Primary style
 
 -------------------------------- */
-*, *::after, *::before {
+li, li::after, li::before {
   box-sizing: border-box;
 }
 
@@ -17,15 +17,6 @@ h1 {
 
 ul {
     list-style-type: none;
-}
-
-body {
-  font-size: 1.6rem;
-  font-family: "Source Sans Pro", sans-serif;
-  color: #222222;
-  background-color: white;
-  position: relative;
-  top: 50px;
 }
 
 a {

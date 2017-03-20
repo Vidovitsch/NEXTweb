@@ -22,7 +22,15 @@
     <body>
         <%@ include file="master.jsp" %>
         
-        <h1>EVENTS</h1>
+        <div id="event-day-bar">
+            <ul id="event-day-bar-list">
+                <li class="event-day-bar-item"><a href="/events/ma">ma</a></li>
+                <li class="event-day-bar-item"><a href="/events/di">di</a></li>
+                <li class="event-day-bar-item"><a href="/events/wo">wo</a></li>
+                <li class="event-day-bar-item"><a href="/events/do">do</a></li>
+                <li class="event-day-bar-item"><a href="/events/vr">vr</a></li>
+            </ul>
+        </div>
         <div id="event-container">
             <table class="event-table" cellpadding="25%">
                 <c:forEach var="row" items="${events}">

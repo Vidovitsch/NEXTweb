@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import Database.IModEvent;
+import Enums.Day;
 
 
 /**
@@ -41,7 +42,47 @@ public class eventsController {
         //insertDummyWorkshops();
         
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", getWorkshops());
+        modelView.addObject("events", initWorkshops(dbEvent.getEvents()));
+        
+        return modelView;
+    }
+    
+    @RequestMapping(value = "/events/ma", method = RequestMethod.GET)
+    public ModelAndView mondayEvents() {
+        ModelAndView modelView = new ModelAndView("events");
+        modelView.addObject("events", filterOnDay(Day.Ma, dbEvent.getEvents()));
+        
+        return modelView;
+    }
+    
+    @RequestMapping(value = "/events/di", method = RequestMethod.GET)
+    public ModelAndView tuesdayEvents() {
+        ModelAndView modelView = new ModelAndView("events");
+        modelView.addObject("events", filterOnDay(Day.Di, dbEvent.getEvents()));
+        
+        return modelView;
+    }
+    
+    @RequestMapping(value = "/events/wo", method = RequestMethod.GET)
+    public ModelAndView wednessdayEvents() {
+        ModelAndView modelView = new ModelAndView("events");
+        modelView.addObject("events", filterOnDay(Day.Wo, dbEvent.getEvents()));
+        
+        return modelView;
+    }
+    
+    @RequestMapping(value = "/events/do", method = RequestMethod.GET)
+    public ModelAndView thursdayEvents() {
+        ModelAndView modelView = new ModelAndView("events");
+        modelView.addObject("events", filterOnDay(Day.Do, dbEvent.getEvents()));
+        
+        return modelView;
+    }
+    
+    @RequestMapping(value = "/events/vr", method = RequestMethod.GET)
+    public ModelAndView fridayEvents() {
+        ModelAndView modelView = new ModelAndView("events");
+        modelView.addObject("events", filterOnDay(Day.Vr, dbEvent.getEvents()));
         
         return modelView;
     }
@@ -49,19 +90,19 @@ public class eventsController {
     //Test method
     private void insertDummyWorkshops() {
         Workshop ws = new Workshop("TestWorkshop");
-        ws.setStartTime("12:00");
-        ws.setEndTime("13:00");
-        ws.setDate("11-11-2017");
+        ws.setStartTime("14:30");
+        ws.setEndTime("15:00");
+        ws.setDate("12-11-2017");
         ws.setLocationName("Hier");
         Lecture ws1 = new Lecture("TestLecture");
-        ws1.setStartTime("12:00");
-        ws1.setEndTime("13:00");
-        ws1.setDate("11-11-2017");
+        ws1.setStartTime("13:10");
+        ws1.setEndTime("15:15");
+        ws1.setDate("13-11-2017");
         ws1.setLocationName("Hier");
         Performance ws2 = new Performance("TestPerformance");
-        ws2.setStartTime("12:00");
-        ws2.setEndTime("13:00");
-        ws2.setDate("11-11-2017");
+        ws2.setStartTime("18:00");
+        ws2.setEndTime("19:00");
+        ws2.setDate("14-11-2017");
         ws2.setLocationName("Hier");
         
         dbEvent.insertEvent(ws);
@@ -75,10 +116,8 @@ public class eventsController {
      * This amount of workshops is defined in the variable ROWNUMBER.
      * @return list of rows containing workshops
      */
-    private ArrayList<Event[]> getWorkshops() {
+    private ArrayList<Event[]> initWorkshops(ArrayList<Event> events) {
         ArrayList<Event[]> eventsDivided = new ArrayList();
-        ArrayList<Event> events = dbEvent.getEvents();
-        
         Event[] row = new Event[ROWNUMBER];
         int wsCounter = 0;
         for (int i = 0; i < events.size(); i++) {
@@ -109,5 +148,16 @@ public class eventsController {
         } else {
             return max - current;
         }
+    }
+    
+    private ArrayList<Event[]> filterOnDay(Day day, ArrayList<Event> events) {
+        ArrayList<Event> filtered = new ArrayList();
+        for (Event e : events) {
+            if (day.equals(day.dateToDate(e.getDate()))) {
+                filtered.add(e);
+            }
+        }
+        
+        return initWorkshops(filtered);
     }
 }

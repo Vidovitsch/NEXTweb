@@ -72,7 +72,7 @@
 
                                 <ul>
                                         <c:forEach var="row" items="${Tuesday}">
-                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event="None">
+                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event=${row.eventType}>
                                                 <a href="#0">
                                                         <em class="event-name">${row.eventName}</em>
                                                 </a>
@@ -99,7 +99,7 @@
 
                                 <ul>
                                         <c:forEach var="row" items="${Thursday}">
-                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description}data-event=${row.eventType}>
+                                        <li class="single-event" data-start=${row.startTime} data-end=${row.endTime} data-content=${row.description} data-event=${row.eventType}>
                                                 <a href="#0">
                                                         <em class="event-name">${row.eventName}</em>
                                                 </a>
@@ -135,7 +135,10 @@
 		</header>
 
 		<div class="body">
-			<div class="event-info"></div>
+                        <div class="event-info">
+                                <span class="event-title">Description of the scheduled item:</span>
+				<h3 class="event-description"><%--#TODO--%></h3>
+                        </div>
 			<div class="body-bg"></div>
 		</div>
 

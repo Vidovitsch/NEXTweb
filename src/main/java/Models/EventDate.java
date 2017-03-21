@@ -125,7 +125,7 @@ public abstract class EventDate {
     /**
      * set's the day, this method is called after the date is changed
      */
-    public void setDay(){
+    private void setDay(){
         try{
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("EEEE", Locale.ENGLISH);
             Date dateEvent = new SimpleDateFormat("dd-MM-yyyy").parse(date);

@@ -12,8 +12,8 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@ include file="master.jsp" %>
-        
-        <h1>Map</h1>
+        <div class="wrapper">
+            <h1>Map</h1>
+        </div>
     </body>
 </html>

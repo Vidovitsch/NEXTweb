@@ -5,8 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib uri = "http://www.springframework.org/tags/form" prefix = "form"%>
 <!DOCTYPE html>
 <html>
@@ -22,31 +22,29 @@
     </head>
 
     <body>
-        <div id="next-header">
-            <img id="next-logo" src="/images/next_logo.png" />
-        </div>
-        <div id="spacer"></div>
-        <div class="login-page">
-            <div id="login-form">
-                <h2>Login</h2>
-                <form>
-                    <div class="form-section">
-                        <span>E-mail:</span> </br>
-                        <input class="form-control" type="text" id="email" name="email" required></br>
-                    </div>
-                    <div class="form-section">
-                        <span>Password:</span> </br>
-                        <input class="form-control" id="password" type="password" name="password" required></br>
-                        <div id="passwordwrapper">
-                            <input id="login-button" class="form-control" type="submit" value="Login" />
-                            <input id="register-button" class="form-control" type="submit" value="Register" />
+        <div class="wrapper">
+            <div class="login-page">
+                <div id="login-form">
+                    <h2>Login</h2>
+                    <form>
+                        <div class="form-section">
+                            <span>E-mail:</span> </br>
+                            <input class="form-control" type="text" id="email" name="email" required></br>
                         </div>
-                        </br>
-                    </div>
-                </form>
-            </div>
-            <div id="login-image">
-                <img src="/images/next_wallpaper1.jpg" />
+                        <div class="form-section">
+                            <span>Password:</span> </br>
+                            <input class="form-control" id="password" type="password" name="password" required></br>
+                            <div id="passwordwrapper">
+                                <input id="login-button" class="form-control" type="submit" value="Login" />
+                                <input id="register-button" class="form-control" type="submit" value="Register" />
+                            </div>
+                            </br>
+                        </div>
+                    </form>
+                </div>
+                <div id="login-image">
+                    <img src="/images/next_wallpaper1.jpg" />
+                </div>
             </div>
         </div>
 

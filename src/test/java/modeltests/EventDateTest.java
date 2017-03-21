@@ -153,6 +153,12 @@ public class EventDateTest {
         testDate.setDate("30-12-20185");
 	fail("an invallid argument exception should have been trown for having a invalid year");
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testDateSix(){
+        testDate.setDate("string");
+        fail("the test should have trown an IllegalArgumentException because the input is not of a valid format.");
+    }
         
     @Test
     public void testDay(){

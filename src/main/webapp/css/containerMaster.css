@@ -70,3 +70,22 @@ html, body {
     left: 0;
     bottom: 0;
 }
+
+.wrapper {
+    width: 100%;
+    margin: 81px auto;
+}
+
+.wrapper2 {
+    width: 100%;
+    margin: 101px auto;
+}
+
+.schedule-wrapper {
+    font-size: 1.6rem;
+    font-family: "Source Sans Pro", sans-serif;
+    color: #222222;
+    background-color: white;
+    position: relative;
+    margin: 100px auto;
+}

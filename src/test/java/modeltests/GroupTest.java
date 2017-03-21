@@ -67,6 +67,18 @@ public class GroupTest {
     }
     
     @Test
+    public void testGroupNumber(){
+        testGroup.setGroupNumber(4);
+        assertEquals("The setGroupNumber method did not assign the propper value to GroupNumber", 4, testGroup.getGroupNumber());
+    }
+    
+    @Test
+    public void testGroupNumberTwo(){
+        testGroup.setGroupNumber(1);
+        assertEquals("The setGroupNumber method did not assign the propper value to GroupNumber", 1, testGroup.getGroupNumber());
+    }
+    
+    @Test
     public void testUSers(){
         ArrayList<User> testList = new ArrayList<User>();
         testList.add(new User("testUser1"));

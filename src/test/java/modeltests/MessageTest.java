@@ -128,4 +128,16 @@ public class MessageTest {
         testMessage.setDate("string");
 	fail("an invallid argument exception should have been trown for having a invalid format");
     }
+    
+    @Test
+    public void testUserName(){
+        testMessage.setUserName("first test");
+        assertEquals("The setUserName method did not assign the propper value to Username", "first test", testMessage.getUserName());
+    }
+    
+    @Test
+    public void testUserNameTwo(){
+        testMessage.setUserName("secondtest");
+        assertEquals("The setUserName method did not assign the propper value to Username", "secondtest", testMessage.getUserName());
+    }
 }

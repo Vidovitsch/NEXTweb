@@ -12,23 +12,24 @@
         <link href="${mainCSS}" rel="stylesheet" />
     </head>
     <body>
-        <%@ include file="master.jsp" %>
-        
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/wBqM2ytqHY4?autoplay=1" frameborder="0" allowfullscreen></iframe>
-        <a href="events.htm">Open workshop screen</a><br>
-        <br>
-        <a href="messageboard.htm">Open MessageBoard</a><br>
-        <br>
-        <a href="schedule.htm">Open schedule</a><br>
-        <br>
-        <a href="group.htm">Open group</a><br>
-        <br>
+        <div class="wrapper">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/wBqM2ytqHY4?autoplay=1" frameborder="0" allowfullscreen></iframe>
+            <a href="events.htm">Open workshop screen</a><br>
+            <br>
+            <a href="messageboard.htm">Open MessageBoard</a><br>
+            <br>
+            <a href="schedule.htm">Open schedule</a><br>
+            <br>
+            <a href="group.htm">Open group</a><br>
+            <br>
 
-        <p>
-            <button ng-click="htmlgeneration(0)">auth</button>
-        </p>
-        <p id="demo"></p>
-        <input id="logout-button" class="form-control" type="submit" value="Logout" />
+            <p>
+                <button ng-click="htmlgeneration(0)">auth</button>
+            </p>
+            <p id="demo"></p>
+            <input id="logout-button" class="form-control" type="submit" value="Logout" />
+        </div>
+        
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-app.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>

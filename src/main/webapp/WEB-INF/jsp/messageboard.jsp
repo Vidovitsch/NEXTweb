@@ -19,38 +19,40 @@
         <title>MessageBoard</title>
     </head>
     <body>
-        <div id="next-header">
-            <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
-        </div>
-        <div id="spacer"></div>
-        <input type="hidden" id="userpcn"></p>
-        <h1>Messages Group ${group}</h1>
-        <div id="Messageboard-container">  
-            <div id="messages" style="overflow-y:scroll;">
-                <c:forEach var="msg" items="${messages}">
-                    <div class="${user == msg.userName ? 'ownMessageWrapper' : 'otherMessageWrapper'}">
-                        <div class="${user == msg.userName ? 'ownMessagecss' : 'otherMessagecss'}">
-                            <div class="message-class">
-                               <span class ="msg-content">${msg.content} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                            </div>
-                            <c:choose>
-                                <c:when test="${user != msg.userName}">
-                                    <div class="info-msg">
-                                    <span class="username-label">${msg.userName}</span>
-                                    <br>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="info-msg">
-                                </c:otherwise>  
-                            </c:choose>
-                                <span class="date-label">${msg.date}</span>
-                                    </div>
-                        </div>
-                    </div>    
-                </c:forEach> 
+        <div class="wrapper">
+            <div id="next-header">
+                <a href="index.htm"><img id="next-logo" src="/images/next_logo.png"/></a>
             </div>
-            <div class="input-container">
-                <textarea id="txtareamsg" name="message"></textarea><button id="btnSend" type="button" onclick="sendMessage()">Send</button>
+            <div id="spacer"></div>
+            <input type="hidden" id="userpcn"></p>
+            <h1>Messages Group ${group}</h1>
+            <div id="Messageboard-container">  
+                <div id="messages" style="overflow-y:scroll;">
+                    <c:forEach var="msg" items="${messages}">
+                        <div class="${user == msg.userName ? 'ownMessageWrapper' : 'otherMessageWrapper'}">
+                            <div class="${user == msg.userName ? 'ownMessagecss' : 'otherMessagecss'}">
+                                <div class="message-class">
+                                   <span class ="msg-content">${msg.content} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
+                                </div>
+                                <c:choose>
+                                    <c:when test="${user != msg.userName}">
+                                        <div class="info-msg">
+                                        <span class="username-label">${msg.userName}</span>
+                                        <br>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="info-msg">
+                                    </c:otherwise>  
+                                </c:choose>
+                                    <span class="date-label">${msg.date}</span>
+                                        </div>
+                            </div>
+                        </div>    
+                    </c:forEach> 
+                </div>
+                <div class="input-container">
+                    <textarea id="txtareamsg" name="message"></textarea><button id="btnSend" type="button" onclick="sendMessage()">Send</button>
+                </div>
             </div>
         </div>
             

@@ -109,7 +109,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>3.2.8.RELEASE</version>
+            <version>4.0.1.RELEASE</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -167,6 +167,12 @@
             <groupId>com.firebase</groupId>
             <artifactId>firebase-client-jvm</artifactId>
             <version>2.5.2</version>
+        </dependency>
+        <!-- http://wiki.sitemesh.org/wiki/display/sitemesh/Setup+SiteMesh+in+5+Minutes+or+Less -->
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>2.4.2</version>
         </dependency>
     </dependencies>
 

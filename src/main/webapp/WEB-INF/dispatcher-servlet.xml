@@ -29,6 +29,7 @@
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>
+                <prop key="map.htm">mapController</prop>
                 <prop key="events.htm">eventsController</prop>
                 <prop key="messageboard.htm">messageboardController</prop>
                 <prop key="schedule.htm">scheduleController</prop>

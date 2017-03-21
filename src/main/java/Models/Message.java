@@ -5,7 +5,9 @@
  */
 package Models;
 
-import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -17,13 +19,15 @@ public class Message {
     private String pcn;
     private String content;
     private String date;
+    private String userName;
     
-    public Message(String pcn, int groupNumber, String content, String date)
+    public Message(String pcn, String userName, int groupNumber, String content, String date)
     {
         this.groupNumber = groupNumber;
         this.pcn = pcn;
         this.content = content;
         this.date = date;
+        this.userName = userName;
     }
     
     /**
@@ -98,6 +102,30 @@ public class Message {
      * @param date 
      */
     public void setDate(String date) {
-        this.date = date;
+        try{
+            Date dateEvent = new SimpleDateFormat("dd-MM-yyyy").parse(date);
+            this.date = date;
+        } catch (ParseException ex){
+            throw new IllegalArgumentException("the date string had an invallid format. format should be dd-MM-yyyy");
+        }
+    }
+    
+    /**
+     * Get the value of userName
+     * 
+     * @return The value of userName
+     */
+    public String getUserName()
+    {
+        return userName;
+    }
+    
+    /**
+     * Set the value of userName
+     * 
+     * @param userName 
+     */
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

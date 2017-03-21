@@ -5,25 +5,23 @@
     "http://www.w3.org/TR/html4/loose.dtd">
 <%! int fontSize;%> 
 <%! int maxfontSize = 3;%> 
-
+    <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Group</title>
+        <spring:url value="/css/main.css" var="mainCSS" />
+        <link href="${mainCSS}" rel="stylesheet" />
     </head>
     <body>
-        <%@ include file="master.jsp" %>
-
-        <a href="events.htm">Open workshop screen</a><br>
-        <br>
-        <a href="messageboard.htm">Open MessageBoard</a><br>
-        <br>
-        <a href="schedule.htm">Open schedule</a><br>
-        <br>
-        <a href="group.htm">Open group</a><br>
-        <br>
-
+        <div class="wrapper">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/wBqM2ytqHY4?autoplay=1" frameborder="0" allowfullscreen></iframe>
+            <a href="events.htm">Open workshop screen</a><br>
+            <br>
+            <a href="messageboard.htm">Open MessageBoard</a><br>
+            <br>
+            <a href="schedule.htm">Open schedule</a><br>
+            <br>
+            <a href="group.htm">Open group</a><br>
+            <br>
         <p>
             <button ng-click="htmlgeneration(0)">auth</button>
         </p>

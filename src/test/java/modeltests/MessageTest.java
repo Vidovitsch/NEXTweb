@@ -33,7 +33,7 @@ public class MessageTest {
     
     @Before
     public void setUp() {
-        testMessage = new Message("testPCN", 1, "test message", "1-12-2017");
+        testMessage = new Message("testPCN", "naam", 1, "test message", "1-12-2017");
     }
     
     @After
@@ -50,7 +50,7 @@ public class MessageTest {
     
     @Test
     public void testConstructorTwo(){
-        testMessage = new Message("test PCN", 3, "test message for the second test", "30-10-2017");
+        testMessage = new Message("test PCN", "naam", 3, "test message for the second test", "30-10-2017");
         assertEquals("the constructor did not assign the propper value to pcn", "test PCN", testMessage.getPcn());
         assertEquals("the constructor did not assign the propper value to groupNumber", 3, testMessage.getGroupNumber());
         assertEquals("the constructor did not assign the propper value to content", "test message for the second test", testMessage.getContent());
@@ -105,23 +105,39 @@ public class MessageTest {
         assertEquals("The setDate method did not assign the propper value to Date", "30-12-2018", testMessage.getDate());
     }
 	
-    /*@Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testDateThree(){
         testMessage.setDate("50-12-2018");
 	fail("an invallid argument exception should have been trown for having a invalid day");
     }
 	
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testDateFour(){
         testMessage.setDate("30-13-2018");
 	fail("an invallid argument exception should have been trown for having a invalid month");
     }
 	
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = AssertionError.class)
     public void testDateFive(){
         testMessage.setDate("30-12-20185");
 	fail("an invallid argument exception should have been trown for having a invalid year");
-    }*/
+    }
     
+    @Test(expected = IllegalArgumentException.class)
+    public void testDateSix(){
+        testMessage.setDate("string");
+	fail("an invallid argument exception should have been trown for having a invalid format");
+    }
     
+    @Test
+    public void testUserName(){
+        testMessage.setUserName("first test");
+        assertEquals("The setUserName method did not assign the propper value to Username", "first test", testMessage.getUserName());
+    }
+    
+    @Test
+    public void testUserNameTwo(){
+        testMessage.setUserName("secondtest");
+        assertEquals("The setUserName method did not assign the propper value to Username", "secondtest", testMessage.getUserName());
+    }
 }

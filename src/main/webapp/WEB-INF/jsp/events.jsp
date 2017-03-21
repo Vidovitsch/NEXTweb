@@ -20,28 +20,40 @@
         <title>Workshops</title>
     </head>
     <body>
-        <%@ include file="master.jsp" %>
         
-        <h1>EVENTS</h1>
-        <div id="event-container">
-            <table class="event-table" cellpadding="25%">
-                <c:forEach var="row" items="${events}">
-                    <tr>
-                        <c:forEach var="ws" items="${row}">
-                            <td>
-                                <div class="event-single">
-                                    <div class="image">
-                                        <img src="${ws.imageURL}" />
-                                        <span id="event-dateTime">${ws.startTime} - ${ws.endTime}</span>
-                                        <span id="event-name"><b>${ws.eventName}</b></span></br>
-                                        <span id="event-type">${ws.eventType}</span>
+        <div class="wrapper">
+            <div id="event-day-bar">
+                <ul id="event-day-bar-list">
+                    <li class="event-day-bar-item"><a href="/events/ma">ma</a></li>
+                    <li class="event-day-bar-item"><a href="/events/di">di</a></li>
+                    <li class="event-day-bar-item"><a href="/events/wo">wo</a></li>
+                    <li class="event-day-bar-item"><a href="/events/do">do</a></li>
+                    <li class="event-day-bar-item"><a href="/events/vr">vr</a></li>
+                </ul>
+            </div>
+            
+            <br> <!-- this break is css magic! -->
+            
+            <div id="event-container">
+                <table class="event-table" cellpadding="25%">
+                    <c:forEach var="row" items="${events}">
+                        <tr>
+                            <c:forEach var="ws" items="${row}">
+                                <td>
+                                    <div class="event-single">
+                                        <div class="image">
+                                            <img src="${ws.imageURL}" />
+                                            <span id="event-dateTime">${ws.startTime} - ${ws.endTime}</span>
+                                            <span id="event-name"><b>${ws.eventName}</b></span></br>
+                                            <span id="event-type">${ws.eventType}</span>
+                                        </div>
                                     </div>
-                                </div>
-                            </td> 
-                        </c:forEach>
-                    </tr>
-                </c:forEach>
-            </table>
+                                </td> 
+                            </c:forEach>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
         </div>
     </body>
 </html>

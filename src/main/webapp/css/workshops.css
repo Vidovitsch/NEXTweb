@@ -12,6 +12,9 @@ h1 {
     text-align: center;
 }
 
+#event-container {
+    margin-top: 50px;
+}
 #workshop-container {
     width: 100%;
 }
@@ -83,4 +86,35 @@ table td {
     width: 100%;
     font-size: 18px;
     color: #FFF;
+}
+
+#event-day-bar-list {
+    z-index: 10;
+    position: fixed;
+    list-style-type: none;
+    overflow: hidden;
+    background-color: #111111;
+    float: left;
+    margin-top: 1px;
+    margin-bottom: 0px;
+    width: 100%;
+    text-align: center;
+}
+
+.event-day-bar-item {
+    float: left;
+    text-align: center;
+}
+
+.event-day-bar-item a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 8px 30px 8px 30px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.event-day-bar-item a:hover {
+    background-color: #333333;
 }

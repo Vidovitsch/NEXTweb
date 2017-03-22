@@ -56,12 +56,24 @@
                                     </a>
                                     <div id="${ws.id}" class="overlay">
                                         <div class="popup">
-                                            <span id="popup-event-type">${ws.eventType}</span>
-                                            <h2>Test</h2>
-                                            <a class="close" href="#">&times;</a>
-                                            <div class="content">
-                                                ${ws.description}
-                                            </div>
+                                            <span style="background-color: ${ws.hexColor};" 
+                                                  id="popup-event-type"><b>${ws.eventType}</b></span>
+                                                <div id="popup-wrapper">
+                                                    <span id="popup-event-name"><b>${ws.eventName}</b></span></br>
+                                                    <span id="popup-event-time">${ws.startTime} - ${ws.endTime}</span></br>
+                                                    <span id="popup-event-location">R1.22</span></br></br>
+                                                    <a class="close" href="#">&times;</a>
+                                                    <div class="content">
+                                                        ${ws.description}
+                                                    </div>
+                                                    <c:if test="${ws.eventType == 'Workshop'}">
+                                                        <div id="popup-workshop-form">
+                                                            <span id="attending-users">Attendance: ${ws.attendingUsers} / 
+                                                                ${ws.maxUsers}</span></br>
+                                                            <input id="attend-button" class="popup-control" type="submit" value="Attend" />
+                                                        </div>
+                                                    </c:if>
+                                                </div>
                                         </div>
                                     </div>
                                 </td> 

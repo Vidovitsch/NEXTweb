@@ -22,7 +22,7 @@ public abstract class EventDate {
     private String date;
     private String day;
     private String locationName;
-    private String description;
+    private String description = " ";
     
     public EventDate(String eventName){
         this.eventName = eventName;

@@ -42,7 +42,7 @@ public class eventsController {
         //insertDummyWorkshops();
         
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", initWorkshops(dbEvent.getEvents()));
+        modelView.addObject("events", initEvents(dbEvent.getEvents()));
         
         return modelView;
     }
@@ -125,7 +125,7 @@ public class eventsController {
             wsCounter++;
             if (wsCounter == ROWNUMBER || events.size() - 1 == i) {
                 eventsDivided.add(row);
-                row = new Event[calcRowLength(i + 1, events.size())];
+                row = new Event[ROWNUMBER];
                 wsCounter = 0;
             }
         }
@@ -133,31 +133,32 @@ public class eventsController {
         return eventsDivided;
     }
     
-    /**
-     * Calculates the length of a row.
-     * Example: ROWNUMBER = 3. There are 7 workshops.
-     * This means there are 2 rows of 3 workshops and 1 row of 1 workshop.
-     * This method calculates the indexes of each row.
-     * @param current
-     * @param max
-     * @return the current row length.
-     */
-    private int calcRowLength(int current, int max) {
-        if (max - current > ROWNUMBER) {
-            return ROWNUMBER;
-        } else {
-            return max - current;
+    private ArrayList<ArrayList<Event>> initEvents(ArrayList<Event> events) {
+        ArrayList<ArrayList<Event>> orderedEvents = new ArrayList();
+        int counter = 0;
+        ArrayList<Event> row = new ArrayList();
+        System.out.println("List size: " + events.size());
+        for (Event event : events) {
+            row.add(event);
+            counter++;
+            if (counter == ROWNUMBER) {
+                orderedEvents.add(row);
+                row = new ArrayList();
+                counter = 0;
+            }
         }
+        orderedEvents.add(row);
+        
+        return orderedEvents;
     }
     
-    private ArrayList<Event[]> filterOnDay(Day day, ArrayList<Event> events) {
+    private ArrayList<ArrayList<Event>> filterOnDay(Day day, ArrayList<Event> events) {
         ArrayList<Event> filtered = new ArrayList();
         for (Event e : events) {
             if (day.equals(day.dateToDate(e.getDate()))) {
                 filtered.add(e);
             }
         }
-        
-        return initWorkshops(filtered);
+        return initEvents(filtered);
     }
 }

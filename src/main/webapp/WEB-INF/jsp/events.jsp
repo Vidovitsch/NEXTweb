@@ -4,10 +4,13 @@
     Author     : David
 --%>
 
+<%@page import="Models.Workshop"%>
+<%@page import="Models.Event"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 
+<%! Event event = new Workshop("Test"); %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,12 +43,25 @@
                         <tr>
                             <c:forEach var="ws" items="${row}">
                                 <td>
+                                    <a href="#${ws.id}">
                                     <div class="event-single">
                                         <div class="image">
                                             <img src="${ws.imageURL}" />
-                                            <span id="event-dateTime">${ws.startTime} - ${ws.endTime}</span>
+                                            <span style="background-color: ${ws.hexColor};" id="event-dateTime">
+                                                ${ws.startTime} - ${ws.endTime}</span>
                                             <span id="event-name"><b>${ws.eventName}</b></span></br>
                                             <span id="event-type">${ws.eventType}</span>
+                                        </div>
+                                    </div>
+                                    </a>
+                                    <div id="${ws.id}" class="overlay">
+                                        <div class="popup">
+                                            <span id="popup-event-type">${ws.eventType}</span>
+                                            <h2>Test</h2>
+                                            <a class="close" href="#">&times;</a>
+                                            <div class="content">
+                                                ${ws.description}
+                                            </div>
                                         </div>
                                     </div>
                                 </td> 

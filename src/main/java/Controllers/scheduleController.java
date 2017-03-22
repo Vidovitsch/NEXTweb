@@ -53,25 +53,28 @@ public class scheduleController {
         return modelView;
     }
 
+    //Ik het de setDescription verplaatst naar de klasse 'Event', omdat die
+    //zo beter bereikbaar is voor jsp en firebase. Ook past het meer bij
+    //het event zelf dat bij een event dag.
     private void insertDummySchedule() {
         EventDay day1 = new EventDay("dinsdag NextSpy");
         day1.setStartTime("09:00");
         day1.setEndTime("17:00");
         day1.setDate("07-11-2017");
         day1.setLocationName("Hier");
-        day1.setDescription("De geplande dinsdag van de NextWeek");
+        //day1.setDescription("De geplande dinsdag van de NextWeek");
         EventDay day2 = new EventDay("donderdag NextSpy");
         day2.setStartTime("10:50");
         day2.setEndTime("17:00");
         day2.setDate("09-11-2017");
         day2.setLocationName("Hier");
-        day2.setDescription("De geplande donderdag van de NextWeek");
+        //day2.setDescription("De geplande donderdag van de NextWeek");
         EventDay day3 = new EventDay("vrijdag NextSpy");
         day3.setStartTime("10:00");
         day3.setEndTime("17:20");
         day3.setDate("10-11-2017");
         day3.setLocationName("Hier");
-        day3.setDescription("De geplande vrijdag van de NextWeek");
+        //day3.setDescription("De geplande vrijdag van de NextWeek");
         
         dbDay.insertDay(day1);
         dbDay.insertDay(day2);

@@ -18,6 +18,9 @@ public class Lecture extends Event {
     private String presenter;
     private EventType eventType = EventType.Lecture;
 
+    //For visual aspects
+    private String hexColor = "#F6B067";
+    
     public Lecture(String eventName) {
         super(eventName);
     }
@@ -57,5 +60,15 @@ public class Lecture extends Event {
      */
     public void setPresenter(String presenter) {
         this.presenter = presenter;
+    }
+    
+    @Override
+    public String getHexColor() {
+        return hexColor;
+    }
+
+    @Override
+    public void setHexColor(String hexColor) {
+        this.hexColor = hexColor;
     }
 }

@@ -60,8 +60,8 @@ table td {
     width: 30%;
     font-size: 18px;
     color: #FFF;
-    background-color: #E22F91;
     padding: 2%;
+    border-bottom-right-radius: 5px;
     text-align: center;
 }
 
@@ -117,4 +117,60 @@ table td {
 
 .event-day-bar-item a:hover {
     background-color: #333333;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1;
+}
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  padding: 20px;
+  margin: auto;
+  top: 40%;
+  background: #fff;
+  border-radius: 5px;
+  width: 30%;
+  position: relative;
+  transition: all 5s ease-in-out;
+}
+
+.popup h2 {
+    text-decoration: none;
+}
+
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+.popup .close:hover {
+  color: #06D85F;
+}
+.popup .content {
+  max-height: 30%;
+  overflow: auto;
+}
+
+#popup-event-type {
+    background-color: #E22F91;
+    color: #FFF;
 }

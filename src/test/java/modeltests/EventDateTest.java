@@ -201,16 +201,4 @@ public class EventDateTest {
         testDate.setDate("25-12-2018");
         assertEquals("The Day was not properly calculated", "Tuesday", testDate.getDay());
     }
-    
-    @Test
-    public void testDescription(){
-        testDate.setDescription("first test");
-        assertEquals("The setDescription method did not assign the propper value to Description", "first test", testDate.getDescription());
-    }
-    
-    @Test
-    public void testDescriptionTwo(){
-        testDate.setDescription("secondtest");
-        assertEquals("The setDescription method did not assign the propper value to Description", "secondtest", testDate.getDescription());
-    }
 }

@@ -59,6 +59,7 @@ public class DBEventModifier implements IModEvent {
         data.put("Date", event.getDate());
         data.put("ImageURL", event.getImageURL());
         data.put("LocationName", event.getLocationName());
+        data.put("Description", event.getDescription());
         data = putEventTypeValues(event, data);
         
         Firebase ref = firebase.child("Event").push();
@@ -86,6 +87,7 @@ public class DBEventModifier implements IModEvent {
                     String date = (String) ds.child("Date").getValue();
                     String imageURL = (String) ds.child("ImageURL").getValue();
                     String locationName = (String) ds.child("LocationName").getValue();
+                    String description = (String) ds.child("Description").getValue();
                     
                     Event event = specifyEvent(ds);
                     event.setId(id);
@@ -94,6 +96,7 @@ public class DBEventModifier implements IModEvent {
                     event.setDate(date);
                     event.setImageURL(imageURL);
                     event.setLocationName(locationName);
+                    event.setDescription(description);
                     
                     events.add(event);
                 }

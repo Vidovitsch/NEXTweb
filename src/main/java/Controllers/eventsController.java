@@ -116,7 +116,6 @@ public class eventsController {
         ArrayList<ArrayList<Event>> orderedEvents = new ArrayList();
         int counter = 0;
         ArrayList<Event> row = new ArrayList();
-        System.out.println("List size: " + events.size());
         for (Event event : events) {
             row.add(event);
             counter++;

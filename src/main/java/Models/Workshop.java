@@ -21,6 +21,9 @@ public class Workshop extends Event {
     private int maxUsers = 50;
     private EventType eventType= EventType.Workshop;
     
+    //For visual aspects
+    private String hexColor = "#577F92";
+    
     public Workshop(String eventName) {
         super(eventName);
     }
@@ -96,5 +99,15 @@ public class Workshop extends Event {
      */
     public void setUsers(ArrayList<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String getHexColor() {
+        return hexColor;
+    }
+
+    @Override
+    public void setHexColor(String hexColor) {
+        this.hexColor = hexColor;
     }
 }

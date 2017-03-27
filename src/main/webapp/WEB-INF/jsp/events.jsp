@@ -61,7 +61,7 @@
                                                 <div id="popup-wrapper">
                                                     <span id="popup-event-name"><b>${ws.eventName}</b></span></br>
                                                     <span id="popup-event-time">${ws.startTime} - ${ws.endTime}</span></br>
-                                                    <span id="popup-event-location">R1.22</span></br></br>
+                                                    <span id="popup-event-location">${ws.locationName}</span></br></br>
                                                     <a class="close" href="#">&times;</a>
                                                     <div class="content">
                                                         ${ws.description}

@@ -41,6 +41,19 @@ public class EvenTest {
     public void tearDown() {
     }
 
+        
+    @Test
+    public void testDescription(){
+        testEvent.setDescription("first test");
+        assertEquals("The setDescription method did not assign the propper value to Description", "first test", testEvent.getDescription());
+    }
+    
+    @Test
+    public void testDescriptionTwo(){
+        testEvent.setDescription("secondtest");
+        assertEquals("The setDescription method did not assign the propper value to Description", "secondtest", testEvent.getDescription());
+    }
+    
     @Test
     public void testGetImageURL(){
         assertEquals("The standard url was not correct", testEvent.getImageURL(), "/images/default_workshop.jpg");

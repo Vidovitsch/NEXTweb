@@ -34,15 +34,11 @@ public class eventsController {
 
     private final static int ROWNUMBER = 3;
     private IModEvent dbEvent = new DBEventModifier();
-    private IModUser dbUser = new DBUserModifier();
             
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public ModelAndView initWorkshopScreen() {
-        
-        //insertDummyWorkshops();
-        
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", initWorkshops(dbEvent.getEvents()));
+        modelView.addObject("events", initEvents(dbEvent.getEvents()));
         
         return modelView;
     }
@@ -87,29 +83,6 @@ public class eventsController {
         return modelView;
     }
     
-    //Test method
-    private void insertDummyWorkshops() {
-        Workshop ws = new Workshop("TestWorkshop");
-        ws.setStartTime("14:30");
-        ws.setEndTime("15:00");
-        ws.setDate("12-11-2017");
-        ws.setLocationName("Hier");
-        Lecture ws1 = new Lecture("TestLecture");
-        ws1.setStartTime("13:10");
-        ws1.setEndTime("15:15");
-        ws1.setDate("13-11-2017");
-        ws1.setLocationName("Hier");
-        Performance ws2 = new Performance("TestPerformance");
-        ws2.setStartTime("18:00");
-        ws2.setEndTime("19:00");
-        ws2.setDate("14-11-2017");
-        ws2.setLocationName("Hier");
-        
-        dbEvent.insertEvent(ws);
-        dbEvent.insertEvent(ws1);
-        dbEvent.insertEvent(ws2);
-    }
-    
     /**
      * Fetching workshops from the database into a list.
      * Each index of the list represents a row of workshops.
@@ -125,7 +98,7 @@ public class eventsController {
             wsCounter++;
             if (wsCounter == ROWNUMBER || events.size() - 1 == i) {
                 eventsDivided.add(row);
-                row = new Event[calcRowLength(i + 1, events.size())];
+                row = new Event[ROWNUMBER];
                 wsCounter = 0;
             }
         }
@@ -134,30 +107,36 @@ public class eventsController {
     }
     
     /**
-     * Calculates the length of a row.
-     * Example: ROWNUMBER = 3. There are 7 workshops.
-     * This means there are 2 rows of 3 workshops and 1 row of 1 workshop.
-     * This method calculates the indexes of each row.
-     * @param current
-     * @param max
-     * @return the current row length.
+     * Fetching workshops from the database into a list.
+     * Each index of the list represents a row of workshops.
+     * This amount of workshops is defined in the variable ROWNUMBER.
+     * @return list of rows containing workshops
      */
-    private int calcRowLength(int current, int max) {
-        if (max - current > ROWNUMBER) {
-            return ROWNUMBER;
-        } else {
-            return max - current;
+    private ArrayList<ArrayList<Event>> initEvents(ArrayList<Event> events) {
+        ArrayList<ArrayList<Event>> orderedEvents = new ArrayList();
+        int counter = 0;
+        ArrayList<Event> row = new ArrayList();
+        for (Event event : events) {
+            row.add(event);
+            counter++;
+            if (counter == ROWNUMBER) {
+                orderedEvents.add(row);
+                row = new ArrayList();
+                counter = 0;
+            }
         }
+        orderedEvents.add(row);
+        
+        return orderedEvents;
     }
     
-    private ArrayList<Event[]> filterOnDay(Day day, ArrayList<Event> events) {
+    private ArrayList<ArrayList<Event>> filterOnDay(Day day, ArrayList<Event> events) {
         ArrayList<Event> filtered = new ArrayList();
         for (Event e : events) {
             if (day.equals(day.dateToDate(e.getDate()))) {
                 filtered.add(e);
             }
         }
-        
-        return initWorkshops(filtered);
+        return initEvents(filtered);
     }
 }

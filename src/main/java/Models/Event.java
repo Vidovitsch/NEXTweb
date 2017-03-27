@@ -10,7 +10,7 @@ package Models;
  *
  * @author David
  */
-public abstract class Event extends EventDate{
+public abstract class Event extends EventDate {
     private String imageURL = "/images/default_workshop.jpg";
     private String id;
 
@@ -51,4 +51,8 @@ public abstract class Event extends EventDate{
     public void setId(String id) {
         this.id = id;
     }
+    
+    public abstract String getHexColor();
+    
+    public abstract void setHexColor(String hexColor);
 }

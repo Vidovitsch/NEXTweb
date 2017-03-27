@@ -17,6 +17,9 @@ public class Performance extends Event {
 
     private EventType eventType = EventType.Performance;
     
+    //For visual aspects
+    private String hexColor = "#A2B9B2";
+    
     public Performance(String eventName) {
         super(eventName);
     }
@@ -26,6 +29,7 @@ public class Performance extends Event {
      *
      * @return the value of eventType
      */
+    @Override
     public EventType getEventType() {
         return eventType;
     }
@@ -37,5 +41,15 @@ public class Performance extends Event {
      */
     public void setEventType(EventType eventType) {
         this.eventType = eventType;
+    }
+    
+    @Override
+    public String getHexColor() {
+        return hexColor;
+    }
+
+    @Override
+    public void setHexColor(String hexColor) {
+        this.hexColor = hexColor;
     }
 }

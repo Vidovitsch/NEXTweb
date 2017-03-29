@@ -104,9 +104,9 @@
                     </header>
 
                     <div class="body">
-                        <span class="event-info">
+                        <div class="event-info">
                             <!--<h3 class="event-description"></h3>-->
-                        </span>
+                        </div>
                         <div class="body-bg"></div>
                     </div>
 

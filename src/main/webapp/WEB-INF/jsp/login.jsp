@@ -34,6 +34,7 @@
                         <div class="form-section">
                             <span>Password:</span> </br>
                             <input class="form-control" id="password" type="password" name="password" required></br>
+                            <input id="forgotpassword-button" class="form-control" type="button" value="Forgot password" />
                             <div id="passwordwrapper">
                                 <input id="login-button" class="form-control" type="submit" value="Login" />
                                 <input id="register-button" class="form-control" type="submit" value="Register" />
@@ -108,6 +109,41 @@
                 }
             };
 
+            document.getElementById("forgotpassword-button").onclick = function () {
+                email = document.getElementById("email");
+                var emailAddress = document.getElementsByName("email")[0].value;
+                if (email.checkValidity() === true)
+                {
+                    if (validateEmail(emailAddress))
+                    {
+                        var auth = firebase.auth();
+                        auth.sendPasswordResetEmail(emailAddress).then(function () {
+                            alert("Mail verstuurd");
+                        }, function (error) {
+                            if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
+                            {
+
+                            } else
+                            {
+                                alert(errorMessage);
+                            }
+                        });
+                    } else
+                    {
+                        email.setCustomValidity("This is not a valid email address");
+                        email.reportValidity();
+                    }
+
+                } else {
+                    email.setCustomValidity("Email cant be empty");
+                    email.reportValidity();
+                }
+            }
+
+            function validateEmail(email) {
+                var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
             document.getElementById("register-button").onclick = function () {
                 password = document.getElementById("password");
                 email = document.getElementById("email");

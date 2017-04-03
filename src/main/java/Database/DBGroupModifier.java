@@ -54,7 +54,7 @@ public class DBGroupModifier implements IModGroup {
         Firebase fb;
         for (User user : group.getUsers()) {
             fb = ref.child("Members").child(user.getPcn());
-            fb.setValue("Attending");
+            fb.setValue("NS");
         }
         
         //Adding messages to the group
@@ -73,7 +73,7 @@ public class DBGroupModifier implements IModGroup {
     public void addUser(Group group, User user) {
         Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
                 .child("Members").child(user.getPcn());
-        ref.setValue("Attending");
+        ref.setValue("NS");
     }
 
     @Override

@@ -45,25 +45,25 @@ public class UserTest {
 
     @Test
     public void testConstructor(){
-        assertEquals("The constructor did not assign the propper value to pcn", "test PCN", testUser.getPcn());
+        assertEquals("The constructor did not assign the propper value to pcn", "test PCN", testUser.getUid());
     }
     
     @Test
     public void testConstructorTwo(){
         testUser = new User("second test");
-        assertEquals("The constructor did not assign the propper value to pcn", "second test", testUser.getPcn());
+        assertEquals("The constructor did not assign the propper value to pcn", "second test", testUser.getUid());
     }
     
     @Test
-    public void testPcn(){
-        testUser.setPcn("first test");
-        assertEquals("The setPcn method did not assign the propper value to Pcn", "first test", testUser.getPcn());
+    public void testUid(){
+        testUser.setUid("first test");
+        assertEquals("The setUid method did not assign the propper value to Uid", "first test", testUser.getUid());
     }
     
     @Test
-    public void testPcnTwo(){
-        testUser.setPcn("secondtest");
-        assertEquals("The setPcn method did not assign the propper value to Pcn", "secondtest", testUser.getPcn());
+    public void testUidTwo(){
+        testUser.setUid("secondtest");
+        assertEquals("The setUid method did not assign the propper value to Uid", "secondtest", testUser.getUid());
     }
     
     @Test
@@ -88,23 +88,6 @@ public class UserTest {
     public void testemailTwo(){
         testUser.setEmail("secondtest");
         assertEquals("The setemail method did not assign the propper value to email", "secondtest", testUser.getEmail());
-    }
-    
-    @Test
-    public void testImage(){
-        assertEquals("The default value of image was incorrect", "/images/default_user.jpg", testUser.getImage());
-    }
-    
-    @Test
-    public void testImageTwo(){
-        testUser.setImage("first test");
-        assertEquals("The setImage method did not assign the propper value to Image", "first test", testUser.getImage());
-    }
-    
-    @Test
-    public void testImageThree(){
-        testUser.setImage("secondtest");
-        assertEquals("The setImage method did not assign the propper value to Image", "secondtest", testUser.getImage());
     }
     
     @Test

@@ -17,17 +17,16 @@ import Enums.UserStatus;
  */
 public class User {
 
-    private String pcn;
+    private String uid;
     private String name;
     private String email;
-    private String image = "/images/default_user.jpg";
     private UserRole userRole;
     private UserStatus userStatus;
     private Course course;
     private int semester;
 
-    public User(String pcn) {
-        this.pcn = pcn;
+    public User(String uid) {
+        this.uid = uid;
     }
         
     /**
@@ -35,17 +34,17 @@ public class User {
      *
      * @return the value of pcn
      */
-    public String getPcn() {
-        return pcn;
+    public String getUid() {
+        return uid;
     }
 
     /**
      * Set the value of pcn
      *
-     * @param pcn new value of pcn
+     * @param uid
      */
-    public void setPcn(String pcn) {
-        this.pcn = pcn;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
     
     /**
@@ -82,24 +81,6 @@ public class User {
      */
     public void setEmail(String email) {
         this.email = email;
-    }
-    
-    /**
-     * Get the value of image
-     *
-     * @return the value of image
-     */
-    public String getImage() {
-        return image;
-    }
-
-    /**
-     * Set the value of image
-     *
-     * @param image new value of image
-     */
-    public void setImage(String image) {
-        this.image = image;
     }
     
     /**

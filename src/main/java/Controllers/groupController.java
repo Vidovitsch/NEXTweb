@@ -5,6 +5,7 @@
  */
 package Controllers;
 
+import Enums.Course;
 import Enums.UserRole;
 import Enums.UserStatus;
 import Models.Group;
@@ -35,27 +36,21 @@ public class groupController
         return modelView;
     }
     
+    //Moet eigenlijk via de database
     private void insertDummyUsers()
     {
-        group = new Group(1);
+        group = new Group(0);
         group.setGroupName("TestGroup");
         
-        User u = new User("i329413");
-        u.setEmail("michael.janssen@student.fontys.nl");
-        u.setImage("http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg");
-        u.setName("Michael Janssen");
-        u.setUserRole(UserRole.Student);
-        u.setUserStatus(UserStatus.Attending);
-        
-        User u2 = new User("i291337");
+        User u2 = new User("JuHFVbEaTjYuHXpROGc71lSFsg23");
         u2.setEmail("leet.mofo@student.fontys.nl");
-        u2.setImage("http://www.apicius.es/wp-content/uploads/2012/07/IMG-20120714-009211.jpg");
         u2.setName("Leet Mofo");
         u2.setUserRole(UserRole.Student);
         u2.setUserStatus(UserStatus.Attending);
+        u2.setCourse(Course.Software_Engineering);
+        u2.setSemester(4);
         
         ArrayList<User> users = new ArrayList();
-        users.add(u);
         users.add(u2);
         
         group.setUsers(users);

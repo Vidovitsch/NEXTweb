@@ -53,7 +53,7 @@ public class DBGroupModifier implements IModGroup {
         //Adding users to the group
         Firebase fb;
         for (User user : group.getUsers()) {
-            fb = ref.child("Members").child(user.getPcn());
+            fb = ref.child("Members").child(user.getUid());
             fb.setValue("NS");
         }
         
@@ -72,14 +72,14 @@ public class DBGroupModifier implements IModGroup {
     @Override
     public void addUser(Group group, User user) {
         Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
-                .child("Members").child(user.getPcn());
+                .child("Members").child(user.getUid());
         ref.setValue("NS");
     }
 
     @Override
     public void removeUser(Group group, User user) {
         Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
-                .child("Members").child(user.getPcn());
+                .child("Members").child(user.getUid());
         ref.removeValue();
     }
 
@@ -118,6 +118,7 @@ public class DBGroupModifier implements IModGroup {
                             int group = Integer.valueOf((String) ds2.child("group").getValue());
                             String pcn = (String) ds2.child("pcn").getValue();
                             msg = new Message(pcn, pcn, group, content, date);
+                            
                             // TODO: change to get name instead of double pcn
                             messages.add(msg);
                         }

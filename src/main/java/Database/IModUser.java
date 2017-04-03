@@ -13,16 +13,7 @@ import Models.User;
  * @author David
  */
 public interface IModUser {
-    
-    /**
-     * Logs in a user to the website
-     * 
-     * @param email
-     * @param password
-     * @return Pcn
-     */
-    String loginUser(String email, String password);
-    
+
     /**
      * Adds a new user into Firebase
      * 

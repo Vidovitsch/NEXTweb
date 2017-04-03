@@ -31,8 +31,6 @@ public class DBUserModifier implements IModUser {
     private Object lock;
     private boolean done = false;
     private User user;
-    private boolean authenticated = false;
-    String returnstring;
 
     public DBUserModifier() {
 
@@ -43,51 +41,26 @@ public class DBUserModifier implements IModUser {
     }
 
     @Override
-    public String loginUser(String email, String password) {
-        returnstring = "loginuser begonnen";
-        firebase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
-            @Override
-            public void onAuthenticated(AuthData ad) {
-                authenticated = true;
-                returnstring += "authenticatie gelukt";
-                unlockFXThread();
-            }
-
-            @Override
-            public void onAuthenticationError(FirebaseError fe) {
-                authenticated = false;
-                returnstring += fe.getMessage();
-                unlockFXThread();
-            }
-        });
-        returnstring += "gaat nu locken";
-        lockFXThread();
-        returnstring += "code na de lock --> de return";
-        return returnstring;
-    }
-
-    @Override
     public void insertUser(User user) {
         Map<String, String> data = new HashMap();
+        data.put("Mail", user.getEmail());
         data.put("Name", user.getName());
-        data.put("Email", user.getEmail());
-        data.put("Image", user.getImage());
         data.put("Role", user.getUserRole().toString());
         data.put("Status", user.getUserStatus().toString());
         data.put("Course", user.getCourse().toString());
         data.put("Semester", String.valueOf(user.getSemester()));
-        Firebase ref = firebase.child("User").child(user.getPcn());
+        Firebase ref = firebase.child("User").child(user.getUid());
         ref.setValue(data);
     }
 
     @Override
     public void removeUser(User user) {
-        Firebase ref = firebase.child("User").child(user.getPcn());
+        Firebase ref = firebase.child("User").child(user.getUid());
         ref.removeValue();
     }
 
     @Override
-    public User getUser(final String pcn) {
+    public User getUser(final String uid) {
         user = null;
         Firebase ref = firebase.child("User");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -95,19 +68,18 @@ public class DBUserModifier implements IModUser {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    if (ds.getKey().equals(pcn)) {
+                    if (ds.getKey().equals(uid)) {
                         String name = (String) ds.child("Name").getValue();
                         String email = (String) ds.child("Email").getValue();
-                        String image = (String) ds.child("Image").getValue();
+
                         UserRole userRole = UserRole.valueOf((String) ds.child("Role").getValue());
                         UserStatus userStatus = UserStatus.valueOf((String) ds.child("Status").getValue());
                         Course course = Course.valueOf((String) ds.child("Course").getValue());
                         int semester = Integer.valueOf((String) ds.child("Semester").getValue());
 
-                        user = new User(pcn);
+                        user = new User(uid);
                         user.setName(name);
                         user.setEmail(email);
-                        user.setImage(image);
                         user.setUserRole(userRole);
                         user.setUserStatus(userStatus);
                         user.setCourse(course);

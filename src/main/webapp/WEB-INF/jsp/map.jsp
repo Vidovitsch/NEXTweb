@@ -14,6 +14,6 @@
     <body>
         <div class="wrapper">
             <h1>Map</h1>
-        </div>
+            <img src="../../images/map.jpg" width="1035" height="800" alt="map" margin="0 auto"/>
     </body>
 </html>

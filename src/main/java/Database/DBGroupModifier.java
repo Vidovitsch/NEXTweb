@@ -107,7 +107,8 @@ public class DBGroupModifier implements IModGroup {
                         members.add(u);
                     }
                     
-                    if (!groupFound) {
+                    if (groupFound) {
+                        System.out.println("Test2");
                         //Fetching other data
                         int groupNumber = Integer.valueOf((String) ds.getKey());
                         String groupName = (String) ds.child("Name").getValue();
@@ -116,10 +117,9 @@ public class DBGroupModifier implements IModGroup {
                         Message msg;
                         for (DataSnapshot ds2 : ds.child("Messages").getChildren()) {
                             String date = ds2.getKey();
-                            String content = (String) ds2.child("content").getValue();
-                            int group = Integer.valueOf((String) ds2.child("group").getValue());
-                            String uid = (String) ds2.child("UID").getValue();
-                            msg = new Message(uid, uid, group, content, date);
+                            String content = String.valueOf(ds2.child("content").getValue());
+                            String uid = String.valueOf(ds2.child("UID").getValue());
+                            msg = new Message(uid, uid, 0, content, date);
                             
                             // TODO: change to get name instead of double uid
                             messages.add(msg);
@@ -138,7 +138,7 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString());
+                System.out.println(fe.toException().toString() + "hoi");
             }
         });
         
@@ -165,7 +165,7 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString());
+                System.out.println(fe.toException().toString() + "hoi");
             }
         });
         lockFXThread();
@@ -187,7 +187,7 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString());
+                System.out.println(fe.toException().toString() + "hoi");
             }
         });
         lockFXThread();
@@ -254,7 +254,7 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString());
+                System.out.println(fe.toException().toString() + "hoi");
             }
         });
         

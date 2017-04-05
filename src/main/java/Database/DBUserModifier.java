@@ -70,7 +70,7 @@ public class DBUserModifier implements IModUser {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     if (ds.getKey().equals(uid)) {
                         String name = (String) ds.child("Name").getValue();
-                        String email = (String) ds.child("Email").getValue();
+                        String email = (String) ds.child("Mail").getValue();
 
                         UserRole userRole = UserRole.valueOf((String) ds.child("Role").getValue());
                         UserStatus userStatus = UserStatus.valueOf((String) ds.child("Status").getValue());

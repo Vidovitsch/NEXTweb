@@ -53,13 +53,13 @@
                 </c:forEach> 
             </div>
             <div class="input-container">
-                <form id="postMessageForm" th:action="@{/mvc/chat}" data-bind="visible: true">
-                    <input id="txtareamsg" name="message" type="text" data-bind="value: message" />
-                    <button id="btnSend" type="submit" data-bind="click: postMessage">Post</button>
+                <form method="post" action="servlet">
+                    <input id="txtareamsg" name="message" type="text"/>
+                    <button id="btnSend" name="btnSend" type="submit">Post</button>
                 </form>
             </div>
         </div>
-        <script src="../../../javascript/jquery-1.7.2.min.js"></script>
+        <%--<script src="../../../javascript/jquery-1.7.2.min.js"></script>
         <script src="../../../javascript/knockout-2.0.0.js"></script>
         <script>document.getElementById("btnSend").onclick = function() {
                 if (that.message().trim() != '') {
@@ -73,6 +73,6 @@
                     that.message('');
                 }
             };
-        </script>
+        </script>--%>
     </body>
 </html>

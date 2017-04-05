@@ -10,19 +10,14 @@ import Database.DBGroupModifier;
 import Database.IModGroup;
 import Models.Group;
 import Models.Message;
-import java.io.IOException;
 import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  *
@@ -59,17 +54,16 @@ public class messageboardController{
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
-        }              
-        
+        }        
         return model;
     } 
     
     
     @RequestMapping(method=RequestMethod.POST)
-    @ResponseBody
-    public void postMessage(@RequestParam String message) {
-        System.out.println("owiej");
-        //groupDB.addMessage(new Message("","", 1, message, ""));
+    public void postMessage(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("OWI");
+        System.out.println(request.getParameter("message"));
+        
     }
     
     

@@ -29,7 +29,7 @@
                     <div class="dropdown">
                         <div class="dropdown-div">
                             <div style="display: inline-block; float: left; width: 75px">
-                                <img src="/images/default_user" width="64px" height="64px">
+                                <img src="/images/default_user.jpg" width="64px" height="64px">
                             </div>
                             <div style="display: inline-block; font-size: 32px; padding-top: 16px">
                                 ${user.name}
@@ -40,10 +40,6 @@
                             <tr>
                                 <td><b>name: </b></td>
                                 <td>${user.name}</td>
-                            </tr>
-                            <tr>
-                                <td><b>uid: </b></td>
-                                <td>${user.uid}</td>
                             </tr>
                             <tr>
                                 <td><b>email: </b></td>

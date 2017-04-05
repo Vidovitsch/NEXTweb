@@ -61,7 +61,7 @@ public class DBGroupModifier implements IModGroup {
         Firebase fb2;
         Map<String, String> msgData = new HashMap();
         for (Message message : group.getMessages()) {
-            msgData.put("pcn", message.getPcn());
+            msgData.put("uid", message.getUid());
             msgData.put("group", String.valueOf(message.getGroupNumber()));
             msgData.put("content", message.getContent());
             fb2 = ref.child("Messages").child(String.valueOf(message.getDate()));
@@ -149,7 +149,7 @@ public class DBGroupModifier implements IModGroup {
         Firebase ref = firebase.child("Group").child(String.valueOf(message.getGroupNumber())).
                 child("Messages").child(String.valueOf(message.getDate()));
         Map<String, String> msgData = new HashMap();
-        msgData.put("pcn", message.getPcn());
+        msgData.put("uid", message.getUid());
         msgData.put("group", String.valueOf(message.getGroupNumber()));
         msgData.put("content", message.getContent());
         ref.setValue(msgData);

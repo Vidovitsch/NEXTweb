@@ -16,15 +16,15 @@ import java.util.Date;
 public class Message {
     
     private int groupNumber;
-    private String pcn;
+    private String uid;
     private String content;
     private String date;
     private String userName;
     
-    public Message(String pcn, String userName, int groupNumber, String content, String date)
+    public Message(String uid, String userName, int groupNumber, String content, String date)
     {
         this.groupNumber = groupNumber;
-        this.pcn = pcn;
+        this.uid = uid;
         this.content = content;
         this.date = date;
         this.userName = userName;
@@ -53,18 +53,18 @@ public class Message {
      * 
      * @return The value of pcn
      */
-    public String getPcn()
+    public String getUid()
     {
-        return pcn;
+        return uid;
     }
     
     /**
      * Set the value of pcn
      * 
-     * @param pcn 
+     * @param uid
      */
-    public void setPcn(String pcn) {
-        this.pcn = pcn;
+    public void setUid(String uid) {
+        this.uid = uid;
     }
     
     /**

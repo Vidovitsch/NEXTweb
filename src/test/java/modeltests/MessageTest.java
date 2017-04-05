@@ -42,7 +42,7 @@ public class MessageTest {
 
     @Test
     public void testConstructor(){
-        assertEquals("the constructor did not assign the propper value to pcn", "testPCN", testMessage.getPcn());
+        assertEquals("the constructor did not assign the propper value to pcn", "testPCN", testMessage.getUid());
         assertEquals("the constructor did not assign the propper value to groupNumber", 1, testMessage.getGroupNumber());
         assertEquals("the constructor did not assign the propper value to content", "test message", testMessage.getContent());
         assertEquals("the constructor did not assign the propper value to date", "1-12-2017", testMessage.getDate());
@@ -51,7 +51,7 @@ public class MessageTest {
     @Test
     public void testConstructorTwo(){
         testMessage = new Message("test PCN", "naam", 3, "test message for the second test", "30-10-2017");
-        assertEquals("the constructor did not assign the propper value to pcn", "test PCN", testMessage.getPcn());
+        assertEquals("the constructor did not assign the propper value to pcn", "test PCN", testMessage.getUid());
         assertEquals("the constructor did not assign the propper value to groupNumber", 3, testMessage.getGroupNumber());
         assertEquals("the constructor did not assign the propper value to content", "test message for the second test", testMessage.getContent());
         assertEquals("the constructor did not assign the propper value to date", "30-10-2017", testMessage.getDate());
@@ -71,14 +71,14 @@ public class MessageTest {
     
     @Test
     public void testPCN(){
-        testMessage.setPcn("first test");
-        assertEquals("The setPCN method did not assign the propper value to PCN", "first test", testMessage.getPcn());
+        testMessage.setUid("first test");
+        assertEquals("The setPCN method did not assign the propper value to PCN", "first test", testMessage.getUid());
     }
     
     @Test
-    public void testPCNTwo(){
-        testMessage.setPcn("secondtest");
-        assertEquals("The setPCN method did not assign the propper value to PCN", "secondtest", testMessage.getPcn());
+    public void testUidTwo(){
+        testMessage.setUid("secondtest");
+        assertEquals("The setPCN method did not assign the propper value to PCN", "secondtest", testMessage.getUid());
     }
     
     @Test

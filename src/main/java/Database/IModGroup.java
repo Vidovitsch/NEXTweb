@@ -9,6 +9,7 @@ import Models.Group;
 import Models.Message;
 import Models.User;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -60,6 +61,13 @@ public interface IModGroup {
      * @return All groups
      */
     ArrayList<Group> getGroups();
+	
+	/**
+     * Get the UID of the user with email email
+     * @param email 
+     * @return single UID of user
+     */
+    String getUid(String email);
     
     /**
      * Getting max group number
@@ -67,4 +75,11 @@ public interface IModGroup {
      * @return Max group number
      */
     int getMaxGroupNumber();
+	
+	/**
+     * Get all the names with the pcn from messages
+     * @param messages old messages
+     * @return new messages including the name of the person who posted the messages
+     */
+    List<Message> addNamesToMessages(List<Message> messages);
 }

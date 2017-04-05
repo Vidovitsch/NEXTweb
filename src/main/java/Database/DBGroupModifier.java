@@ -35,6 +35,7 @@ public class DBGroupModifier implements IModGroup {
     private boolean done = false;
     private boolean groupFound = false;
     private Group group = null;
+    private String uid = "";
     
     public DBGroupModifier() {
         FBConnector connector = FBConnector.getInstance();
@@ -82,9 +83,10 @@ public class DBGroupModifier implements IModGroup {
                 .child("Members").child(user.getUid());
         ref.removeValue();
     }
+	
 
     @Override
-    public Group getGroup(final String pcn) {
+    public Group getGroup(final String uid) {
         Firebase ref = firebase.child("Group");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             
@@ -97,11 +99,11 @@ public class DBGroupModifier implements IModGroup {
                     //Fetching members
                     User u;
                     for (DataSnapshot ds3 : ds.child("Members").getChildren()) {
-                        String pcn2 = ds3.getKey();
-                        if (pcn2.equals(pcn)) {
+                        String uid2 = ds3.getKey();
+                        if (uid2.equals(uid)) {
                             groupFound = true;
                         }
-                        u = new User(pcn);
+                        u = new User(uid);
                         members.add(u);
                     }
                     
@@ -116,10 +118,10 @@ public class DBGroupModifier implements IModGroup {
                             String date = ds2.getKey();
                             String content = (String) ds2.child("content").getValue();
                             int group = Integer.valueOf((String) ds2.child("group").getValue());
-                            String pcn = (String) ds2.child("pcn").getValue();
-                            msg = new Message(pcn, pcn, group, content, date);
+                            String uid = (String) ds2.child("UID").getValue();
+                            msg = new Message(uid, uid, group, content, date);
                             
-                            // TODO: change to get name instead of double pcn
+                            // TODO: change to get name instead of double uid
                             messages.add(msg);
                         }
 
@@ -142,6 +144,54 @@ public class DBGroupModifier implements IModGroup {
         
         lockFXThread();
         return group;
+    }
+    
+    @Override
+    public String getUid(final String email)
+    {
+        Firebase ref = firebase.child("User");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    //Fetching members
+                    String emailDB = (String) ds.child("Mail").getValue();
+                    if (emailDB.equals(email)) {
+                        uid = ds.getKey();
+                    }
+                }
+                unlockFXThread();
+            }
+            
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        lockFXThread();
+        return uid;
+    }
+    
+    @Override
+    public List<Message> addNamesToMessages(final List<Message> messages) {
+        Firebase ref = firebase.child("User");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (Message msg : messages)
+                {
+                    msg.setUserName((String) snapshot.child(msg.getUid()).child("Name").getValue());
+                }
+                unlockFXThread();
+            }
+            
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        lockFXThread();
+        return messages;
     }
 
     @Override
@@ -171,8 +221,8 @@ public class DBGroupModifier implements IModGroup {
                     //Fetching members
                     User u;
                     for (DataSnapshot ds3 : ds.child("Members").getChildren()) {
-                        String pcn = ds3.getKey();
-                        u = new User(pcn);
+                        String uid = ds3.getKey();
+                        u = new User(uid);
                         members.add(u);
                     }
                     
@@ -186,9 +236,9 @@ public class DBGroupModifier implements IModGroup {
                         String date = ds2.getKey();
                         String content = (String) ds2.child("content").getValue();
                         int group = Integer.valueOf((String) ds2.child("group").getValue());
-                        String pcn = (String) ds2.child("pcn").getValue();
-                        // TODO: change to get name instead of double pcn
-                        msg = new Message(pcn, pcn, group, content, date);
+                        String uid = (String) ds2.child("UID").getValue();
+                        // TODO: change to get name instead of double uid
+                        msg = new Message(uid, uid, group, content, date);
                         messages.add(msg);
                     }
 

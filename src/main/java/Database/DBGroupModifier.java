@@ -6,7 +6,6 @@
 
 package Database;
 
-import Models.Event;
 import Models.Group;
 import Models.Message;
 import Models.User;

@@ -24,6 +24,7 @@ public class User {
     private UserStatus userStatus;
     private Course course;
     private int semester;
+    private int groupID;
 
     public User(String uid) {
         this.uid = uid;
@@ -153,5 +154,13 @@ public class User {
      */
     public void setSemester(int semester) {
         this.semester = semester;
+    }
+    
+    public int getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(int groupID) {
+        this.groupID = groupID;
     }
 }

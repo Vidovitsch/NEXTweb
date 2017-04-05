@@ -8,14 +8,11 @@ package Database;
 import Enums.Course;
 import Enums.UserRole;
 import Enums.UserStatus;
-import Models.Event;
 import Models.User;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -49,6 +46,7 @@ public class DBUserModifier implements IModUser {
         data.put("Status", user.getUserStatus().toString());
         data.put("Course", user.getCourse().toString());
         data.put("Semester", String.valueOf(user.getSemester()));
+        data.put("GroupID", String.valueOf(user.getGroupID()));
         Firebase ref = firebase.child("User").child(user.getUid());
         ref.setValue(data);
     }
@@ -76,7 +74,7 @@ public class DBUserModifier implements IModUser {
                         UserStatus userStatus = UserStatus.valueOf((String) ds.child("Status").getValue());
                         Course course = Course.valueOf((String) ds.child("Course").getValue());
                         int semester = Integer.valueOf((String) ds.child("Semester").getValue());
-
+                        int groupID = Integer.valueOf((String) ds.child("GroupID").getValue());
                         user = new User(uid);
                         user.setName(name);
                         user.setEmail(email);
@@ -84,6 +82,7 @@ public class DBUserModifier implements IModUser {
                         user.setUserStatus(userStatus);
                         user.setCourse(course);
                         user.setSemester(semester);
+                        user.setGroupID(groupID);
                         break;
                     }
                 }

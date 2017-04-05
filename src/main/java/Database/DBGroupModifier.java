@@ -6,7 +6,6 @@
 
 package Database;
 
-import Models.Event;
 import Models.Group;
 import Models.Message;
 import Models.User;
@@ -48,6 +47,7 @@ public class DBGroupModifier implements IModGroup {
         //Adding a group to firebase
         Map<String, String> data = new HashMap();
         data.put("Name", group.getGroupName());
+        data.put("Location", String.valueOf(group.getLocation()));
         Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()));
         ref.setValue(data);
         
@@ -112,6 +112,7 @@ public class DBGroupModifier implements IModGroup {
                         //Fetching other data
                         int groupNumber = Integer.valueOf((String) ds.getKey());
                         String groupName = (String) ds.child("Name").getValue();
+                        int location = Integer.valueOf(String.valueOf(ds.child("Location").getValue()));
 
                         //Fetching messages
                         Message msg;
@@ -129,6 +130,7 @@ public class DBGroupModifier implements IModGroup {
                         group.setGroupName(groupName);
                         group.setMessages(messages);
                         group.setUsers(members);
+                        group.setLocation(location);
                         
                         groupFound = false;
                     }

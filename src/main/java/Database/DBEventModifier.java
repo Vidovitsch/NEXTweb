@@ -156,8 +156,8 @@ public class DBEventModifier implements IModEvent {
     private ArrayList<User> attendantsToUsers(DataSnapshot snapshot) {
         ArrayList<User> users = new ArrayList();
         for (DataSnapshot ds : snapshot.getChildren()) {
-            String pcn = ds.getKey();
-            users.add(new User(pcn));
+            String uid = ds.getKey();
+            users.add(new User(uid));
         }
         return users;
     }

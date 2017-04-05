@@ -19,7 +19,8 @@ public class Group {
     private String groupName;
     private ArrayList<User> users;
     private ArrayList<Message> messages;
-    
+    private int location = 0;
+        
     public Group(int groupNumber) {
         this.groupNumber = groupNumber;
         users = new ArrayList();
@@ -95,5 +96,13 @@ public class Group {
      */
     public void setMessages(ArrayList<Message> messages) {
         this.messages = messages;
+    }
+    
+    public int getLocation() {
+        return location;
+    }
+
+    public void setLocation(int groupLocation) {
+        this.location = location;
     }
 }

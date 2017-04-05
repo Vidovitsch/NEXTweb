@@ -29,11 +29,11 @@
                     <form>
                         <div class="form-section">
                             <span>E-mail:</span> </br>
-                            <input class="form-control" type="text" id="email" name="email" required></br>
+                            <input class="form-control" type="text" id="email" name="email" required value="i336483@student.fontys.nl"></br>
                         </div>
                         <div class="form-section">
                             <span>Password:</span> </br>
-                            <input class="form-control" id="password" type="password" name="password" required></br>
+                            <input class="form-control" id="password" type="password" name="password" required value="qwer1234"></br>
                             <input id="forgotpassword-button" class="form-control" type="button" value="Forgot password" />
                             <div id="passwordwrapper">
                                 <input id="login-button" class="form-control" type="submit" value="Login" />
@@ -88,6 +88,7 @@
                     firebase.auth().onAuthStateChanged(function (user) {
                         if (user) {
                             post("loggedin", {currentemail: user.email});
+							document.cookie = "username="+user.email;
                         }
                     });
                     firebase.auth().signInWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {

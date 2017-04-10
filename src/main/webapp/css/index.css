@@ -21,9 +21,15 @@ span:hover {
     margin-top: 120px;
 }
 body{
-    background-color: #1C1C1C;
+/*    background-color: #1C1C1C;*/
+  background: url(/images/indexbackground.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
     text-align: -webkit-center;
 }
+
 
 h1,h2,h3,p,div,a, .headline{
     color: white;
@@ -135,7 +141,7 @@ h1,h2,h3,p,div,a, .headline{
 
 .b05_3d_roll div:nth-child(1) {
     color: #000000;
-    background-color: #000000;
+    background-color: #ffffff;
     transform: rotateX(90deg);
     -webkit-transform: rotateX(90deg);
     -moz-transform: rotateX(90deg);
@@ -148,8 +154,8 @@ h1,h2,h3,p,div,a, .headline{
 }
 
 .b05_3d_roll div:nth-child(2) {
-    color: #000000;
-    background-color: #ffffff;
+    color: #ffffff;
+    background-color: #000000;
     transform: rotateX(0deg);
     -webkit-transform: rotateX(0deg);
     -moz-transform: rotateX(0deg);
@@ -162,7 +168,7 @@ h1,h2,h3,p,div,a, .headline{
 }
 
 .b05_3d_roll:hover div:nth-child(1) {
-    color: #ffffff;
+    color: #000000;
     transition: all 0.2s ease;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
@@ -172,7 +178,7 @@ h1,h2,h3,p,div,a, .headline{
 }
 
 .b05_3d_roll:hover div:nth-child(2) {
-    background-color: #000000;
+    background-color: #ffffff;
     transition: all 0.2s ease;
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;

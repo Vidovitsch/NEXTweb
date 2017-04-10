@@ -32,7 +32,6 @@ public class messageboardController{
     @RequestMapping(value = "/messageboard", method = RequestMethod.GET)
     public ModelAndView initWorkshopmessageboardScreen(HttpServletRequest request) {
         ModelAndView model = new ModelAndView("messageboard");
-        
         try
         {
             Cookie[] cookies = request.getCookies();
@@ -40,13 +39,13 @@ public class messageboardController{
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals("username"))
                     {
-                        String email = cookie.getValue();
-                        model.addObject("userUID", groupDB.getUid(email));
-                        group = groupDB.getGroup(groupDB.getUid(email));
+                        String uid = groupDB.getUid(cookie.getValue());
+                        model.addObject("userUID", uid);
+                        group = groupDB.getGroup(uid);
                         model.addObject("group", group.getGroupName());
-                        List<Message> messages = group.getMessages();
-                        messages = groupDB.addNamesToMessages(messages);
-                        model.addObject("messages", messages);                     
+                        List<Message> messages = groupDB.addNamesToMessages(group.getMessages());
+                          
+                        model.addObject("messages", messages);
                     }
                 }
             }       
@@ -61,7 +60,6 @@ public class messageboardController{
     
     @RequestMapping(method=RequestMethod.POST)
     public void postMessage(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("OWI");
         System.out.println(request.getParameter("message"));
         
     }

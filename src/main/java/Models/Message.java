@@ -30,6 +30,14 @@ public class Message {
         this.userName = userName;
     }
     
+    public Message(String uid, int groupNumber, String content, String date)
+    {
+        this.groupNumber = groupNumber;
+        this.uid = uid;
+        this.content = content;
+        this.date = date;
+    }
+    
     /**
      * Get the value of groupNumber
      * 

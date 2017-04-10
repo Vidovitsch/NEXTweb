@@ -32,9 +32,9 @@ public class DBGroupModifier implements IModGroup {
     private Firebase firebase;
     private Object lock;
     private boolean done = false;
-    private boolean groupFound = false;
     private Group group = null;
     private String uid = "";
+    private String groupNumber = "";
     
     public DBGroupModifier() {
         FBConnector connector = FBConnector.getInstance();
@@ -87,63 +87,63 @@ public class DBGroupModifier implements IModGroup {
 
     @Override
     public Group getGroup(final String uid) {
-        Firebase ref = firebase.child("Group");
-        ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            
+        Firebase refUser = firebase.child("User");
+        refUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot ds : snapshot.getChildren()) {
-                    ArrayList<Message> messages = new ArrayList();
-                    ArrayList<User> members = new ArrayList();
-                    
-                    //Fetching members
-                    User u;
-                    for (DataSnapshot ds3 : ds.child("Members").getChildren()) {
-                        String uid2 = ds3.getKey();
-                        if (uid2.equals(uid)) {
-                            groupFound = true;
-                        }
-                        u = new User(uid);
-                        members.add(u);
-                    }
-                    
-                    if (groupFound) {
-                        System.out.println("Test2");
-                        //Fetching other data
-                        int groupNumber = Integer.valueOf((String) ds.getKey());
-                        String groupName = (String) ds.child("Name").getValue();
-                        int location = Integer.valueOf(String.valueOf(ds.child("Location").getValue()));
-
-                        //Fetching messages
-                        Message msg;
-                        for (DataSnapshot ds2 : ds.child("Messages").getChildren()) {
-                            String date = ds2.getKey();
-                            String content = String.valueOf(ds2.child("content").getValue());
-                            String uid = String.valueOf(ds2.child("UID").getValue());
-                            msg = new Message(uid, uid, 0, content, date);
-                            
-                            // TODO: change to get name instead of double uid
-                            messages.add(msg);
-                        }
-
-                        group = new Group(groupNumber);
-                        group.setGroupName(groupName);
-                        group.setMessages(messages);
-                        group.setUsers(members);
-                        group.setLocation(location);
-                        
-                        groupFound = false;
-                    }
-                }
+                groupNumber = String.valueOf(snapshot.child("opzo80Mv3fNZoZNmzj2eJBr3Jfc2").child("GroupID").getValue());
                 unlockFXThread();
             }
-            
+
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString() + "hoi");
+                System.out.println(fe.toException().toString());
             }
         });
         
+        
+        lockFXThread();
+        
+        if (!groupNumber.equals(""))
+        {
+            Firebase refGroup = firebase.child("Group");
+            refGroup.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    DataSnapshot ds = snapshot.child(groupNumber);
+                    ArrayList<Message> messages = new ArrayList();
+                    ArrayList<User> members = new ArrayList();
+
+                    //Fetching other data
+                    int groupNumber = Integer.valueOf((String) ds.getKey());
+                    int location=  Integer.valueOf(String.valueOf(ds.child("Location").getValue()));
+                    String groupName = (String) ds.child("Name").getValue();
+
+                    //Fetching messages
+                    Message msg;
+                    for (DataSnapshot ds2 : ds.child("Messages").getChildren()) {
+                        String date = ds2.getKey();
+                        String content = String.valueOf(ds2.child("Content").getValue());
+                        String uid = String.valueOf(ds2.child("UID").getValue());
+                        msg = new Message(uid, 0, content, date);
+                        // TODO: change to get name instead of double uid
+                        messages.add(msg);
+                    }
+
+                    group = new Group(groupNumber);
+                    group.setGroupName(groupName);
+                    group.setMessages(messages);
+                    group.setUsers(members);
+                    group.setLocation(location);
+                    unlockFXThread();
+                }
+
+                @Override
+                public void onCancelled(FirebaseError fe) {
+                    System.out.println(fe.toException().toString());
+                }
+            });
+        }
         lockFXThread();
         return group;
     }
@@ -167,7 +167,7 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString() + "hoi");
+                System.out.println(fe.toException().toString());
             }
         });
         lockFXThread();
@@ -180,16 +180,17 @@ public class DBGroupModifier implements IModGroup {
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (Message msg : messages)
+
+                for (Message msg : messages) 
                 {
-                    msg.setUserName((String) snapshot.child(msg.getUid()).child("Name").getValue());
+                    msg.setUserName(String.valueOf(snapshot.child(msg.getUid()).child("Name").getValue()));
                 }
                 unlockFXThread();
             }
             
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString() + "hoi");
+                System.out.println(fe.toException().toString());
             }
         });
         lockFXThread();
@@ -256,7 +257,7 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString() + "hoi");
+                System.out.println(fe.toException().toString());
             }
         });
         

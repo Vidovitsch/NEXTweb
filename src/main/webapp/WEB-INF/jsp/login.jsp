@@ -65,6 +65,8 @@
             firebase.initializeApp(config);
         </script>
         <script>
+            // Get a reference to the database service
+            var database = firebase.database();
             firebase.auth().signOut().then(function () {
                 // Sign-out successful.
             }).catch(function (error) {
@@ -113,33 +115,72 @@
             document.getElementById("forgotpassword-button").onclick = function () {
                 email = document.getElementById("email");
                 var emailAddress = document.getElementsByName("email")[0].value;
-                if (email.checkValidity() === true)
-                {
-                    if (validateEmail(emailAddress))
-                    {
+                if (email.checkValidity() === true) {
+                    if (validateEmail(emailAddress)) {
                         var auth = firebase.auth();
-                        auth.sendPasswordResetEmail(emailAddress).then(function () {
-                            alert("Mail verstuurd");
-                        }, function (error) {
-                            if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
-                            {
+                        var uid;
+                        var lastpasswordreset;
+                        try {
+                            firebase.database().ref('/User').once("value", function (snapshot) {
+                                snapshot.forEach(function (childSnapshot) {
+                                    var mail = childSnapshot.val().Mail;
+                                    if (mail === emailAddress) {
+                                        uid = childSnapshot.key;
+                                        firebase.database().ref('/passwordrequest/').once('value').then(function (snapshot) {
+                                            if (snapshot.hasChild(uid)) {
+                                                var childsnapshot = snapshot.child(uid);
+                                                var lastpasswordreset = snapshot.val().lastResetRequest;
+                                                var resetdate = new Date(lastpasswordreset);
+                                                var comparedate = new Date();
+                                                comparedate.setHours(comparedate.getHours() - 2);
+                                                if (comparedate.getTime() > resetdate) {
+                                                    auth.sendPasswordResetEmail(emailAddress).then(function () {
+                                                        firebase.database().ref('passwordrequest/' + uid).set({
+                                                            lastResetRequest: new Date().getTime()
+                                                        });
+                                                        alert("Mail verstuurd");
+                                                    }, function (error) {
+                                                        var errorMessage = error.message;
+                                                        if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.") {
+                                                        } else {
+                                                            alert(errorMessage);
+                                                        }
+                                                    });
+                                                } else {
+                                                    alert("De laatste reset voor " + emailAddress + " is recentelijk al gedaan\nprobeer het later nog eens");
+                                                }
+                                            } else {
+                                                alert("nog geen reset aangevraagd");
+                                                auth.sendPasswordResetEmail(emailAddress).then(function () {
+                                                    firebase.database().ref('passwordrequest/' + uid).set({
+                                                        lastResetRequest: new Date().getTime()
+                                                    });
+                                                    alert("Mail verstuurd! Bekijk je inbox om een nieuw wachtwoord op te geven :)");
+                                                }, function (error) {
+                                                    var errorMessage = error.message;
+                                                    if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.") {
+                                                    } else {
+                                                        alert(errorMessage);
+                                                    }
+                                                });
+                                            }
+                                        });
+                                        throw new Error("found user");
+                                    }
+                                });
+                            });
+                        } catch (err) {
 
-                            } else
-                            {
-                                alert(errorMessage);
-                            }
-                        });
-                    } else
-                    {
+                        }
+                    } else {
                         email.setCustomValidity("This is not a valid email address");
                         email.reportValidity();
                     }
-
                 } else {
                     email.setCustomValidity("Email cant be empty");
                     email.reportValidity();
                 }
-            }
+            };
 
             function validateEmail(email) {
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -148,8 +189,7 @@
             document.getElementById("register-button").onclick = function () {
                 password = document.getElementById("password");
                 email = document.getElementById("email");
-                if (email.checkValidity() === true && password.checkValidity() === true)
-                {
+                if (email.checkValidity() === true && password.checkValidity() === true) {
                     var confirmcontrols = '<span>Confirm password:</span> </br><input class="form-control" id="confirmpassword" type="password" name="confirmpassword" required> </br>\
                                     <input id="confirm-button" class="form-control" type="submit" value="Confirm" />';
                     document.getElementById('passwordwrapper').innerHTML = confirmcontrols;
@@ -178,11 +218,9 @@
                                 // Handle Errors here.
                                 var errorCode = error.code;
                                 var errorMessage = error.message;
-                                if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.")
-                                {
+                                if (errorMessage === "A network error (such as timeout, interrupted connection or unreachable host) has occurred.") {
 
-                                } else
-                                {
+                                } else {
                                     alert(errorMessage);
                                 }
                             });
@@ -193,8 +231,7 @@
                         }
                         return false;
                     };
-                } else
-                {
+                } else {
                     password.reportValidity();
                     email.reportValidity();
                 }

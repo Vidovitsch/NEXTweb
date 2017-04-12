@@ -198,7 +198,7 @@
                                             firebase.database().ref('/passwordrequest/').once('value').then(function (snapshot) {
                                                 if (snapshot.hasChild(uid)) {
                                                     var childsnapshot = snapshot.child(uid);
-                                                    var lastpasswordreset = snapshot.val().lastResetRequest;
+                                                    var lastpasswordreset = childsnapshot.val().lastResetRequest;
                                                     var resetdate = new Date(lastpasswordreset);
                                                     var comparedate = new Date();
                                                     comparedate.setHours(comparedate.getHours() - 2);

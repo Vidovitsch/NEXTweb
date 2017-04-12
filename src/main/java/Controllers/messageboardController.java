@@ -44,7 +44,6 @@ public class messageboardController{
                         group = groupDB.getGroup(uid);
                         model.addObject("group", group.getGroupName());
                         List<Message> messages = groupDB.addNamesToMessages(group.getMessages());
-                          
                         model.addObject("messages", messages);
                     }
                 }

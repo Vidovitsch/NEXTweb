@@ -17,15 +17,10 @@
         <title>Group</title>
     </head>
     <body>
-
         <div class="wrapper2">
-
             <div id="next-group">
-
                 <h2>Group Nr: ${group.groupNumber}</h2>
-
                 <c:forEach var="user" items="${users}">
-
                     <div class="dropdown">
                         <div class="dropdown-div">
                             <div style="display: inline-block; float: left; width: 75px">
@@ -49,15 +44,11 @@
                                 <td><b>class: </b></td>
                                 <td>S43, Software</td>
                             </tr>
-
                             </table>
                         </div>
                     </div>
-
                     <br>        
-
                 </c:forEach>
-
             </div>
         </div>
             

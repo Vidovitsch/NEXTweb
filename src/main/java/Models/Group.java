@@ -98,11 +98,21 @@ public class Group {
         this.messages = messages;
     }
     
+    /**
+     * Get the value of the group location
+     * 
+     * @return group location (table number)
+     */
     public int getLocation() {
         return location;
     }
 
+    /**
+     * Set the value of messages
+     * 
+     * @param groupLocation
+     */
     public void setLocation(int groupLocation) {
-        this.location = location;
+        this.location = groupLocation;
     }
 }

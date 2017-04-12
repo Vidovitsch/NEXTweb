@@ -59,6 +59,7 @@ h1 {
    display: inline-block;
    text-align: right;
    width: 150px;
+   font-size: 10px;
 }
 
 .message-class {

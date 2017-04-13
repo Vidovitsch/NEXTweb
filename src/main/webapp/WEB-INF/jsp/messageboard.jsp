@@ -51,10 +51,8 @@
                     </c:forEach> 
                 </div>
                 <div class="input-container">
-                    <form method="post" action="servlet">
-                        <input id="txtareamsg" name="message" type="text"/>
-                        <button id="btnSend" name="btnSend" type="submit">Post</button>
-                    </form>
+                    <input id="txtareamsg" name="message" type="text"/>
+                    <button id="btnSend" name="btnSend" type="submit" onClick="postMessage('${userUID}')">Post</button>
                 </div>
             </div>
             <script>
@@ -104,7 +102,6 @@
                 };
             
                 var messages = database.ref("Group/0/Messages");
-
                 messages.on("child_added", function(snapshot) {
                 var message = snapshot.val();
                 var userName = database.ref("User/" + message.UID + "/Name").valueOf();
@@ -119,6 +116,6 @@
                              '<div class="otherMessageWrapper"><div class="otherMessagecss"><div class="message-class"><span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span></div><div class="info-msg"><span class="username-label">' + userName + '</span><br><span class="date-label">' + snapshot.toString() + '</span></div></div></div>';
                      }
                 });
-            </script>
+        </script>
     </body>
 </html>

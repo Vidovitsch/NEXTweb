@@ -33,7 +33,6 @@ and open the template in the editor.
 
 .dropdown-content {
     display: none;
-    position: fixed;
     background-color: #f9f9f9;
     min-width: 300px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -146,4 +145,7 @@ and open the template in the editor.
     width: 75%;
     float: left;
     resize: none;
+    border-color: #333333;
+    border-radius: 2px;
+    padding: 1.5%;
 }

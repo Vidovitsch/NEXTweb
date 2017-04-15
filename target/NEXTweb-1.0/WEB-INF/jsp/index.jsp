@@ -16,8 +16,6 @@
             <div class="headline">Je ultieme ervaring begint hier</div>
             <a href="events.htm">Open workshop screen</a><br>
             <br>
-            <a href="messageboard.htm">Open MessageBoard</a><br>
-            <br>
             <a href="schedule.htm">Open schedule</a><br>
             <br>
             <a href="group.htm">Open group</a><br>

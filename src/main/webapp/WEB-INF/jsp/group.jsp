@@ -24,7 +24,7 @@
     <body>
         <div class="wrapper">
             <div id="next-group">
-                <h2>Group Nr: ${group.groupNumber}</h2>
+                <!-- <h2>Group Nr: ${group.groupNumber}</h2> -->
                 <c:forEach var="user" items="${users}">
                     <div class="dropdown">
                         <div class="dropdown-div">

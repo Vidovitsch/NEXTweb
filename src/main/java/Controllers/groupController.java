@@ -50,8 +50,44 @@ public class groupController
         u2.setCourse(Course.Software_Engineering);
         u2.setSemester(4);
         
+        User u3 = new User("JuHFVbEaTjYuHXpROGc71lSFsg23");
+        u3.setEmail("leet.mofo@student.fontys.nl");
+        u3.setName("Leet Mofo");
+        u3.setUserRole(UserRole.Student);
+        u3.setUserStatus(UserStatus.Attending);
+        u3.setCourse(Course.Software_Engineering);
+        u3.setSemester(4);
+        
+        User u4 = new User("JuHFVbEaTjYuHXpROGc71lSFsg23");
+        u4.setEmail("leet.mofo@student.fontys.nl");
+        u4.setName("Leet Mofo");
+        u4.setUserRole(UserRole.Student);
+        u4.setUserStatus(UserStatus.Attending);
+        u4.setCourse(Course.Software_Engineering);
+        u4.setSemester(4);
+        
+        User u5 = new User("JuHFVbEaTjYuHXpROGc71lSFsg23");
+        u5.setEmail("leet.mofo@student.fontys.nl");
+        u5.setName("Leet Mofo");
+        u5.setUserRole(UserRole.Student);
+        u5.setUserStatus(UserStatus.Attending);
+        u5.setCourse(Course.Software_Engineering);
+        u5.setSemester(4);
+        
+        User u6 = new User("JuHFVbEaTjYuHXpROGc71lSFsg23");
+        u6.setEmail("leet.mofo@student.fontys.nl");
+        u6.setName("Leet Mofo");
+        u6.setUserRole(UserRole.Student);
+        u6.setUserStatus(UserStatus.Attending);
+        u6.setCourse(Course.Software_Engineering);
+        u6.setSemester(4);
+        
         ArrayList<User> users = new ArrayList();
         users.add(u2);
+        users.add(u3);
+        users.add(u4);
+        users.add(u5);
+        users.add(u6);
         
         group.setUsers(users);
     }

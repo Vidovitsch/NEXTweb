@@ -82,8 +82,6 @@
                 if (eventType === "Workshop") {
                     document.getElementById("popup-wrapper").innerHTML +=
                             '<div id="popup-workshop-form"> \
-                                <span id="attending-users">Attendance: ${workshop.attendingUsers} / \
-                                    ${workshop.maxUsers}</span></br> \
                                 <input id="attend-button" class="popup-control" type="submit" value="Attend" /> \
                             </div>';
                 }     

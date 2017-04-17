@@ -23,6 +23,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import Database.IModEvent;
 import Enums.Day;
+import Models.EventViewModel;
+import Models.LoginModel;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 /**
@@ -39,6 +45,7 @@ public class eventsController {
     public ModelAndView initWorkshopScreen() {
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject(new EventViewModel());
         
         return modelView;
     }

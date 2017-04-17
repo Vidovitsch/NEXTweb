@@ -39,8 +39,8 @@ public class DBEventModifier implements IModEvent {
     }
 
     @Override
-    public void addAttendingUser(Workshop event, User user) {
-        Firebase ref = firebase.child("Event").child(event.getId()).child("Attending").child(user.getUid());
+    public void addAttendingUser(String eventID, String uid) {
+        Firebase ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
         ref.setValue("Attending");
     }
     

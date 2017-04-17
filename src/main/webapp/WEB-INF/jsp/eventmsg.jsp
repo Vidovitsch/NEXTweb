@@ -22,24 +22,70 @@
     </head>
     <body>
         <div class="wrapper">
-            <h1>Hello World!</h1>
+            <div id="message">
+                <div id="cssLoader" class="loader"></div><br>
+            </div>
         </div>
         <script>
-            // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyCRi0Ma5ekQxhwg-BfQCa6684hMzvR3Z1o",
-                authDomain: "nextweek-b9a58.firebaseapp.com",
-                databaseURL: "https://nextweek-b9a58.firebaseio.com",
-                storageBucket: "nextweek-b9a58.appspot.com",
-                messagingSenderId: "488624254338"
+            
+            function startTimer(duration, display) {
+                var start = Date.now(),
+                    diff,
+                    seconds;
+                function timer() {
+                    // get the number of seconds that have elapsed since 
+                    // startTimer() was called
+                    diff = duration - (((Date.now() - start) / 1000) | 0);
+
+                    // does the same job as parseInt truncates the float
+                    seconds = (diff % 60) | 0;
+
+                    seconds = seconds < 10 ? "0" + seconds : seconds;
+                    
+                    if (seconds === '00') {
+                        location.replace("/events");
+                    }
+                    
+                    display.textContent = seconds; 
+
+                    if (diff <= 0) {
+                        // add one second so that the count down starts at the full duration
+                        // example 05:00 not 04:59
+                        start = Date.now() + 1000;
+                    }
+                };
+                // we don't want to wait a full second before the timer starts
+                timer();
+                setInterval(timer, 1000);
+            }
+            
+            function startCountDown() {
+                var seconds = 5,
+                display = document.querySelector('#time');
+                startTimer(seconds, display);
             };
-            firebase.initializeApp(config); 
-            var database = firebase.database();
-            alert("${eventID}");
-            var attendants = database.ref("Event/${eventID}/Attending");
-            attendants.on("child_added", function(snapshot) {
-                alert("Succes!");
-            });
+            
+            function initRedirect(available) {
+                document.getElementById("message").innerHTML += 
+                        '<div id="available"><span>' + available + '</span></div>';
+                document.getElementById("message").innerHTML += 
+                        '<div id="cdTime">Redirecting in <span id="time"></span> seconds!</div>';
+                startCountDown();
+            }
+            
+            window.onload = function() {
+                var loader = document.getElementById('cssLoader'),
+                    seconds = 2,
+                    second = 0,
+                    interval;
+                interval = setInterval(function() {
+                    if (second >= seconds) {
+                        loader.parentNode.removeChild(loader);
+                        initRedirect("${available}");
+                    }
+                second++;
+                }, 1000);
+            }
         </script>
     </body>
 </html>

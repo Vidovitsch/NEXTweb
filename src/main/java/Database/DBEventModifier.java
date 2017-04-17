@@ -113,6 +113,33 @@ public class DBEventModifier implements IModEvent {
         return events;
     }
     
+    @Override
+    public String[] checkAttendancy(String eventID) {
+        final String[] attendancy = new String[2];
+        Firebase ref = firebase.child("Event/" + eventID);
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                attendancy[1] = String.valueOf(snapshot.child("MaxUsers").getValue());
+                snapshot = snapshot.child("Attending");
+                if (snapshot != null) {
+                    attendancy[0] = String.valueOf(snapshot.getChildrenCount());
+                }
+                
+                unlockFXThread();
+            }
+            
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        
+        lockFXThread();
+        return attendancy;
+    } 
+    
     private Event specifyEvent(DataSnapshot ds) {
         String eventType = (String) ds.child("EventType").getValue();
         if (eventType.equals("Workshop")) {

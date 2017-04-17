@@ -52,4 +52,6 @@ public interface IModEvent {
      * @param user 
      */
     void removeAttendingUser(Workshop event, User user);
+    
+    String[] checkAttendancy(String eventID);
 }

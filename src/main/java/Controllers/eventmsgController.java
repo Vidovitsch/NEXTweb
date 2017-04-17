@@ -9,7 +9,11 @@ import Database.DBEventModifier;
 import Database.DBGroupModifier;
 import Database.IModEvent;
 import Database.IModGroup;
+import Enums.EventType;
+import Models.Event;
 import Models.EventViewModel;
+import Models.Workshop;
+import java.util.ArrayList;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -33,16 +37,25 @@ public class eventmsgController  {
             ModelMap model, HttpServletRequest request) {
         String uid = getCurrentUID(request);
         String eventID = eventViewModel.getEventID();
+        ArrayList<ArrayList<Event>> events = (ArrayList<ArrayList<Event>>) model.get("events");
+        
         ModelAndView loginView = new ModelAndView("login");
         ModelAndView messageView = new ModelAndView("eventmsg");
         messageView.addObject("eventID", eventID);
         messageView.addObject("uid", uid);
         
+        String[] a = eventDB.checkAttendancy(eventID);
+        
         //Redirect user to the login screen if he/she isn't signed up yet
         if (uid == null) {
             return loginView;
         } else {
-            eventDB.addAttendingUser(eventID, uid);
+            if (Integer.valueOf(a[1]) != Integer.valueOf(a[0])) {
+                eventDB.addAttendingUser(eventID, uid);
+                messageView.addObject("available", "Attendance succesful!");
+            } else {
+                messageView.addObject("available", "This workshop is full!");
+            }
             return messageView;
         }
     }
@@ -64,4 +77,6 @@ public class eventmsgController  {
             }
         return uid;
     }
+    
+    
 }

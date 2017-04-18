@@ -11,12 +11,7 @@
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-app.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
-        <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-        
+    <head>        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="/css/group.css" />
         <title>Group</title>
@@ -67,14 +62,6 @@
         </div>
         <script>
             // Initialize Firebase
-            var config = {
-                apiKey: "AIzaSyCRi0Ma5ekQxhwg-BfQCa6684hMzvR3Z1o",
-                authDomain: "nextweek-b9a58.firebaseapp.com",
-                databaseURL: "https://nextweek-b9a58.firebaseio.com",
-                storageBucket: "nextweek-b9a58.appspot.com",
-                messagingSenderId: "488624254338"
-            };
-            firebase.initializeApp(config); 
             var database = firebase.database();
             
             document.getElementById("txtareamsg")

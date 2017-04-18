@@ -31,7 +31,6 @@
             <props>
                 <prop key="map.htm">mapController</prop>
                 <prop key="events.htm">eventsController</prop>
-                <prop key="messageboard.htm">messageboardController</prop>
                 <prop key="schedule.htm">scheduleController</prop>
                 <prop key="group.htm">groupController</prop>
                 <prop key="login.htm">loginController</prop>
@@ -42,7 +41,6 @@
                 <prop key="/requestregistration">loginController</prop>
                 <prop key="/loggedin">loginController</prop>
                 <prop key="/login">loginController</prop>
-                <prop key="eventmsg">eventmsgController</prop>
                 
             </props>
         </property>

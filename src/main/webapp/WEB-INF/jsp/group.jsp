@@ -64,19 +64,47 @@
             // Initialize Firebase
             var database = firebase.database();
             
+            var input = document.getElementById('txtareamsg');
+            input.focus();
+            input.select();
+            
             document.getElementById("txtareamsg")
                 .addEventListener("keyup", function(event) {
                 event.preventDefault();
                 if (event.keyCode == 13) {
                     document.getElementById("btnSend").click();
                 }
-            });
+            }); 
+            
+            var totalMessages = 0;
+            setInterval(setTime, 5000);
+
+            function setTime()
+            {
+                totalMessages = 0;
+            }
+
 
             var postMessage = function(uid) {
+                if (totalMessages > 3)
+                {
+                    if (totalMessages > 4)
+                    {
+                        alert("Dude, stahp");
+                        return;
+                    }
+                    alert("Don't spam the page please");
+                    totalMessages++;
+                    return;
+                }
+                if (!document.getElementById("txtareamsg").value)
+                    return;
                 var content = document.getElementById("txtareamsg").value;
                 var dateTime = getCurrentDateTime();
 
                 writeToFirebase(dateTime, content, uid);
+                totalMessages++;
+                console.log(totalMessages);
                 document.getElementById("txtareamsg").value = '';
             };
 

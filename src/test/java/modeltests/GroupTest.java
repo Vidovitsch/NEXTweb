@@ -36,7 +36,7 @@ public class GroupTest {
     
     @Before
     public void setUp() {
-        testGroup = new Group(1);
+        testGroup = new Group("1");
     }
     
     @After
@@ -45,13 +45,13 @@ public class GroupTest {
 
     @Test
     public void testGroupConstructor(){
-        assertEquals("the group number was not propperly assined", testGroup.getGroupNumber(), 1);
+        assertEquals("the group number was not propperly assined", testGroup.getGroupNumber(), "1");
     }
     
     @Test
     public void testGroupConstructorTwo(){
-        testGroup = new Group(99);
-        assertEquals("the group number was not propperly assined", testGroup.getGroupNumber(), 99);
+        testGroup = new Group("99");
+        assertEquals("the group number was not propperly assined", testGroup.getGroupNumber(), "99");
     }
     
     @Test
@@ -68,14 +68,14 @@ public class GroupTest {
     
     @Test
     public void testGroupNumber(){
-        testGroup.setGroupNumber(4);
-        assertEquals("The setGroupNumber method did not assign the propper value to GroupNumber", 4, testGroup.getGroupNumber());
+        testGroup.setGroupNumber("4");
+        assertEquals("The setGroupNumber method did not assign the propper value to GroupNumber", "4", testGroup.getGroupNumber());
     }
     
     @Test
     public void testGroupNumberTwo(){
-        testGroup.setGroupNumber(1);
-        assertEquals("The setGroupNumber method did not assign the propper value to GroupNumber", 1, testGroup.getGroupNumber());
+        testGroup.setGroupNumber("1");
+        assertEquals("The setGroupNumber method did not assign the propper value to GroupNumber", "1", testGroup.getGroupNumber());
     }
     
     @Test

@@ -62,16 +62,18 @@ and open the template in the editor.
 }
 
 #next-group {
-    float: left;
+    position: absolute;
     width: 30%;
     padding: 1%;
 }
 
 #Messageboard-container {
     width: 50%;
-    float: right;
+    display: inline;
+    position: absolute;
     height: 80%;
     padding: 1%;
+    left: 400px;
 }
 
 #messages {

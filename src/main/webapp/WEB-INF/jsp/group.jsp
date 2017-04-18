@@ -24,8 +24,8 @@
     <body>
         <div class="wrapper">
             <div id="next-group">
-                <!-- <h2>Group Nr: ${group.groupNumber}</h2> -->
-                <c:forEach var="user" items="${users}">
+                <h2>Group Nr: ${group.groupNumber}</h2>
+                <c:forEach var="user" items="${group.users}">
                     <div class="dropdown">
                         <div class="dropdown-div">
                             <div style="display: inline-block; float: left; width: 75px">
@@ -46,8 +46,8 @@
                                 <td>${user.email}</td>
                             </tr>
                             <tr>
-                                <td><b>class: </b></td>
-                                <td>S43, Software</td>
+                                <td><b>profile: semester </b></td>
+                                <td>${user.course}: ${user.semester}</td>
                             </tr>
                             </table>
                         </div>
@@ -57,27 +57,7 @@
             </div>
             <div id="Messageboard-container">  
                 <div id="messages" style="overflow-y:scroll;">
-                    <c:forEach var="msg" items="${messages}">
-                        <div class="${userUID == msg.uid ? 'ownMessageWrapper' : 'otherMessageWrapper'}">
-                            <div class="${userUID == msg.uid ? 'ownMessagecss' : 'otherMessagecss'}">
-                                <div class="message-class">
-                                   <span class ="msg-content">${msg.content} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
-                                </div>
-                                <c:choose>
-                                    <c:when test="${userUID != msg.uid}">
-                                        <div class="info-msg">
-                                        <span class="username-label">${msg.userName}</span>
-                                        <br>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="info-msg">
-                                    </c:otherwise>  
-                                </c:choose>
-                                    <span class="date-label">${msg.date}</span>
-                                        </div>
-                            </div>
-                        </div>    
-                    </c:forEach> 
+                    
                 </div>
                 <div class="input-container">
                     <input id="txtareamsg" name="message" type="text"/>
@@ -96,14 +76,21 @@
             };
             firebase.initializeApp(config); 
             var database = firebase.database();
+            
+            document.getElementById("txtareamsg")
+                .addEventListener("keyup", function(event) {
+                event.preventDefault();
+                if (event.keyCode == 13) {
+                    document.getElementById("btnSend").click();
+                }
+            });
 
             var postMessage = function(uid) {
-                console.log("Im here!");
                 var content = document.getElementById("txtareamsg").value;
                 var dateTime = getCurrentDateTime();
 
                 writeToFirebase(dateTime, content, uid);
-                document.getElementById("txtaremsg").value = '';
+                document.getElementById("txtareamsg").value = '';
             };
 
             function getCurrentDateTime() {
@@ -120,32 +107,65 @@
             };
 
             function writeToFirebase(dateTime, content, uid) {
-                var groupID = getGroupID(uid);
-                database.ref('Group/' + groupID + '/Messages/' + dateTime).set({
-                    Content: content,
-                    UID: uid
+                database.ref('User/' + uid + '/GroupID/').once("value", function(data) {
+                    id = data.val();
+                    database.ref('Group/' + id + '/Messages/' + dateTime).set({
+                        Content: content,
+                        UID: uid
+                    });
                 });
             };
-
-            function getGroupID(uid) {
-                return 0; 
-            };
-
+            
             var messages = database.ref("Group/0/Messages");
             messages.on("child_added", function(snapshot) {
-            var message = snapshot.val();
-            var userName = database.ref("User/" + message.UID + "/Name").valueOf();
-                 if (${userUID == msg.uid})
-                 {
-                    document.getElementById("messages").innerHTML += 
-                         '<div class="ownMessageWrapper"><div class="ownMessagecss"><div class="message-class"><span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span></div><div class="info-msg"><span class="date-label">' + snapshot.val().toString() + '</span></div></div></div>';
-                 }
-                 else
-                 {
-                    document.getElementById("messages").innerHTML += 
-                         '<div class="otherMessageWrapper"><div class="otherMessagecss"><div class="message-class"><span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span></div><div class="info-msg"><span class="username-label">' + userName + '</span><br><span class="date-label">' + snapshot.toString() + '</span></div></div></div>';
-                 }
-            });
+                var message = snapshot.val();
+                var userName;
+                var date;
+                date = snapshot.key;
+                database.ref("User/" + message.UID).once("value", function(data) {
+                        userName = data.val().Name;
+                        var lastName = data.val().Lastname;
+                        if (lastName !== undefined)
+                        {
+                            userName += " " + lastName;
+                        }
+                        postMsg(message, userName, date);
+                    });
+                });
+                function postMsg(message, userName, date) {
+                    var uid = "${userUID}";
+                    if (uid === message.UID)
+                    {
+                       document.getElementById("messages").innerHTML += 
+                            '<div class="ownMessageWrapper"> \
+                               <div class="ownMessagecss"> \
+                                   <div class="message-class">\
+                                       <span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>\
+                                   </div>\
+                                   <div class="info-msg">\
+                                       <span class="date-label">' + date + '</span>\
+                                   </div>\
+                               </div>\
+                           </div>';
+                    }
+                    else
+                    {
+                       document.getElementById("messages").innerHTML += 
+                           '<div class="otherMessageWrapper">\
+                               <div class="otherMessagecss">\
+                                   <div class="message-class">\
+                                       <span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>\
+                                   </div>\
+                                   <div class="info-msg">\
+                                       <span class="username-label">' + userName + '</span><br>\
+                                       <span class="date-label">' + date + '</span>\
+                                   </div>\
+                               </div>\
+                           </div>';
+                    }
+                    var el = document.getElementById("messages");
+                    el.scrollTop = el.scrollHeight;
+                }
         </script>
     </body>
 </html>

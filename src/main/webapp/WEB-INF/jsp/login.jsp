@@ -29,7 +29,7 @@
                     <form>
                         <div class="form-section">
                             <span>E-mail:</span> </br>
-                            <input class="form-control" type="text" id="email" name="email" required value="i336483@student.fontys.nl"></br>
+                            <input class="form-control" type="text" id="email" name="email" required value="t.berkvens@student.fontys.nl"></br>
                         </div>
                         <div class="form-section" id="passwordstuff">
                             <span>Password:</span> </br>

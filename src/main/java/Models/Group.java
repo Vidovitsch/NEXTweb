@@ -15,13 +15,13 @@ import java.util.ArrayList;
  */
 public class Group {
 
-    private int groupNumber;
+    private String groupNumber;
     private String groupName;
     private ArrayList<User> users;
     private ArrayList<Message> messages;
     private int location = 0;
         
-    public Group(int groupNumber) {
+    public Group(String groupNumber) {
         this.groupNumber = groupNumber;
         users = new ArrayList();
     }
@@ -31,7 +31,7 @@ public class Group {
      *
      * @return the value of groupNumber
      */
-    public int getGroupNumber() {
+    public String getGroupNumber() {
         return groupNumber;
     }
 
@@ -40,7 +40,7 @@ public class Group {
      *
      * @param groupNumber new value of groupNumber
      */
-    public void setGroupNumber(int groupNumber) {
+    public void setGroupNumber(String groupNumber) {
         this.groupNumber = groupNumber;
     }
     

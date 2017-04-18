@@ -16,7 +16,7 @@ public enum Course {
      * 
      * @return
      */
-    public String getPrefix(Course course) {
+    public static String getPrefix(Course course) {
         switch (course) {
             case Media_Design:
                 return "M";
@@ -26,6 +26,19 @@ public enum Course {
                 return "B";
             default:
                 return "T";
+        }
+    }
+    
+    public static Course getCourse(char prefix) {
+        switch (prefix) {
+            case 'M':
+                return Media_Design;
+            case 'S':
+                return Software_Engineering;
+            case 'B':
+                return Business;
+            default:
+                return Techniek;
         }
     }
 };

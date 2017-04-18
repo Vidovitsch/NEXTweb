@@ -43,8 +43,6 @@ public class messageboardController{
                         model.addObject("userUID", uid);
                         group = groupDB.getGroup(uid);
                         model.addObject("group", group.getGroupName());
-                        List<Message> messages = groupDB.addNamesToMessages(group.getMessages());
-                        model.addObject("messages", messages);
                     }
                 }
             }       
@@ -54,14 +52,5 @@ public class messageboardController{
             System.out.println(ex.getMessage());
         }        
         return model;
-    } 
-    
-    
-    @RequestMapping(method=RequestMethod.POST)
-    public void postMessage(HttpServletRequest request, HttpServletResponse response) {
-        System.out.println(request.getParameter("message"));
-        
     }
-    
-    
 }

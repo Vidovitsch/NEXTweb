@@ -95,7 +95,7 @@
             }
             
             function attend(id) {
-                post("/eventmsg", {eventID : id});
+                post("/events", {eventID : id});
             }
             
             function post(path, params, method) {

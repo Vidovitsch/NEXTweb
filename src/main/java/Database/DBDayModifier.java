@@ -40,7 +40,7 @@ public class DBDayModifier implements IModDay {
         data.put("EndTime", day.getEndTime());
         data.put("Date", day.getDate());
         data.put("LocationName", day.getLocationName());
-        data.put("Description", day.getDescription());
+        //data.put("Description", day.getDescription());
         
         Firebase ref = firebase.child("Days").push();
         ref.setValue(data);

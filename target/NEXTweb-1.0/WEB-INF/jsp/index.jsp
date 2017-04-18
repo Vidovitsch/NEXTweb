@@ -34,7 +34,6 @@
             <script>
                 function GetValue()
                 {
-
                     document.getElementById("message").innerHTML = "m.vaneijkeren@student.fontys.nl;david.debekker@student.fontys.nl;a.dekkerslos@student.fontys.nl";
                     copyToClipboard("message");
                 }
@@ -62,30 +61,14 @@
                     window.location.href = "mailto:user@example.com?subject=Subject&body=message%20goes%20here";
                 });
             </script>
-            <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-app.js"></script>
-            <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
-            <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
-            <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-            <script contextmenu>
-                // Initialize Firebase
-                var config = {
-                    apiKey: "AIzaSyCRi0Ma5ekQxhwg-BfQCa6684hMzvR3Z1o",
-                    authDomain: "nextweek-b9a58.firebaseapp.com",
-                    databaseURL: "https://nextweek-b9a58.firebaseio.com",
-                    storageBucket: "nextweek-b9a58.appspot.com",
-                    messagingSenderId: "488624254338"
-                };
-                firebase.initializeApp(config);
-            </script>
             <script>
                 var user = firebase.auth().currentUser;
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
-                        // User is signed in.
-                        document.getElementById("demo").innerHTML = user.email;
+                        // User is signed in.il;
                     } else {
                         // No user is signed in.
-                        document.getElementById("demo").innerHTML = "no user logged in";
+                        //post("login.htm", null, "get"); 
                     }
                 });
                 document.getElementById("logout-button").onclick = function () {

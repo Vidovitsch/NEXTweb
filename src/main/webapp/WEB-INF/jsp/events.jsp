@@ -85,7 +85,7 @@
                         var red = '#DD4F43'; 
                         document.getElementById("popup-wrapper").innerHTML +=
                             '<div id="popup-workshop-form"> \
-                                <input id="attend-button" class="popup-control" style="background-color: "' + red + '" type="submit" \n\
+                                <input id="attend-button" class="popup-control" style="background-color: "&quot;' + red + '&quot;" type="submit" \n\
                                     onclick="unattend(&quot;' + eventID + '&quot;)" value="Un-Attend" /> \
                             </div>';
                     } else {

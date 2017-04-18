@@ -30,6 +30,7 @@
         <property name="mappings">
             <props>
                 <prop key="map.htm">mapController</prop>
+                <prop key="mapcreation">mapcreationController</prop>
                 <prop key="events.htm">eventsController</prop>
                 <prop key="messageboard.htm">messageboardController</prop>
                 <prop key="schedule.htm">scheduleController</prop>
@@ -37,6 +38,11 @@
                 <prop key="login.htm">loginController</prop>
                 <prop key="loginresult.htm">loginController</prop>
                 <prop key="index.htm">indexController</prop>
+                <prop key="adminpanel.htm">adminController</prop>
+                <prop key="/createWorkshop">adminController</prop>
+                <prop key="/createLecture">adminController</prop>
+                <prop key="/createPerformance">adminController</prop>
+                <prop key="/createSchoolday">adminController</prop>
                 <prop key="registeruser.htm">loginController</prop>
                 <prop key="/requestlogin">loginController</prop>
                 <prop key="/requestregistration">loginController</prop>

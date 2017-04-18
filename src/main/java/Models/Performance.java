@@ -20,6 +20,16 @@ public class Performance extends Event {
     //For visual aspects
     private String hexColor = "#A2B9B2";
     
+    private String attending = "false";
+    
+    public String getAttending() {
+        return this.attending;
+    }
+    
+    public void setAttending(String attending) {
+        this.attending = attending;
+    }
+    
     public Performance(String eventName) {
         super(eventName);
     }

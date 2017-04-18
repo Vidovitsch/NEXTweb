@@ -21,10 +21,20 @@ public class Lecture extends Event {
     //For visual aspects
     private String hexColor = "#F6B067";
     
+    private String attending = "false";
+    
     public Lecture(String eventName) {
         super(eventName);
     }
         
+    public String getAttending() {
+        return this.attending;
+    }
+    
+    public void setAttending(String attending) {
+        this.attending = attending;
+    }
+    
     /**
      * Get the value of eventType
      *

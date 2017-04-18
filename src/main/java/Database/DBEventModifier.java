@@ -46,8 +46,35 @@ public class DBEventModifier implements IModEvent {
     }
     
     @Override
-    public void removeAttendingUser(Workshop event, User user) {
-        Firebase ref = firebase.child("Event").child(event.getId()).child("Attending").child(user.getUid());
+    public void checkAttending(final Workshop ws, final String uid) {
+        final ArrayList<Event> events = new ArrayList();
+        Firebase ref = firebase.child("Event/" + ws.getId() + "/Attending");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    System.out.println(uid + " ::: " + ds.getKey());
+                    if (ds.getKey().equals(uid)) {
+                        ws.setAttending("true");
+                        break;
+                    }
+                }
+                unlockFXThread();
+            }
+            
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        
+        lockFXThread();
+    }
+    
+    @Override
+    public void removeAttendingUser(String eventID, String uid) {
+        Firebase ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
         ref.removeValue();
     }
     

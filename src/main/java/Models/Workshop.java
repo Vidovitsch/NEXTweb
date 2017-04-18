@@ -22,11 +22,21 @@ public class Workshop extends Event {
     private int attendingUsers;
     private EventType eventType= EventType.Workshop;
     
+    private String attending = "false";
+    
     //For visual aspects
     private String hexColor = "#577F92";
     
     public Workshop(String eventName) {
         super(eventName);
+    }
+    
+    public String getAttending() {
+        return this.attending;
+    }
+    
+    public void setAttending(String attending) {
+        this.attending = attending;
     }
     
     /**

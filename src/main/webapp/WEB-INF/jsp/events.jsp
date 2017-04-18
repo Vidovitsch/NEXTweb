@@ -80,9 +80,11 @@
                             </div>'; 
 
                 if (eventType === "Workshop") {
+                    var eventID = id;
                     document.getElementById("popup-wrapper").innerHTML +=
                             '<div id="popup-workshop-form"> \
-                                <input id="attend-button" class="popup-control" type="submit" value="Attend" /> \
+                                <input id="attend-button" class="popup-control" type="submit" \n\
+                                    onclick="attend(&quot;' + eventID + '&quot;)" value="Attend" /> \
                             </div>';
                 }     
             };
@@ -91,6 +93,31 @@
                 var popup = document.getElementById("event");
                 popup.parentNode.removeChild(popup);
             }
+            
+            function attend(id) {
+                post("/events", {eventID : id});
+            }
+            
+            function post(path, params, method) {
+                method = method || "post"; // Set method to post by default if not specified.
+                // The rest of this code assumes you are not using a library.
+                // It can be made less wordy if you use one.
+                var form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+                for (var key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+                        form.appendChild(hiddenField);
+                    }
+                }
+                document.body.appendChild(form);
+                form.submit();
+            }
+            
         </script>
     </body>
 </html>

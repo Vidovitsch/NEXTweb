@@ -42,6 +42,7 @@
                 <prop key="/requestregistration">loginController</prop>
                 <prop key="/loggedin">loginController</prop>
                 <prop key="/login">loginController</prop>
+                
             </props>
         </property>
     </bean>

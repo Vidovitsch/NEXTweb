@@ -40,10 +40,10 @@ public interface IModEvent {
     /**
      * Adds an attendant to a event
      * 
-     * @param event
-     * @param user 
+     * @param eventID
+     * @param uid
      */
-    void addAttendingUser(Workshop event, User user);
+    void addAttendingUser(String eventID, String uid);
     
     /**
      * Removes an attendant from a event
@@ -52,4 +52,6 @@ public interface IModEvent {
      * @param user 
      */
     void removeAttendingUser(Workshop event, User user);
+    
+    String[] checkAttendancy(String eventID);
 }

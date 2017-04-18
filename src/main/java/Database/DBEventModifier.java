@@ -6,7 +6,6 @@
 
 package Database;
 
-import Enums.EventType;
 import Models.Event;
 import Models.Lecture;
 import Models.Performance;
@@ -86,13 +85,10 @@ public class DBEventModifier implements IModEvent {
         data.put("EndTime", event.getEndTime());
         data.put("Date", event.getDate());
         data.put("ImageURL", event.getImageURL());
-        System.out.println("image url: " + event.getImageURL());
         data.put("LocationName", event.getLocationName());
         data.put("Description", event.getDescription());
         data = putEventTypeValues(event, data);
-        if(event.getEventType() == EventType.Workshop){
-            data.put("maxUsers", String.valueOf(((Workshop)event).getMaxUsers()));
-        }
+        
         Firebase ref = firebase.child("Event").push();
         ref.setValue(data);
     }

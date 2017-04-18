@@ -66,7 +66,7 @@ public class eventsController {
         uid = getCurrentUID(request);
         String eventID = eventViewModel.getEventID();
         String mode = eventViewModel.getMode();
-        
+        System.out.println("Mode: " + mode);
         ModelAndView messageView = new ModelAndView("events");
         messageView.addObject("eventID", eventID);
         messageView.addObject("uid", uid);
@@ -76,10 +76,12 @@ public class eventsController {
         String[] a = dbEvent.checkAttendancy(eventID);
 
         if (mode.equals("unattend")) {
+            System.out.println("unattend: " + uid);
             dbEvent.removeAttendingUser(eventID, uid);
             messageView.addObject("message", "Un-Attended");
         } else {
             if (Integer.valueOf(a[1]) != Integer.valueOf(a[0])) {
+                System.out.println(uid);
                 dbEvent.addAttendingUser(eventID, uid);
                 messageView.addObject("message", "Attendance succesful!");
             } else {
@@ -176,9 +178,11 @@ public class eventsController {
     private String getCurrentUID(HttpServletRequest request) {
         uid = null;
         Cookie[] cookies = request.getCookies();
+        System.out.println(request == null ? "request is null" : "request is not null");
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
                     if (cookie.getName().equals("username")) {
+                        System.out.println("username = " + cookie.getValue());
                         uid = groupDB.getUid(cookie.getValue());
                     }
                 }

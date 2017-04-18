@@ -86,7 +86,7 @@
                         document.getElementById("popup-wrapper").innerHTML +=
                             '<div id="popup-workshop-form"> \
                                 <input id="attend-button" class="popup-control" style="background-color: "' + red + '" type="submit" \n\
-                                    onclick="attend(&quot;' + eventID + '&quot;)" value="Un-Attend" /> \
+                                    onclick="unattend(&quot;' + eventID + '&quot;)" value="Un-Attend" /> \
                             </div>';
                     } else {
                         document.getElementById("popup-wrapper").innerHTML +=

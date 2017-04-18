@@ -29,7 +29,7 @@
             <div id="next-header">
                 <a href="index.htm"><img id="nav-logo" src="/images/next_logo.png" /></a>
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="/group.htm">Contact</a></li>
+                    <li class="nav-item"><a href="/contact.htm">Contact</a></li>
                     <li class="nav-item"><a href="/events.htm">Events</a></li>
                     <li class="nav-item"><a href="/group.htm">Group</a></li>
                     <li class="nav-item"><a href="/map.htm">Map</a></li>

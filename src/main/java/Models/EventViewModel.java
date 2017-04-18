@@ -14,6 +14,15 @@ package Models;
 public class EventViewModel {
 
     private String eventID;
+    private String mode;
+    
+    public String getMode() {
+        return this.mode;
+    }
+    
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
     
     public String getEventID() {
         return eventID;

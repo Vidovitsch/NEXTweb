@@ -42,12 +42,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Controller
 public class eventsController {
 
+    private String uid;
+    
     private final static int ROWNUMBER = 3;
     private IModEvent dbEvent = new DBEventModifier();
     private IModGroup groupDB = new DBGroupModifier();
             
     @RequestMapping(value = "/events", method = RequestMethod.GET)
-    public ModelAndView initWorkshopScreen() {
+    public ModelAndView initWorkshopScreen(HttpServletRequest request) {
+        uid = getCurrentUID(request);
+        
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", initEvents(dbEvent.getEvents()));
         modelView.addObject(new EventViewModel());
@@ -59,20 +63,28 @@ public class eventsController {
     @RequestMapping(value = "/events", method = RequestMethod.POST)
     public ModelAndView updateEvent(@ModelAttribute("SpringWeb") EventViewModel eventViewModel,
             ModelMap model, HttpServletRequest request) {
-        String uid = getCurrentUID(request);
+        uid = getCurrentUID(request);
         String eventID = eventViewModel.getEventID();
+        String mode = eventViewModel.getMode();
         
         ModelAndView messageView = new ModelAndView("events");
         messageView.addObject("eventID", eventID);
         messageView.addObject("uid", uid);
+        messageView.addObject("events", initEvents(dbEvent.getEvents()));
+        messageView.addObject(eventViewModel);
         
         String[] a = dbEvent.checkAttendancy(eventID);
-        
-        if (Integer.valueOf(a[1]) != Integer.valueOf(a[0])) {
-            dbEvent.addAttendingUser(eventID, uid);
-            messageView.addObject("message", "Attendance succesful!");
+
+        if (mode.equals("unattend")) {
+            dbEvent.removeAttendingUser(eventID, uid);
+            messageView.addObject("message", "Un-Attended");
         } else {
-            messageView.addObject("message", "This workshop is full!");
+            if (Integer.valueOf(a[1]) != Integer.valueOf(a[0])) {
+                dbEvent.addAttendingUser(eventID, uid);
+                messageView.addObject("message", "Attendance succesful!");
+            } else {
+                messageView.addObject("message", "This workshop is full!");
+            }
         }
         
         return messageView;
@@ -136,6 +148,10 @@ public class eventsController {
                 row = new ArrayList();
                 counter = 0;
             }
+            if (event instanceof Workshop) {
+                Workshop ws = (Workshop) event;
+                dbEvent.checkAttending(ws, uid);
+            }
         }
         orderedEvents.add(row);
         
@@ -158,7 +174,7 @@ public class eventsController {
      * @return uid of the current signed in user
      */
     private String getCurrentUID(HttpServletRequest request) {
-        String uid = null;
+        uid = null;
         Cookie[] cookies = request.getCookies();
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
@@ -168,5 +184,9 @@ public class eventsController {
                 }
             }
         return uid;
+    }
+    
+    private void setAttending(Workshop ws) {
+        
     }
 }

@@ -44,7 +44,7 @@
                                 <td id="${ws.id}">
                                     <div class="event-single" onclick="showPopUp('${ws.hexColor}', '${ws.eventType}', 
                                                 '${ws.eventName}', '${ws.startTime}', '${ws.endTime}', 
-                                                '${ws.locationName}', '${ws.description}', '${ws.id}');">
+                                                '${ws.locationName}', '${ws.description}', '${ws.id}', '${ws.attending}');">
                                         <div class="image">
                                             <img src="${ws.imageURL}" />
                                             <span style="background-color: ${ws.hexColor};" id="event-dateTime">
@@ -61,7 +61,7 @@
             </div>
         </div>
         <script>
-            function showPopUp(hexColor, eventType, eventName, start, end, location, description, id) {
+            function showPopUp(hexColor, eventType, eventName, start, end, location, description, id, attending) {
                 document.getElementById(id).innerHTML += 
                         '<div id="event" class="overlay"> \
                                 <div class="popup"> \
@@ -81,11 +81,20 @@
 
                 if (eventType === "Workshop") {
                     var eventID = id;
-                    document.getElementById("popup-wrapper").innerHTML +=
+                    if (attending === 'true') {
+                        var red = '#DD4F43'; 
+                        document.getElementById("popup-wrapper").innerHTML +=
+                            '<div id="popup-workshop-form"> \
+                                <input id="attend-button" class="popup-control" style="background-color: "' + red + '" type="submit" \n\
+                                    onclick="attend(&quot;' + eventID + '&quot;)" value="Un-Attend" /> \
+                            </div>';
+                    } else {
+                        document.getElementById("popup-wrapper").innerHTML +=
                             '<div id="popup-workshop-form"> \
                                 <input id="attend-button" class="popup-control" type="submit" \n\
                                     onclick="attend(&quot;' + eventID + '&quot;)" value="Attend" /> \
                             </div>';
+                    }
                 }     
             };
             
@@ -95,7 +104,11 @@
             }
             
             function attend(id) {
-                post("/events", {eventID : id});
+                post("/events", {eventID : id, mode : 'attend'});
+            }
+            
+            function unattend(id) {
+                post("/events", {eventID : id, mode : 'unattend'});
             }
             
             function post(path, params, method) {
@@ -118,6 +131,12 @@
                 form.submit();
             }
             
+            window.onload = function() {
+                var message = "${message}";
+                if (message !== 'null') {
+                    alert(message);
+                }
+            };
         </script>
     </body>
 </html>

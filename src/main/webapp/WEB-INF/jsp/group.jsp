@@ -86,13 +86,13 @@
 
 
             var postMessage = function(uid) {
+                if (totalMessages > 4)
+                {
+                    alert("Dude, stahp");
+                    return;
+                }
                 if (totalMessages > 3)
                 {
-                    if (totalMessages > 4)
-                    {
-                        alert("Dude, stahp");
-                        return;
-                    }
                     alert("Don't spam the page please");
                     totalMessages++;
                     return;

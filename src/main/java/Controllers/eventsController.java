@@ -68,7 +68,6 @@ public class eventsController {
         String mode = eventViewModel.getMode();
         ModelAndView messageView = new ModelAndView("events");
         messageView.addObject("eventID", eventID);
-        messageView.addObject("uid", uid);
         messageView.addObject(eventViewModel);
         
         String[] a = dbEvent.checkAttendancy(eventID);
@@ -95,6 +94,9 @@ public class eventsController {
     public ModelAndView mondayEvents() {
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", filterOnDay(Day.Ma, dbEvent.getEvents()));
+        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject(new EventViewModel());
+        modelView.addObject("message", "null");
         
         return modelView;
     }
@@ -103,6 +105,9 @@ public class eventsController {
     public ModelAndView tuesdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", filterOnDay(Day.Di, dbEvent.getEvents()));
+        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject(new EventViewModel());
+        modelView.addObject("message", "null");
         
         return modelView;
     }
@@ -111,6 +116,9 @@ public class eventsController {
     public ModelAndView wednessdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", filterOnDay(Day.Wo, dbEvent.getEvents()));
+        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject(new EventViewModel());
+        modelView.addObject("message", "null");
         
         return modelView;
     }
@@ -119,6 +127,9 @@ public class eventsController {
     public ModelAndView thursdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", filterOnDay(Day.Do, dbEvent.getEvents()));
+        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject(new EventViewModel());
+        modelView.addObject("message", "null");
         
         return modelView;
     }
@@ -127,6 +138,9 @@ public class eventsController {
     public ModelAndView fridayEvents() {
         ModelAndView modelView = new ModelAndView("events");
         modelView.addObject("events", filterOnDay(Day.Vr, dbEvent.getEvents()));
+        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject(new EventViewModel());
+        modelView.addObject("message", "null");
         
         return modelView;
     }

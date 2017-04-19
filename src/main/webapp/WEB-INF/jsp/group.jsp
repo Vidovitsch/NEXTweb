@@ -104,7 +104,6 @@
 
                 writeToFirebase(dateTime, content, uid);
                 totalMessages++;
-                console.log(totalMessages);
                 document.getElementById("txtareamsg").value = '';
             };
 
@@ -120,7 +119,8 @@
                         currentDate.getMilliseconds();
                 return dateTime;
             };
-
+            
+            var id;
             function writeToFirebase(dateTime, content, uid) {
                 database.ref('User/' + uid + '/GroupID/').once("value", function(data) {
                     id = data.val();
@@ -130,14 +130,22 @@
                     });
                 });
             };
+
+            database.ref('User/${userUID}/GroupID/').once("value", function(data) {
+                id = data.val();
+                bindMessages();
+            });
             
-            var messages = database.ref("Group/0/Messages");
-            messages.on("child_added", function(snapshot) {
-                var message = snapshot.val();
-                var userName;
-                var date;
-                date = snapshot.key;
-                database.ref("User/" + message.UID).once("value", function(data) {
+            function bindMessages() {
+                var path = "Group/"+id+"/Messages";
+                var messages = database.ref(path);
+                messages.on("child_added", function(snapshot) {
+                    var message = snapshot.val();
+                    var userName;
+                    var date;
+                    date = snapshot.key;
+                    console.log(message.UID);
+                    database.ref("User/" + message.UID).once("value", function(data) {
                         userName = data.val().Name;
                         var lastName = data.val().Lastname;
                         if (lastName !== undefined)
@@ -147,40 +155,42 @@
                         postMsg(message, userName, date);
                     });
                 });
-                function postMsg(message, userName, date) {
-                    var uid = "${userUID}";
-                    if (uid === message.UID)
-                    {
-                       document.getElementById("messages").innerHTML += 
-                            '<div class="ownMessageWrapper"> \
-                               <div class="ownMessagecss"> \
-                                   <div class="message-class">\
-                                       <span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>\
-                                   </div>\
-                                   <div class="info-msg">\
-                                       <span class="date-label">' + date + '</span>\
-                                   </div>\
+            }
+            
+            function postMsg(message, userName, date) {
+                var uid = "${userUID}";
+                if (uid === message.UID)
+                {
+                   document.getElementById("messages").innerHTML += 
+                        '<div class="ownMessageWrapper"> \
+                           <div class="ownMessagecss"> \
+                               <div class="message-class">\
+                                   <span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>\
                                </div>\
-                           </div>';
-                    }
-                    else
-                    {
-                       document.getElementById("messages").innerHTML += 
-                           '<div class="otherMessageWrapper">\
-                               <div class="otherMessagecss">\
-                                   <div class="message-class">\
-                                       <span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>\
-                                   </div>\
-                                   <div class="info-msg">\
-                                       <span class="username-label">' + userName + '</span><br>\
-                                       <span class="date-label">' + date + '</span>\
-                                   </div>\
+                               <div class="info-msg">\
+                                   <span class="date-label">' + date + '</span>\
                                </div>\
-                           </div>';
-                    }
-                    var el = document.getElementById("messages");
-                    el.scrollTop = el.scrollHeight;
+                           </div>\
+                       </div>';
                 }
+                else
+                {
+                   document.getElementById("messages").innerHTML += 
+                       '<div class="otherMessageWrapper">\
+                           <div class="otherMessagecss">\
+                               <div class="message-class">\
+                                   <span class ="msg-content">' + message.Content + ' &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>\
+                               </div>\
+                               <div class="info-msg">\
+                                   <span class="username-label">' + userName + '</span><br>\
+                                   <span class="date-label">' + date + '</span>\
+                               </div>\
+                           </div>\
+                       </div>';
+                }
+                var el = document.getElementById("messages");
+                el.scrollTop = el.scrollHeight;
+            }
         </script>
     </body>
 </html>

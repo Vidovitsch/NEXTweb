@@ -102,7 +102,6 @@ public class DBGroupModifier implements IModGroup {
             }
         });
         
-        
         lockFXThread();
         
         final List<String> uidLst = new ArrayList<String>();
@@ -118,6 +117,10 @@ public class DBGroupModifier implements IModGroup {
 
                     //Fetching other data
                     String groupNumber = (String) ds.getKey();
+                    if (groupNumber == "-1")
+                    {
+                        return;
+                    }
                     int location=  Integer.valueOf(String.valueOf(ds.child("Location").getValue()));
                     String groupName = (String) ds.child("Name").getValue();
                     
@@ -150,6 +153,10 @@ public class DBGroupModifier implements IModGroup {
             });
         }
         lockFXThread();
+        if (groupNumber == "-1")
+        {
+            return null;
+        }
         
         refUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

@@ -9,4 +9,7 @@ and open the template in the editor.
     <decorator name="basic-theme" page="masterpage.jsp">
         <pattern>/*</pattern>
     </decorator>
+    <decorator name="login-theme" page="masterpagelogin.jsp">
+        <pattern>/login.htm</pattern>
+    </decorator>
 </decorators> 

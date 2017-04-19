@@ -123,6 +123,10 @@
                     password = document.getElementById("password");
                     email = document.getElementById("email");
                     if (email.checkValidity() === true && password.checkValidity() === true) {
+                        /*if (!validateEmail(email.value))
+                        {
+                            return
+                        }*/
                         document.getElementById('passwordwrapper').innerHTML = confirmcontrols;
                         document.getElementById("backtologin-button").onclick = function () {
                             document.getElementById('passwordstuff').innerHTML = originalcontrols;
@@ -252,6 +256,11 @@
 
             function validateEmail(email) {
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                /*var domain = re.substring(re.indexOf("@"), re.length-1);
+                if (domain.indexOf("fontys" < 0))
+                {
+                    return false;
+                }(*/
                 return re.test(email);
             }
 

@@ -9,11 +9,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" type="text/css" href="/css/map.css" />
+        <title>Map</title>
     </head>
     <body>
         <div class="wrapper">
             <h1>Map</h1>
-            <img src="../../images/map.jpg" width="1035" height="800" alt="map" margin="0 auto"/>
+            <canvas id="map" style="background-color: #F0F0F0"></canvas>
+        </div>
+        
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+        <script src="/javascript/map.js"></script>
+        <script src="/javascript/circle.js"></script>
+        <script src="/javascript/line.js"></script>
+        <script src="/javascript/rectangle.js"></script>
+        <script src="/javascript/table.js"></script>
+        
     </body>
 </html>

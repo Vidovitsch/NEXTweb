@@ -22,6 +22,7 @@ public class Workshop extends Event {
     private int attendingUsers;
     private EventType eventType= EventType.Workshop;
     
+    //For expansion reasons
     private String attending = "false";
     
     //For visual aspects

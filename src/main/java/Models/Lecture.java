@@ -21,6 +21,7 @@ public class Lecture extends Event {
     //For visual aspects
     private String hexColor = "#F6B067";
     
+    //For expansion reasons
     private String attending = "false";
     
     public Lecture(String eventName) {

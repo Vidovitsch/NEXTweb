@@ -7,12 +7,7 @@ package Controllers;
 
 import Database.DBGroupModifier;
 import Database.IModGroup;
-import Enums.Course;
-import Enums.UserRole;
-import Enums.UserStatus;
 import Models.Group;
-import Models.User;
-import java.util.ArrayList;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -54,8 +49,15 @@ public class groupController
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
-        } 
-        return modelView;
+        }
+        if (group == null)
+        {
+            return new ModelAndView("index");
+        }
+        else
+        {
+            return modelView;
+        }
     }
 
 }

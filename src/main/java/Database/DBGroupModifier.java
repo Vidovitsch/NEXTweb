@@ -117,8 +117,9 @@ public class DBGroupModifier implements IModGroup {
 
                     //Fetching other data
                     String groupNumber = (String) ds.getKey();
-                    if (groupNumber == "-1")
+                    if (groupNumber.equals("-1"))
                     {
+                        unlockFXThread();
                         return;
                     }
                     int location=  Integer.valueOf(String.valueOf(ds.child("Location").getValue()));

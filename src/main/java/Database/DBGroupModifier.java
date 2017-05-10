@@ -154,7 +154,7 @@ public class DBGroupModifier implements IModGroup {
             });
         }
         lockFXThread();
-        if (groupNumber == "-1")
+        if (groupNumber.equals("-1"))
         {
             return null;
         }

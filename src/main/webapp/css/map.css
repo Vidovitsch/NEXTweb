@@ -85,4 +85,42 @@
 	width: 90%;
 }
 
+#searchText {
+    background-image: url('/css/searchicon.png');
+    background-position: calc(100% - 10px) 10px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 10px;
+    border: 1px solid #ddd;
+}
+
+.searchbar {
+    padding-left: 20px;
+    padding-top: 10px;
+    width: 400px;
+}
+
+#tbsearchresults {
+    padding-left: 10px;
+    background-color: white;
+    position: absolute;
+    width: 360px;
+    border-right-style: solid;
+    border-right-width: 3px;
+    border-right-color: black;
+    border-left-style: solid;
+    border-left-width: 2px;
+    border-left-color: black;
+    border-bottom-style: solid;
+    border-bottom-width: 3px;
+    border-bottom-color: black;
+    display: none;
+}
+
+.trsearch:hover {
+    background-color: #D3D3D3;
+}
+
+
 /* other */

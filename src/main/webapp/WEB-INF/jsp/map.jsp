@@ -14,7 +14,12 @@
     </head>
     <body>
         <div class="wrapper">
-            <h1>Map</h1>
+            <div class="searchbar">
+                <input type="text" id="searchText" name="searchText" oninput="search()">
+                <div id="searchresults">
+                    <table id="tbsearchresults"></table>
+                </div>
+            </div>
             <canvas id="map" style="background-color: #F0F0F0"></canvas>
         </div>
         
@@ -24,6 +29,7 @@
         <script src="/javascript/line.js"></script>
         <script src="/javascript/rectangle.js"></script>
         <script src="/javascript/table.js"></script>
+        <script src="/javascript/search.js"></script>
         
     </body>
 </html>

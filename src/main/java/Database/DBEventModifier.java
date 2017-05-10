@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Database;
 
 import Models.Event;
@@ -21,13 +20,12 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author David
  */
 public class DBEventModifier implements IModEvent {
-    
+
     private static Firebase firebase;
     private Object lock;
     private boolean done = false;
@@ -40,16 +38,19 @@ public class DBEventModifier implements IModEvent {
 
     @Override
     public void addAttendingUser(String eventID, String uid) {
-        Firebase ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
-        ref.setValue("Attending");
+        Firebase eventRef = firebase.child("Event").child(eventID).child("Attending").child(uid);
+        Firebase userRef = firebase.child("User").child(uid).child("Attending").child(eventID);
+
+        eventRef.setValue("Attending");
+        userRef.setValue("Attending");
     }
-    
+
     @Override
     public void checkAttending(final Workshop ws, final String uid) {
         final ArrayList<Event> events = new ArrayList();
         Firebase ref = firebase.child("Event/" + ws.getId() + "/Attending");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            
+
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -61,22 +62,24 @@ public class DBEventModifier implements IModEvent {
                 }
                 unlockFXThread();
             }
-            
+
             @Override
             public void onCancelled(FirebaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
-        
+
         lockFXThread();
     }
-    
+
     @Override
     public void removeAttendingUser(String eventID, String uid) {
         Firebase ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
+        Firebase userRef = firebase.child("User").child(uid).child("Attending").child(eventID);
         ref.removeValue();
+        userRef.removeValue();
     }
-    
+
     @Override
     public void insertEvent(Event event) {
         Map<String, String> data = new HashMap();
@@ -88,11 +91,11 @@ public class DBEventModifier implements IModEvent {
         data.put("LocationName", event.getLocationName());
         data.put("Description", event.getDescription());
         data = putEventTypeValues(event, data);
-        
+
         Firebase ref = firebase.child("Event").push();
         ref.setValue(data);
     }
-    
+
     @Override
     public void removeEvent(Event event) {
         Firebase ref = firebase.child("Event").child(event.getId());
@@ -104,7 +107,7 @@ public class DBEventModifier implements IModEvent {
         final ArrayList<Event> events = new ArrayList();
         Firebase ref = firebase.child("Event");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            
+
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
@@ -115,7 +118,7 @@ public class DBEventModifier implements IModEvent {
                     String imageURL = (String) ds.child("ImageURL").getValue();
                     String locationName = (String) ds.child("LocationName").getValue();
                     String description = (String) ds.child("Description").getValue();
-                    
+
                     Event event = specifyEvent(ds);
                     event.setId(id);
                     event.setStartTime(startTime);
@@ -124,28 +127,93 @@ public class DBEventModifier implements IModEvent {
                     event.setImageURL(imageURL);
                     event.setLocationName(locationName);
                     event.setDescription(description);
-                    
+
                     events.add(event);
                 }
                 unlockFXThread();
             }
-            
+
             @Override
             public void onCancelled(FirebaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
-        
+
         lockFXThread();
         return events;
     }
-    
+
+    public ArrayList<Event> getEvents(String uid) {
+        final ArrayList<Event> events = new ArrayList();
+        final ArrayList<String> eventIDs = new ArrayList();
+        Firebase userRef = firebase.child("User").child(uid).child("Attending");
+        userRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    String eventUID = ds.getKey();
+                    eventIDs.add(eventUID);
+                }
+                unlockFXThread();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        lockFXThread();
+
+        Firebase eventRef = firebase.child("Event");
+        eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot dsEvents : snapshot.getChildren()) {
+                    String id = dsEvents.getKey();
+                    for (String eventID : eventIDs) {
+                        if (id.equals(eventID)) {
+                            String startTime = (String) dsEvents.child("StartTime").getValue();
+                            String endTime = (String) dsEvents.child("EndTime").getValue();
+                            String date = (String) dsEvents.child("Date").getValue();
+                            String imageURL = (String) dsEvents.child("ImageURL").getValue();
+                            String locationName = (String) dsEvents.child("LocationName").getValue();
+                            String description = (String) dsEvents.child("Description").getValue();
+
+                            Event event = specifyEvent(dsEvents);
+                            event.setId(id);
+                            event.setStartTime(startTime);
+                            event.setEndTime(endTime);
+                            event.setDate(date);
+                            event.setImageURL(imageURL);
+                            event.setLocationName(locationName);
+                            event.setDescription(description);
+
+                            events.add(event);
+                        }
+                    }
+
+                }
+                unlockFXThread();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError fe) {
+                System.out.println(fe.toException().toString());
+            }
+        });
+        lockFXThread();
+        return events;
+    }
+
     @Override
+
     public String[] checkAttendancy(String eventID) {
         final String[] attendancy = new String[2];
         Firebase ref = firebase.child("Event/" + eventID);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
-            
+
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 attendancy[1] = String.valueOf(snapshot.child("MaxUsers").getValue());
@@ -153,20 +221,20 @@ public class DBEventModifier implements IModEvent {
                 if (snapshot != null) {
                     attendancy[0] = String.valueOf(snapshot.getChildrenCount());
                 }
-                
+
                 unlockFXThread();
             }
-            
+
             @Override
             public void onCancelled(FirebaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
-        
+
         lockFXThread();
         return attendancy;
-    } 
-    
+    }
+
     private Event specifyEvent(DataSnapshot ds) {
         String eventType = (String) ds.child("EventType").getValue();
         if (eventType.equals("Workshop")) {
@@ -174,25 +242,25 @@ public class DBEventModifier implements IModEvent {
             String presenter = (String) ds.child("Presenter").getValue();
             int maxUsers = Integer.valueOf((String) ds.child("MaxUsers").getValue());
             ArrayList<User> users = attendantsToUsers(ds.child("Attending"));
-            
+
             event.setPresenter(presenter);
             event.setMaxUsers(maxUsers);
             event.setUsers(users);
-            
+
             return event;
         } else if (eventType.equals("Lecture")) {
             Lecture event = new Lecture((String) ds.child("EventName").getValue());
             String presenter = (String) ds.child("Presenter").getValue();
             event.setPresenter(presenter);
-            
+
             return event;
         } else {
             Performance event = new Performance((String) ds.child("EventName").getValue());
-            
+
             return event;
         }
     }
-    
+
     private Map<String, String> putEventTypeValues(Event event, Map<String, String> data) {
         if (event instanceof Workshop) {
             data.put("Presenter", ((Workshop) event).getPresenter());
@@ -206,7 +274,7 @@ public class DBEventModifier implements IModEvent {
         }
         return data;
     }
-    
+
     private ArrayList<User> attendantsToUsers(DataSnapshot snapshot) {
         ArrayList<User> users = new ArrayList();
         for (DataSnapshot ds : snapshot.getChildren()) {
@@ -215,10 +283,10 @@ public class DBEventModifier implements IModEvent {
         }
         return users;
     }
-    
+
     /**
-     * Tells a random object to wait while in a loop.
-     * The loop stops, and won't cause any unnecessary cpu use.
+     * Tells a random object to wait while in a loop. The loop stops, and won't
+     * cause any unnecessary cpu use.
      */
     private void lockFXThread() {
         lock = new Object();
@@ -228,14 +296,15 @@ public class DBEventModifier implements IModEvent {
                     lock.wait();
                 } catch (InterruptedException ex) {
                     Logger.getLogger(DBEventModifier.class.getName()).log(Level.SEVERE, null, ex);
-                } 
+                }
             }
         }
         done = false;
     }
-    
+
     /**
-     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed and break free.
+     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed
+     * and break free.
      */
     private void unlockFXThread() {
         synchronized (lock) {

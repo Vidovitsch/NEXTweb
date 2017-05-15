@@ -20,6 +20,7 @@
         <div class="wrapper">
             <div id="next-group">
                 <h2>Group Nr: ${group.groupNumber}</h2>
+                <h2>Table Nr: ${group.location}</h2>
                 <c:forEach var="user" items="${group.users}">
                     <div class="dropdown">
                         <div class="dropdown-div">

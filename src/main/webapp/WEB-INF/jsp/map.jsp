@@ -15,7 +15,7 @@
     <body>
         <div class="wrapper">
             <div class="searchbar">
-                <input type="text" id="searchText" name="searchText" oninput="search()">
+                <input type="text" id="searchText" name="searchText" oninput="search()" placeholder="Enter name or GroupID">
                 <div id="searchresults">
                     <table id="tbsearchresults"></table>
                 </div>

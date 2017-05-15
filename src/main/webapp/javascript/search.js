@@ -48,17 +48,18 @@ function search() {
             results.push(total[i]);
         }
     }
-    document.getElementById("tbsearchresults").innerHTML ="";
+    var tbresults = document.getElementById("tbsearchresults")
+    tbresults.innerHTML ="";
     for (i=0; i <results.length; i++)
     {   
-        document.getElementById("tbsearchresults").innerHTML += "<tr class=\"trsearch\" onclick=\"fill('"+results[i].mail+"')\"><td>" + results[i].mail + "</td></tr>";
+        tbresults.innerHTML += "<tr class=\"trsearch\" onclick=\"fill('"+results[i].mail+"')\"><td>" + results[i].mail + "</td></tr>";
     }
-    if (document.getElementById("tbsearchresults").innerHTML != "")
+    if (tbresults.innerHTML != "")
     {
-        document.getElementById("tbsearchresults").style.display = "table";
+        tbresults.style.display = "table";
     }
     else
     {
-        document.getElementById("tbsearchresults").style.display = "none";
+        tbresults.style.display = "none";
     }
 }

@@ -146,6 +146,7 @@
                         document.getElementById('confirm-button').onclick = function () {
                             var emailvalue = document.getElementsByName("email")[0].value;
                             var passwordvalue = document.getElementsByName("password")[0].value;
+                            if (!checkEmailValid(emailvalue)){return;}
                             if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user) {

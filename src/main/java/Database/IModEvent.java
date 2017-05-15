@@ -9,6 +9,7 @@ import Models.Event;
 import Models.User;
 import Models.Workshop;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -56,4 +57,6 @@ public interface IModEvent {
     String[] checkAttendancy(String eventID);
     
     void checkAttending(Workshop ws, String uid);
+
+    List getEvents(String uid);
 }

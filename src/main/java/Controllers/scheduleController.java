@@ -7,14 +7,19 @@ package Controllers;
 
 import Database.DBDayModifier;
 import Database.DBEventModifier;
+import Database.DBGroupModifier;
 import Database.IModDay;
 import Database.IModEvent;
+import Database.IModGroup;
+import Models.Event;
 import Models.EventDate;
 import Models.EventDay;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,15 +33,19 @@ import org.springframework.web.servlet.ModelAndView;
 public class scheduleController
 {
 
+    private String uid;
+    
     private IModEvent dbEvent = new DBEventModifier();
     private IModDay dbDay = new DBDayModifier();
-
+    private IModGroup groupDB = new DBGroupModifier();
+    
     @RequestMapping(value = "/schedule", method = RequestMethod.GET)
-    public ModelAndView initWorkshopmessageboardScreen()
+    public ModelAndView initWorkshopmessageboardScreen(HttpServletRequest request)
     {
         //insertDummySchedule();
+        uid = getCurrentUID(request);
         ModelAndView modelView = new ModelAndView("schedule");
-        for (Map.Entry<String, List<EventDate>> e : getSchedule().entrySet())
+        for (Map.Entry<String, List<Event>> e : getSchedule(uid).entrySet())
         {
             modelView.addObject(e.getKey(), e.getValue());
         }
@@ -75,29 +84,41 @@ public class scheduleController
         dbDay.insertDay(day3);
     }
 
-    public Map<String, List<EventDate>> getSchedule()
+    public Map<String, List<Event>> getSchedule(String uid)
     {
-        Map schedule = new HashMap<String, List<EventDate>>();
-        addEvents(schedule, dbEvent.getEvents());
-        addEvents(schedule, dbDay.getDays());
+        Map schedule = new HashMap<String, List<Event>>();
+        addEvents(schedule, dbEvent.getEvents(uid));
         return schedule;
     }
 
-    private void addEvents(Map<String, List<EventDate>> schedule, List scheduleItems)
+    private void addEvents(Map<String, List<Event>> schedule, List scheduleItems)
     {
-        List<EventDate> temp;
+        List<Event> temp;
         for (Object eD : scheduleItems)
         {
-            EventDate current = (EventDate) eD;
+            Event current = (Event) eD;
             if (!schedule.containsKey(current.getDay()))
             {
-                temp = new ArrayList<EventDate>();
+                temp = new ArrayList<Event>();
             } else
             {
-                temp = (ArrayList<EventDate>) schedule.get(current.getDay());
+                temp = (ArrayList<Event>) schedule.get(current.getDay());
             }
             temp.add(current);
             schedule.put(current.getDay(), temp);
         }
+    }
+    
+    private String getCurrentUID(HttpServletRequest request) {
+        uid = null;
+        Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if (cookie.getName().equals("username")) {
+                        uid = groupDB.getUid(cookie.getValue());
+                    }
+                }
+            }
+        return uid;
     }
 }

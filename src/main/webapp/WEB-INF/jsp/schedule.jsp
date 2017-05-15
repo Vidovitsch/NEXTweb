@@ -122,6 +122,6 @@
             if (!window.jQuery)
                 document.write('<script src="js/jquery-3.0.0.min.js"><\/script>');
         </script>
-        <script src="../../../javascript/schedule.js"></script> <!-- Resource jQuery -->
+        <script src="../../../images/javascript/schedule.js"></script> <!-- Resource jQuery -->
     </body>
 </html>

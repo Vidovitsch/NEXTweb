@@ -38,12 +38,10 @@
                 <prop key="contact.htm">contactController</prop>
                 <prop key="index.htm">indexController</prop>
                 <prop key="registeruser.htm">loginController</prop>
-                <prop key="assignments.htm">assignmentController</prop>
                 <prop key="/requestlogin">loginController</prop>
                 <prop key="/requestregistration">loginController</prop>
                 <prop key="/loggedin">loginController</prop>
                 <prop key="/login">loginController</prop>
-                <prop key="/submitassignment">assignmentController</prop>
                 
             </props>
         </property>

@@ -79,15 +79,6 @@ table td {
     color: #FFF;
 }
 
-#assignment-name {
-    position: absolute;
-    top: 225px;
-    left: 30px;
-    width: 100%;
-    font-size: 33px;
-    color: #000;
-}
-
 #event-type {
     position: absolute;
     top: 260px;
@@ -190,13 +181,6 @@ table td {
 }
 
 #popup-event-name {
-    font-size: 25px;
-}
-
-.popup .content p{
-    color:black;
-}
-#popup-assignment-name {
     font-size: 25px;
 }
 

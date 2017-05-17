@@ -34,6 +34,7 @@
                     <li class="nav-item"><a href="/group.htm">Group</a></li>
                     <li class="nav-item"><a href="/map.htm">Map</a></li>
                     <li class="nav-item"><a href="/schedule.htm">Schedule</a></li>
+                    <li class="nav-item"><a href="/assignments.htm">Assignments</a></li>
                 </ul>
             </div>
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-app.js"></script>

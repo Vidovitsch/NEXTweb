@@ -12,6 +12,8 @@ package Models;
 public class AssignmentModel {
 
     private String uid;
+    private String name;
+    private String assignmentlink;
 
     public String getUid() {
         return uid;
@@ -21,8 +23,6 @@ public class AssignmentModel {
         this.uid = uid;
     }
 
-    private String assignmentlink;
-
     public String getAssignmentlink() {
         return assignmentlink;
     }
@@ -30,8 +30,6 @@ public class AssignmentModel {
     public void setAssignmentlink(String assignmentlink) {
         this.assignmentlink = assignmentlink;
     }
-
-    private String name;
 
     public String getName() {
         return name;

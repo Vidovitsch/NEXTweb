@@ -97,8 +97,13 @@
                         var passwordvalue = document.getElementsByName("password")[0].value;
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
-                                post("loggedin", {currentemail: user.email});
                                 document.cookie = "username=" + user.email;
+                                if (user.email.indexOf("student.fontys.nl") == -1)
+                                {
+                                    window.location.href = "/pie/createworkshop.htm";
+                                } else {
+                                    post("loggedin", {currentemail: user.email});
+                                }
                             }
                         });
                         firebase.auth().signInWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {
@@ -122,7 +127,9 @@
                 document.getElementById("register-button").onclick = function () {
                     password = document.getElementById("password");
                     email = document.getElementById("email");
-                    if (!checkEmailValid(email.value)){return;}
+                    if (!checkEmailValid(email.value)) {
+                        return;
+                    }
                     if (email.checkValidity() === true && password.checkValidity() === true) {
                         /*if (!validateEmail(email.value))
                          {
@@ -146,7 +153,9 @@
                         document.getElementById('confirm-button').onclick = function () {
                             var emailvalue = document.getElementsByName("email")[0].value;
                             var passwordvalue = document.getElementsByName("password")[0].value;
-                            if (!checkEmailValid(emailvalue)){return;}
+                            if (!checkEmailValid(emailvalue)) {
+                                return;
+                            }
                             if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user) {

@@ -20,37 +20,32 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class loginController
-{
+public class loginController {
 
     private IModUser dbUser = new DBUserModifier();
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView LoginRequest()
-    {
+    public ModelAndView LoginRequest() {
         return new ModelAndView("login", "command", new LoginModel());
     }
 
     @RequestMapping(value = "/requestlogin", method = RequestMethod.POST)
     public String loginUser(@ModelAttribute("SpringWeb") LoginModel loginModel,
-            ModelMap model)
-    {
+            ModelMap model) {
         model.addAttribute("currentemail", loginModel.getCurrentemail());
         return "loginresult";
     }
 
     @RequestMapping(value = "/requestregistration", method = RequestMethod.POST)
     public String registerUser(@ModelAttribute("SpringWeb") LoginModel loginModel,
-            ModelMap model)
-    {
+            ModelMap model) {
         model.addAttribute("currentemail", loginModel.getCurrentemail());
         return "registeruser";
     }
 
     @RequestMapping(value = "/loggedin", method = RequestMethod.POST)
     public String loggedIn(@ModelAttribute("SpringWeb") LoginModel loginModel,
-            ModelMap model)
-    {
+            ModelMap model) {
         model.addAttribute("currentemail", loginModel.getCurrentemail());
         return "index";
     }

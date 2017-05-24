@@ -17,7 +17,7 @@
             <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             <spring:url value="/css/containerMaster.css" var="containerCSS" />
             <link href="${containerCSS}" rel="stylesheet" />
-<!--ddd-->
+            <!--ddd-->
             <decorator:head />
 
             <title>
@@ -40,17 +40,7 @@
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
             <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-            <script contextmenu>
-                // Initialize Firebase
-                var config = {
-                    apiKey: "AIzaSyCRi0Ma5ekQxhwg-BfQCa6684hMzvR3Z1o",
-                    authDomain: "nextweek-b9a58.firebaseapp.com",
-                    databaseURL: "https://nextweek-b9a58.firebaseio.com",
-                    storageBucket: "nextweek-b9a58.appspot.com",
-                    messagingSenderId: "488624254338"
-                };
-                firebase.initializeApp(config);
-            </script>
+            <script src="/javascript/inifirebase.js"></script>
             <script>
                 var user = firebase.auth().currentUser;
                 firebase.auth().onAuthStateChanged(function (user) {

@@ -12,7 +12,4 @@ and open the template in the editor.
     <decorator name="login-theme" page="masterpagelogin.jsp">
         <pattern>/login.htm</pattern>
     </decorator>
-    <decorator name="pie-theme" page="masterpagepie.jsp">
-        <pattern>/pie/*</pattern>
-    </decorator>
 </decorators> 

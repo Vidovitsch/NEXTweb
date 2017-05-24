@@ -36,6 +36,7 @@
                 <prop key="login.htm">loginController</prop>
                 <prop key="loginresult.htm">loginController</prop>
                 <prop key="contact.htm">contactController</prop>
+                <prop key="createworkshop.htm">pieController</prop>
                 <prop key="index.htm">indexController</prop>
                 <prop key="registeruser.htm">loginController</prop>
                 <prop key="assignments.htm">assignmentController</prop>
@@ -44,6 +45,8 @@
                 <prop key="/loggedin">loginController</prop>
                 <prop key="/login">loginController</prop>
                 <prop key="/submitassignment">assignmentController</prop>
+                <prop key="/createWorkshop">pieController</prop>
+                
                 
             </props>
         </property>

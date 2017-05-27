@@ -38,11 +38,11 @@ public class DBEventModifier implements IModEvent {
 
     @Override
     public void addAttendingUser(String eventID, String uid) {
-        Firebase eventRef = firebase.child("Event").child(eventID).child("Attending").child(uid);
-        Firebase userRef = firebase.child("User").child(uid).child("Attending").child(eventID);
+        System.out.println("Event ID: " + eventID);
+        System.out.println("User ID: " + uid);
+        Firebase eventRef = firebase.child("Event").child(eventID).child("Attending").child(uid).child("Status");
 
         eventRef.setValue("Attending");
-        userRef.setValue("Attending");
     }
 
     @Override
@@ -54,7 +54,6 @@ public class DBEventModifier implements IModEvent {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    System.out.println(uid + " ::: " + ds.getKey());
                     if (ds.getKey().equals(uid)) {
                         ws.setAttending("true");
                         break;

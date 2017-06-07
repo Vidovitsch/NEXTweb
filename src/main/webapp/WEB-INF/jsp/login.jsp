@@ -87,8 +87,13 @@
                         var passwordvalue = document.getElementsByName("password")[0].value;
                         firebase.auth().onAuthStateChanged(function (user) {
                             if (user) {
-                                post("loggedin", {currentemail: user.email});
                                 document.cookie = "username=" + user.email;
+                                if (user.email.indexOf("student.fontys.nl") == -1)
+                                {
+                                    window.location.href = "/pie/createworkshop.htm";
+                                } else {
+                                    post("loggedin", {currentemail: user.email});
+                                }
                             }
                         });
                         firebase.auth().signInWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {
@@ -112,11 +117,14 @@
                 document.getElementById("register-button").onclick = function () {
                     password = document.getElementById("password");
                     email = document.getElementById("email");
+                    if (!checkEmailValid(email.value)) {
+                        return;
+                    }
                     if (email.checkValidity() === true && password.checkValidity() === true) {
                         /*if (!validateEmail(email.value))
-                        {
-                            return
-                        }*/
+                         {
+                         return
+                         }*/
                         document.getElementById('passwordwrapper').innerHTML = confirmcontrols;
                         document.getElementById("backtologin-button").onclick = function () {
                             document.getElementById('passwordstuff').innerHTML = originalcontrols;
@@ -135,6 +143,9 @@
                         document.getElementById('confirm-button').onclick = function () {
                             var emailvalue = document.getElementsByName("email")[0].value;
                             var passwordvalue = document.getElementsByName("password")[0].value;
+                            if (!checkEmailValid(emailvalue)) {
+                                return;
+                            }
                             if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user) {
@@ -164,9 +175,20 @@
                     }
                 };
             }
-            
+
             setloginandregisterlistener();
-            
+
+            function checkEmailValid(email) {
+                var myBool = email.indexOf('student.fontys.nl');
+                if (myBool > 0)
+                {
+                    return true;
+                }
+
+                alert('Please enter a valid email for domain: student.fontys.nl')
+                return false;
+            }
+
             function forgotpassword() {
                 var forgotpasswordcontrols = '<input id="forgotpassword-button" class="form-control" type="button" value="Reset password" />\n\
                                                 <input id="backtologin-button" class="form-control" type="submit" value="Go back to login" />';
@@ -247,10 +269,10 @@
             function validateEmail(email) {
                 var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 /*var domain = re.substring(re.indexOf("@"), re.length-1);
-                if (domain.indexOf("fontys" < 0))
-                {
-                    return false;
-                }(*/
+                 if (domain.indexOf("fontys" < 0))
+                 {
+                 return false;
+                 }(*/
                 return re.test(email);
             }
 

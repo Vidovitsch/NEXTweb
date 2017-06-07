@@ -27,29 +27,41 @@
         </head>
         <body>
             <div id="next-header">
-                <a href="index.htm"><img id="nav-logo" src="/images/next_logo.png" /></a>
+                <a href="createworkshop.htm"><img id="nav-logo" src="/images/next_logo.png" /></a>
                 <ul class="nav-list">
-                    <li class="nav-item"><a href="/contact.htm">Contact</a></li>
-                    <li class="nav-item"><a href="/events.htm">Events</a></li>
-                    <li class="nav-item"><a href="/group.htm">Group</a></li>
-                    <li class="nav-item"><a href="/map.htm">Map</a></li>
-                    <li class="nav-item"><a href="/schedule.htm">Schedule</a></li>
-                    <li class="nav-item"><a href="/assignments.htm">Assignments</a></li>
+                    <li class="nav-item"><a href="../login.htm">Log out</a></li>
                 </ul>
             </div>
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-app.js"></script>
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
             <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-            <script src="/javascript/initfirebase.js"></script>
+            <script contextmenu>
+                // Initialize Firebase
+                var config = {
+                    apiKey: "AIzaSyCRi0Ma5ekQxhwg-BfQCa6684hMzvR3Z1o",
+                    authDomain: "nextweek-b9a58.firebaseapp.com",
+                    databaseURL: "https://nextweek-b9a58.firebaseio.com",
+                    storageBucket: "nextweek-b9a58.appspot.com",
+                    messagingSenderId: "488624254338"
+                };
+                firebase.initializeApp(config);
+            </script>
             <script>
                 var user = firebase.auth().currentUser;
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
-                        // User is signed in.
+                        var index = document.cookie.indexOf("student.fontys.nl");
+                        if (index == -1)
+                        {
+                            // User is signed in.
+                        } else {
+                            // No user is signed in.
+                            post("../login.htm", null, "get");
+                        }
                     } else {
                         // No user is signed in.
-                        post("login.htm", null, "get");
+                        post("../login.htm", null, "get");
                     }
                 });
                 function post(path, params, method) {

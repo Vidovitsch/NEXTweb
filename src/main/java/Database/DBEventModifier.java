@@ -53,7 +53,6 @@ public class DBEventModifier implements IModEvent {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    System.out.println(uid + " ::: " + ds.getKey());
                     if (ds.getKey().equals(uid)) {
                         ws.setAttending("true");
                         break;

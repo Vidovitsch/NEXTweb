@@ -73,12 +73,12 @@ public class eventsController {
         String[] a = dbEvent.checkAttendancy(eventID);
 
         if (mode.equals("unattend")) {
-            System.out.println("unattend: " + uid);
             dbEvent.removeAttendingUser(eventID, uid);
             messageView.addObject("message", "Un-Attended");
         } else {
-            if (Integer.valueOf(a[1]) != Integer.valueOf(a[0])) {
-                System.out.println(uid);
+            //Check if max users is smaller or equal to the attending users
+            System.out.println(a[1] + " >= " + a[0]);
+            if (Integer.valueOf(a[1]) >= Integer.valueOf(a[0])) {
                 dbEvent.addAttendingUser(eventID, uid);
                 messageView.addObject("message", "Attendance succesful!");
             } else {

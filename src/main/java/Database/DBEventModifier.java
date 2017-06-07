@@ -41,6 +41,8 @@ public class DBEventModifier implements IModEvent {
         System.out.println("Event ID: " + eventID);
         System.out.println("User ID: " + uid);
         Firebase eventRef = firebase.child("Event").child(eventID).child("Attending").child(uid).child("Status");
+        Firebase userRef = firebase.child("User").child(uid).child("Attending").child(eventID);
+        userRef.setValue("Attending");
 
         eventRef.setValue("Attending");
     }

@@ -16,32 +16,56 @@
     </head>
     <body>
         <div class="wrapper">
-            <div class="slideshow-container">
-                <div class="mySlides fade">
-                    <div class="numbertext">1 / 3</div>
-                    <img src="/images/default_workshop.jpg" style="width:100%">
-                    <div class="text">Caption Text</div>
+            <br><br><br>
+            <div id="header">
+                <div class="slideshow-container">
+                    <div class="mySlides fade">
+                        <img src="/images/default_workshop.jpg" style="width:100%">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="/images/map.jpg" style="width:100%">
+                    </div>
+                    <div class="mySlides fade">
+                        <img src="/images/default_workshop.jpg" style="width:100%">
+                    </div>
                 </div>
-                <div class="mySlides fade">
-                    <div class="numbertext">2 / 3</div>
-                    <img src="/images/default_workshop.jpg" style="width:100%">
-                    <div class="text">Caption Two</div>
+                <div class="header-container">
+                    <h1>Welcome to NEXT</h1>
+                    <div class="header-buttons">
+                        <div class="button_base b03_skewed_slide_in">
+                            <div>Go to Events</div>
+                            <div></div>
+                            <div>Go to Events</div>
+                        </div>
+                        <br><br>
+                        <div class="button_base b03_skewed_slide_in">
+                            <div>Go to Map</div>
+                            <div></div>
+                            <div>Go to Map</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="mySlides fade">
-                    <div class="numbertext">3 / 3</div>
-                    <img src="/images/default_workshop.jpg" style="width:100%">
-                    <div class="text">Caption Three</div>
-                </div>
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
-            </div>
-            <br>
-            <div style="text-align:center">
-                <span class="dot" onclick="currentSlide(1)"></span> 
-                <span class="dot" onclick="currentSlide(2)"></span> 
-                <span class="dot" onclick="currentSlide(3)"></span> 
             </div>
         </div>
-        
+        <script>
+            //Image Slideshow
+            var slideIndex = 0;
+            showSlides();
+
+            //Automatic slide change
+            function showSlides() {
+                var i;
+                var slides = document.getElementsByClassName("mySlides");
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none"; 
+                }
+                slideIndex++;
+                if (slideIndex > slides.length) { 
+                    slideIndex = 1;
+                } 
+                slides[slideIndex - 1].style.display = "block"; 
+                setTimeout(showSlides, 6000); // Change image every 5 seconds
+            }
+        </script>
     </body>
 </html>

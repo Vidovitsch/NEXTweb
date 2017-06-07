@@ -29,7 +29,5 @@ public class DBAssignmentModifier implements IModAssignment {
         DatabaseReference linkRef = firebase.child("Assignment").child(name).child("Submissions").child(uid).child("Link");
         linkRef.setValue(link);
         nameRef.setValue(email);
-
     }
-
 }

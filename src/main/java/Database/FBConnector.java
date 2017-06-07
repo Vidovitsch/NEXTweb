@@ -5,7 +5,6 @@
  */
 package Database;
 
-import com.firebase.client.Firebase;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.FirebaseCredentials;
@@ -46,7 +45,7 @@ public class FBConnector implements IDatabase {
         if (databaseReference == null) {
             FileInputStream serviceAccount = null;
             try {
-                serviceAccount = new FileInputStream("src/main/java/Database/NextWeek-e50906a6dd28");
+                serviceAccount = new FileInputStream("src/main/java/Database/NextWeek-e50906a6dd28.json");
                 System.out.println("setting FirebaseOptions");
                 FirebaseOptions options = new FirebaseOptions.Builder()
                         .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))

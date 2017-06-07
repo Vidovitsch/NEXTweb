@@ -9,10 +9,10 @@ import Enums.Course;
 import Enums.UserRole;
 import Enums.UserStatus;
 import Models.User;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-import com.firebase.client.Firebase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -24,7 +24,7 @@ import java.util.logging.Logger;
  */
 public class DBUserModifier implements IModUser {
 
-    private static Firebase firebase;
+    private static DatabaseReference firebase;
     private Object lock;
     private boolean done = false;
     private User user;
@@ -33,7 +33,7 @@ public class DBUserModifier implements IModUser {
 
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
-        firebase = (Firebase) connector.getConnectionObject();
+        firebase = (DatabaseReference) connector.getConnectionObject();
 
     }
 
@@ -47,20 +47,20 @@ public class DBUserModifier implements IModUser {
         data.put("Course", user.getCourse().toString());
         data.put("Semester", String.valueOf(user.getSemester()));
         data.put("GroupID", String.valueOf(user.getGroupID()));
-        Firebase ref = firebase.child("User").child(user.getUid());
+        DatabaseReference ref = firebase.child("User").child(user.getUid());
         ref.setValue(data);
     }
 
     @Override
     public void removeUser(User user) {
-        Firebase ref = firebase.child("User").child(user.getUid());
+        DatabaseReference ref = firebase.child("User").child(user.getUid());
         ref.removeValue();
     }
 
     @Override
     public User getUser(final String uid) {
         user = null;
-        Firebase ref = firebase.child("User");
+        DatabaseReference ref = firebase.child("User");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -90,7 +90,7 @@ public class DBUserModifier implements IModUser {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });

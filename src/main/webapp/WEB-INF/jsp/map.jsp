@@ -24,5 +24,6 @@
         <script src="/javascript/line.js"></script>
         <script src="/javascript/rectangle.js"></script>
         <script src="/javascript/table.js"></script>
+        <script src="/javascript/initfirebase.js"></script>
     </body>
 </html>

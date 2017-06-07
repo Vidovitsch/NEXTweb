@@ -10,10 +10,10 @@ import Enums.Course;
 import Models.Group;
 import Models.Message;
 import Models.User;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.logging.Logger;
  */
 public class DBGroupModifier implements IModGroup {
     
-    private Firebase firebase;
+    private DatabaseReference firebase;
     private Object lock;
     private boolean done = false;
     private Group group = null;
@@ -40,7 +40,7 @@ public class DBGroupModifier implements IModGroup {
     public DBGroupModifier() {
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
-        firebase = (Firebase) connector.getConnectionObject();
+        firebase = (DatabaseReference) connector.getConnectionObject();
     }
 
     @Override
@@ -49,18 +49,18 @@ public class DBGroupModifier implements IModGroup {
         Map<String, String> data = new HashMap();
         data.put("Name", group.getGroupName());
         data.put("Location", String.valueOf(group.getLocation()));
-        Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()));
+        DatabaseReference ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()));
         ref.setValue(data);
         
         //Adding users to the group
-        Firebase fb;
+        DatabaseReference fb;
         for (User user : group.getUsers()) {
             fb = ref.child("Members").child(user.getUid());
             fb.setValue("NS");
         }
         
         //Adding messages to the group
-        Firebase fb2;
+        DatabaseReference fb2;
         Map<String, String> msgData = new HashMap();
         for (Message message : group.getMessages()) {
             msgData.put("uid", message.getUid());
@@ -73,14 +73,14 @@ public class DBGroupModifier implements IModGroup {
 
     @Override
     public void addUser(Group group, User user) {
-        Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
+        DatabaseReference ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
                 .child("Members").child(user.getUid());
         ref.setValue("NS");
     }
 
     @Override
     public void removeUser(Group group, User user) {
-        Firebase ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
+        DatabaseReference ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
                 .child("Members").child(user.getUid());
         ref.removeValue();
     }
@@ -88,7 +88,7 @@ public class DBGroupModifier implements IModGroup {
 
     @Override
     public Group getGroup(final String uid) {
-        Firebase refUser = firebase.child("User");
+        DatabaseReference refUser = firebase.child("User");
         refUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -97,7 +97,7 @@ public class DBGroupModifier implements IModGroup {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
@@ -108,7 +108,7 @@ public class DBGroupModifier implements IModGroup {
         final ArrayList<User> members = new ArrayList<User>();
         if (!groupNumber.equals(""))
         {
-            Firebase refGroup = firebase.child("Group");
+            DatabaseReference refGroup = firebase.child("Group");
             refGroup.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot snapshot) {
@@ -148,7 +148,7 @@ public class DBGroupModifier implements IModGroup {
                 }
 
                 @Override
-                public void onCancelled(FirebaseError fe) {
+                public void onCancelled(DatabaseError fe) {
                     System.out.println(fe.toException().toString());
                 }
             });
@@ -176,7 +176,7 @@ public class DBGroupModifier implements IModGroup {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
@@ -189,7 +189,7 @@ public class DBGroupModifier implements IModGroup {
     @Override
     public String getUid(final String email)
     {
-        Firebase ref = firebase.child("User");
+        DatabaseReference ref = firebase.child("User");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -204,7 +204,7 @@ public class DBGroupModifier implements IModGroup {
             }
             
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
@@ -214,7 +214,7 @@ public class DBGroupModifier implements IModGroup {
     
     @Override
     public List<Message> addNamesToMessages(final List<Message> messages) {
-        Firebase ref = firebase.child("User");
+        DatabaseReference ref = firebase.child("User");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -227,7 +227,7 @@ public class DBGroupModifier implements IModGroup {
             }
             
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
@@ -237,7 +237,7 @@ public class DBGroupModifier implements IModGroup {
 
     @Override
     public void addMessage(Message message) {
-        Firebase ref = firebase.child("Group").child(String.valueOf(message.getGroupNumber())).
+        DatabaseReference ref = firebase.child("Group").child(String.valueOf(message.getGroupNumber())).
                 child("Messages").child(String.valueOf(message.getDate()));
         Map<String, String> msgData = new HashMap();
         msgData.put("uid", message.getUid());
@@ -249,7 +249,7 @@ public class DBGroupModifier implements IModGroup {
     @Override
     public ArrayList<Group> getGroups() {
         final ArrayList<Group> groups = new ArrayList();
-        Firebase ref = firebase.child("Group");
+        DatabaseReference ref = firebase.child("Group");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             
             @Override
@@ -294,7 +294,7 @@ public class DBGroupModifier implements IModGroup {
             }
             
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
@@ -306,7 +306,7 @@ public class DBGroupModifier implements IModGroup {
     @Override
     public int getMaxGroupNumber() {
         final Set<Integer> groupNumbers = new TreeSet();
-        Firebase ref = firebase.child("Group");
+        DatabaseReference ref = firebase.child("Group");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             
             @Override
@@ -319,7 +319,7 @@ public class DBGroupModifier implements IModGroup {
             }
             
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });

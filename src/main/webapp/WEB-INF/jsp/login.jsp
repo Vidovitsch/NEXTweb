@@ -53,7 +53,7 @@
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
         <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-        <script src="/javascript/inifirebase.js"></script>
+        <script src="/javascript/initfirebase.js"></script>
         <script>
             var originalcontrols = '<span>Password:</span> </br><input class = "form-control" id = "password" type = "password" name = "password" required value = "qwer1234" > \n\
                                                     < /br><div id = "passwordwrapper" ><input id = "login-button" class = "form-control" type = "submit" value = "Login" / >\n\

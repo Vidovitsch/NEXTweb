@@ -40,7 +40,7 @@
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-auth.js"></script>
             <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase-database.js"></script>
             <script src="https://www.gstatic.com/firebasejs/3.7.2/firebase.js"></script>
-            <script src="/javascript/inifirebase.js"></script>
+            <script src="/javascript/initfirebase.js"></script>
             <script>
                 var user = firebase.auth().currentUser;
                 firebase.auth().onAuthStateChanged(function (user) {

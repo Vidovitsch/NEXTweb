@@ -46,8 +46,7 @@
                 <prop key="/login">loginController</prop>
                 <prop key="/submitassignment">assignmentController</prop>
                 <prop key="/createWorkshop">pieController</prop>
-                
-                
+                <prop key="/home">homePageController</prop>
             </props>
         </property>
     </bean>

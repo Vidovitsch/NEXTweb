@@ -100,6 +100,7 @@ public class DBEventModifier implements IModEvent {
 
     @Override
     public ArrayList<Event> getEvents() {
+        System.out.println("in getEvents");
         final ArrayList<Event> events = new ArrayList();
         DatabaseReference ref = firebase.child("Event");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -122,6 +123,7 @@ public class DBEventModifier implements IModEvent {
     }
 
     private Event dsToEvent(DataSnapshot ds) {
+        System.out.println("Start of dsToEvent");
         String id = ds.getKey();
         String startTime = (String) ds.child("StartTime").getValue();
         String endTime = (String) ds.child("EndTime").getValue();
@@ -129,8 +131,9 @@ public class DBEventModifier implements IModEvent {
         String imageURL = (String) ds.child("ImageURL").getValue();
         String locationName = (String) ds.child("LocationName").getValue();
         String description = (String) ds.child("Description").getValue();
-
+        System.out.println("Start SpecifyEvent");
         Event event = specifyEvent(ds);
+        System.out.println("Event specified");
         event.setId(id);
         event.setStartTime(startTime);
         event.setEndTime(endTime);
@@ -138,17 +141,21 @@ public class DBEventModifier implements IModEvent {
         event.setImageURL(imageURL);
         event.setLocationName(locationName);
         event.setDescription(description);
+        System.out.println("end of dsToEvent");
         return event;
     }
 
     public ArrayList<Event> getEvents(String uid) {
         final ArrayList<Event> events = new ArrayList();
         final ArrayList<String> eventIDs = new ArrayList();
+        System.out.println("in getEventes(String uid)");
         DatabaseReference userRef = firebase.child("User").child(uid).child("Attending");
+        System.out.println("userRef created");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("in userRef DataChange");
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String eventUID = ds.getKey();
                     eventIDs.add(eventUID);
@@ -168,11 +175,15 @@ public class DBEventModifier implements IModEvent {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("in eventRef DataChange");
                 for (DataSnapshot dsEvents : snapshot.getChildren()) {
+                    System.out.println("Retreiving eventkey");
                     String id = dsEvents.getKey();
                     for (String eventID : eventIDs) {
+                        System.out.println("looping eventIDs with id: " + eventID);
                         if (id.equals(eventID)) {
-                            events.add(dsToEvent(snapshot));
+                            System.out.println("in equals");
+                            events.add(dsToEvent(dsEvents));
                         }
                     }
 
@@ -186,11 +197,11 @@ public class DBEventModifier implements IModEvent {
             }
         });
         lockFXThread();
+        System.out.println("Na lock, returning events");
         return events;
     }
 
     @Override
-
     public String[] checkAttendancy(String eventID) {
         final String[] attendancy = new String[2];
         DatabaseReference ref = firebase.child("Event/" + eventID);
@@ -218,28 +229,41 @@ public class DBEventModifier implements IModEvent {
     }
 
     private Event specifyEvent(DataSnapshot ds) {
-        String eventType = (String) ds.child("EventType").getValue();
-        if (eventType.equals("Workshop")) {
-            Workshop event = new Workshop((String) ds.child("EventName").getValue());
-            String presenter = (String) ds.child("Presenter").getValue();
-            int maxUsers = Integer.valueOf((String) ds.child("MaxUsers").getValue());
-            ArrayList<User> users = attendantsToUsers(ds.child("Attending"));
+        try {
+            System.out.println(ds.getRef().toString());
+            String eventType = (String) ds.child("EventType").getValue();
+            System.out.println("eventtype = " + eventType);
+            if (eventType.equals("Workshop")) {
+                System.out.println("in workshop");
+                Workshop event = new Workshop((String) ds.child("EventName").getValue());
+                String presenter = (String) ds.child("Presenter").getValue();
+                int maxUsers = Integer.valueOf((String) ds.child("MaxUsers").getValue());
+                ArrayList<User> users = attendantsToUsers(ds.child("Attending"));
 
-            event.setPresenter(presenter);
-            event.setMaxUsers(maxUsers);
-            event.setUsers(users);
+                event.setPresenter(presenter);
+                event.setMaxUsers(maxUsers);
+                event.setUsers(users);
 
-            return event;
-        } else if (eventType.equals("Lecture")) {
-            Lecture event = new Lecture((String) ds.child("EventName").getValue());
-            String presenter = (String) ds.child("Presenter").getValue();
-            event.setPresenter(presenter);
+                return event;
+            } else if (eventType.equals("Lecture")) {
+                System.out.println("in Lecture");
 
-            return event;
-        } else {
-            Performance event = new Performance((String) ds.child("EventName").getValue());
+                Lecture event = new Lecture((String) ds.child("EventName").getValue());
+                String presenter = (String) ds.child("Presenter").getValue();
+                event.setPresenter(presenter);
 
-            return event;
+                return event;
+            } else {
+                System.out.println("in else -->  performance");
+
+                Performance event = new Performance((String) ds.child("EventName").getValue());
+
+                return event;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("exception catch");
+            return null;
         }
     }
 

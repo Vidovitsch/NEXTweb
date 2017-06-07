@@ -18,5 +18,5 @@ public interface IModAssignment {
      *
      * @param user
      */
-    void insertSubmission(String uid, String link, String name);
+    void insertSubmission(String uid, String link, String name, String email);
 }

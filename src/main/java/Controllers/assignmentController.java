@@ -54,7 +54,8 @@ public class assignmentController {
         String uid = model.getUid();
         String link = model.getAssignmentlink();
         String name = model.getName();
-        dbAssignment.insertSubmission(uid, link, name);
+        String email = model.getEmail();
+        dbAssignment.insertSubmission(uid, link, name, email);
         modelView.addObject("message", "Submission succesful!");
         return modelView;
     }

@@ -24,10 +24,11 @@ public class DBAssignmentModifier implements IModAssignment {
     }
 
     @Override
-    public void insertSubmission(String uid, String link, String name) {
-        Firebase assignmentRef = firebase.child("Assignment").child(name).child("Submissions").child(uid);
-
-        assignmentRef.setValue(link);
+    public void insertSubmission(String uid, String link, String name, String email) {
+        Firebase nameRef = firebase.child("Assignment").child(name).child("Submissions").child(uid).child("Name");
+        Firebase linkRef = firebase.child("Assignment").child(name).child("Submissions").child(uid).child("Link");
+        linkRef.setValue(link);
+        nameRef.setValue(email);
 
     }
 

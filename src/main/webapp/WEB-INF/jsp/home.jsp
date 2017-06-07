@@ -16,6 +16,9 @@
     </head>
     <body>
         <div class="wrapper">
+            <div class="background-container">
+                <div class="background"></div>
+            </div>
             <br><br><br>
             <div id="header">
                 <div class="slideshow-container">
@@ -44,6 +47,15 @@
                             <div>Go to Map</div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <br><br><br>
+            <div id="content">
+                <div class="poll-container">
+                    
+                </div>
+                <div class='trailer-container'>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/hCFGCrE3k60" frameborder="0" allowfullscreen></iframe>
                 </div>
             </div>
         </div>

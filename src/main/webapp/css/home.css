@@ -9,6 +9,52 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
+.background-container {
+    position: relative;
+    z-index: 1;
+}
+
+.background-container .background {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: url(/images/next_wallpaper1.jpg) center center;
+    opacity: .4;
+    width: 100%;
+    height: 100%;
+}
+
+/* !Content! */
+#content {
+    width: 85%;
+    margin: 0 auto;
+    padding: 25px;
+}
+
+.poll-container {
+    width: 46%;
+    height: 400px;
+    float: left;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 5px 5px 3px #CCCCCC;
+}
+
+.trailer-container {
+    width: 46%;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    padding: 35px;
+    float: right;
+    text-align: center;
+    box-shadow: 5px 5px 3px #CCCCCC;
+    display: inline-block;
+}
+
+/* !Header! */
 #header {
     background-color: #FFFFFF;
     width: 85%;

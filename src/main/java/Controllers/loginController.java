@@ -47,6 +47,6 @@ public class loginController {
     public String loggedIn(@ModelAttribute("SpringWeb") LoginModel loginModel,
             ModelMap model) {
         model.addAttribute("currentemail", loginModel.getCurrentemail());
-        return "index";
+        return "home";
     }
 }

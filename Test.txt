@@ -1,3 +1,0 @@
-asdf
-d
-refs/remotes/origin/david-main

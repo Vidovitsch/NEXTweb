@@ -5,7 +5,7 @@
  */
 package Database;
 
-import com.firebase.client.Firebase;
+import com.google.firebase.database.DatabaseReference;
 
 /**
  *
@@ -13,22 +13,21 @@ import com.firebase.client.Firebase;
  */
 public class DBAssignmentModifier implements IModAssignment {
 
-    private static Firebase firebase;
+    private static DatabaseReference firebase;
     private Object lock;
     private boolean done = false;
 
     public DBAssignmentModifier() {
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
-        firebase = (Firebase) connector.getConnectionObject();
+        firebase = (DatabaseReference) connector.getConnectionObject();
     }
 
     @Override
-    public void insertSubmission(String uid, String link, String name) {
-        Firebase assignmentRef = firebase.child("Assignment").child(name).child("Submissions").child(uid);
-
-        assignmentRef.setValue(link);
-
+    public void insertSubmission(String uid, String link, String name, String email) {
+        DatabaseReference nameRef = firebase.child("Assignment").child(name).child("Submissions").child(uid).child("Name");
+        DatabaseReference linkRef = firebase.child("Assignment").child(name).child("Submissions").child(uid).child("Link");
+        linkRef.setValue(link);
+        nameRef.setValue(email);
     }
-
 }

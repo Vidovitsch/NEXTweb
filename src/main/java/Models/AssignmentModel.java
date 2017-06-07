@@ -14,6 +14,7 @@ public class AssignmentModel {
     private String uid;
     private String name;
     private String assignmentlink;
+    private String email;
 
     public String getUid() {
         return uid;
@@ -37,6 +38,14 @@ public class AssignmentModel {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

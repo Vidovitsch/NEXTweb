@@ -10,10 +10,11 @@ import Models.Lecture;
 import Models.Performance;
 import Models.User;
 import Models.Workshop;
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,31 +25,29 @@ import java.util.logging.Logger;
  *
  * @author David
  */
+
+
 public class DBEventModifier implements IModEvent {
 
-    private static Firebase firebase;
+    private static DatabaseReference firebase;
     private Object lock;
     private boolean done = false;
 
     public DBEventModifier() {
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
-        firebase = (Firebase) connector.getConnectionObject();
+        firebase = (DatabaseReference) connector.getConnectionObject();
     }
 
     @Override
     public void addAttendingUser(String eventID, String uid) {
-        System.out.println("Event ID: " + eventID);
-        System.out.println("User ID: " + uid);
-        Firebase eventRef = firebase.child("Event").child(eventID).child("Attending").child(uid).child("Status");
-
-        eventRef.setValue("Attending");
+        DatabaseReference ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
+        ref.setValue("Attending");
     }
 
     @Override
     public void checkAttending(final Workshop ws, final String uid) {
-        final ArrayList<Event> events = new ArrayList();
-        Firebase ref = firebase.child("Event/" + ws.getId() + "/Attending");
+        DatabaseReference ref = firebase.child("Event/" + ws.getId() + "/Attending");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -63,8 +62,8 @@ public class DBEventModifier implements IModEvent {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString());
+            public void onCancelled(DatabaseError de) {
+                System.out.println(de.toException().toString());
             }
         });
 
@@ -73,10 +72,8 @@ public class DBEventModifier implements IModEvent {
 
     @Override
     public void removeAttendingUser(String eventID, String uid) {
-        Firebase ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
-        Firebase userRef = firebase.child("User").child(uid).child("Attending").child(eventID);
+        DatabaseReference ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
         ref.removeValue();
-        userRef.removeValue();
     }
 
     @Override
@@ -91,50 +88,33 @@ public class DBEventModifier implements IModEvent {
         data.put("Description", event.getDescription());
         data = putEventTypeValues(event, data);
 
-        Firebase ref = firebase.child("Event").push();
+        DatabaseReference ref = firebase.child("Event").push();
         ref.setValue(data);
     }
 
     @Override
     public void removeEvent(Event event) {
-        Firebase ref = firebase.child("Event").child(event.getId());
+        DatabaseReference ref = firebase.child("Event").child(event.getId());
         ref.removeValue();
     }
 
     @Override
     public ArrayList<Event> getEvents() {
+        System.out.println("in getEvents");
         final ArrayList<Event> events = new ArrayList();
-        Firebase ref = firebase.child("Event");
+        DatabaseReference ref = firebase.child("Event");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 for (DataSnapshot ds : snapshot.getChildren()) {
-                    String id = ds.getKey();
-                    String startTime = (String) ds.child("StartTime").getValue();
-                    String endTime = (String) ds.child("EndTime").getValue();
-                    String date = (String) ds.child("Date").getValue();
-                    String imageURL = (String) ds.child("ImageURL").getValue();
-                    String locationName = (String) ds.child("LocationName").getValue();
-                    String description = (String) ds.child("Description").getValue();
-
-                    Event event = specifyEvent(ds);
-                    event.setId(id);
-                    event.setStartTime(startTime);
-                    event.setEndTime(endTime);
-                    event.setDate(date);
-                    event.setImageURL(imageURL);
-                    event.setLocationName(locationName);
-                    event.setDescription(description);
-
-                    events.add(event);
+                    events.add(dsToEvent(ds));
                 }
                 unlockFXThread();
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString());
+            public void onCancelled(DatabaseError de) {
+                System.out.println(de.toException().toString());
             }
         });
 
@@ -142,14 +122,40 @@ public class DBEventModifier implements IModEvent {
         return events;
     }
 
+    private Event dsToEvent(DataSnapshot ds) {
+        System.out.println("Start of dsToEvent");
+        String id = ds.getKey();
+        String startTime = (String) ds.child("StartTime").getValue();
+        String endTime = (String) ds.child("EndTime").getValue();
+        String date = (String) ds.child("Date").getValue();
+        String imageURL = (String) ds.child("ImageURL").getValue();
+        String locationName = (String) ds.child("LocationName").getValue();
+        String description = (String) ds.child("Description").getValue();
+        System.out.println("Start SpecifyEvent");
+        Event event = specifyEvent(ds);
+        System.out.println("Event specified");
+        event.setId(id);
+        event.setStartTime(startTime);
+        event.setEndTime(endTime);
+        event.setDate(date);
+        event.setImageURL(imageURL);
+        event.setLocationName(locationName);
+        event.setDescription(description);
+        System.out.println("end of dsToEvent");
+        return event;
+    }
+
     public ArrayList<Event> getEvents(String uid) {
         final ArrayList<Event> events = new ArrayList();
         final ArrayList<String> eventIDs = new ArrayList();
-        Firebase userRef = firebase.child("User").child(uid).child("Attending");
+        System.out.println("in getEventes(String uid)");
+        DatabaseReference userRef = firebase.child("User").child(uid).child("Attending");
+        System.out.println("userRef created");
         userRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("in userRef DataChange");
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     String eventUID = ds.getKey();
                     eventIDs.add(eventUID);
@@ -158,38 +164,26 @@ public class DBEventModifier implements IModEvent {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
-                System.out.println(fe.toException().toString());
+            public void onCancelled(DatabaseError de) {
+                System.out.println(de.toException().toString());
             }
         });
         lockFXThread();
 
-        Firebase eventRef = firebase.child("Event");
+        DatabaseReference eventRef = firebase.child("Event");
         eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot snapshot) {
+                System.out.println("in eventRef DataChange");
                 for (DataSnapshot dsEvents : snapshot.getChildren()) {
+                    System.out.println("Retreiving eventkey");
                     String id = dsEvents.getKey();
                     for (String eventID : eventIDs) {
+                        System.out.println("looping eventIDs with id: " + eventID);
                         if (id.equals(eventID)) {
-                            String startTime = (String) dsEvents.child("StartTime").getValue();
-                            String endTime = (String) dsEvents.child("EndTime").getValue();
-                            String date = (String) dsEvents.child("Date").getValue();
-                            String imageURL = (String) dsEvents.child("ImageURL").getValue();
-                            String locationName = (String) dsEvents.child("LocationName").getValue();
-                            String description = (String) dsEvents.child("Description").getValue();
-
-                            Event event = specifyEvent(dsEvents);
-                            event.setId(id);
-                            event.setStartTime(startTime);
-                            event.setEndTime(endTime);
-                            event.setDate(date);
-                            event.setImageURL(imageURL);
-                            event.setLocationName(locationName);
-                            event.setDescription(description);
-
-                            events.add(event);
+                            System.out.println("in equals");
+                            events.add(dsToEvent(dsEvents));
                         }
                     }
 
@@ -198,19 +192,19 @@ public class DBEventModifier implements IModEvent {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
         lockFXThread();
+        System.out.println("Na lock, returning events");
         return events;
     }
 
     @Override
-
     public String[] checkAttendancy(String eventID) {
         final String[] attendancy = new String[2];
-        Firebase ref = firebase.child("Event/" + eventID);
+        DatabaseReference ref = firebase.child("Event/" + eventID);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
@@ -225,7 +219,7 @@ public class DBEventModifier implements IModEvent {
             }
 
             @Override
-            public void onCancelled(FirebaseError fe) {
+            public void onCancelled(DatabaseError fe) {
                 System.out.println(fe.toException().toString());
             }
         });
@@ -235,28 +229,41 @@ public class DBEventModifier implements IModEvent {
     }
 
     private Event specifyEvent(DataSnapshot ds) {
-        String eventType = (String) ds.child("EventType").getValue();
-        if (eventType.equals("Workshop")) {
-            Workshop event = new Workshop((String) ds.child("EventName").getValue());
-            String presenter = (String) ds.child("Presenter").getValue();
-            int maxUsers = Integer.valueOf((String) ds.child("MaxUsers").getValue());
-            ArrayList<User> users = attendantsToUsers(ds.child("Attending"));
+        try {
+            System.out.println(ds.getRef().toString());
+            String eventType = (String) ds.child("EventType").getValue();
+            System.out.println("eventtype = " + eventType);
+            if (eventType.equals("Workshop")) {
+                System.out.println("in workshop");
+                Workshop event = new Workshop((String) ds.child("EventName").getValue());
+                String presenter = (String) ds.child("Presenter").getValue();
+                int maxUsers = Integer.valueOf((String) ds.child("MaxUsers").getValue());
+                ArrayList<User> users = attendantsToUsers(ds.child("Attending"));
 
-            event.setPresenter(presenter);
-            event.setMaxUsers(maxUsers);
-            event.setUsers(users);
+                event.setPresenter(presenter);
+                event.setMaxUsers(maxUsers);
+                event.setUsers(users);
 
-            return event;
-        } else if (eventType.equals("Lecture")) {
-            Lecture event = new Lecture((String) ds.child("EventName").getValue());
-            String presenter = (String) ds.child("Presenter").getValue();
-            event.setPresenter(presenter);
+                return event;
+            } else if (eventType.equals("Lecture")) {
+                System.out.println("in Lecture");
 
-            return event;
-        } else {
-            Performance event = new Performance((String) ds.child("EventName").getValue());
+                Lecture event = new Lecture((String) ds.child("EventName").getValue());
+                String presenter = (String) ds.child("Presenter").getValue();
+                event.setPresenter(presenter);
 
-            return event;
+                return event;
+            } else {
+                System.out.println("in else -->  performance");
+
+                Performance event = new Performance((String) ds.child("EventName").getValue());
+
+                return event;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("exception catch");
+            return null;
         }
     }
 

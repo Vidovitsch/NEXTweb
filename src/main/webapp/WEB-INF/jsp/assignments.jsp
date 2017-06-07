@@ -38,7 +38,7 @@
                 firebase.database().ref('/Assignment').once("value", function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         assignmentname = childSnapshot.key;
-                        assignmentdsc = childSnapshot.val().Description;
+                        assignmentdsc = childSnapshot.val().Description;1
                         assignment = {
                             name: assignmentname,
                             description: assignmentdsc}
@@ -78,7 +78,9 @@
                 {
                     var uid = '${userUID}';
                     var link = document.getElementById("assignmentinput").value.toString();
-                    post("/submitassignment", {uid: uid, assignmentlink: link, name: name});
+                    var email = document.cookie;
+                    email = email.replace("username=", "");
+                    post("/submitassignment", {uid: uid, assignmentlink: link, name: name, email: email});
                 }
 
                 function post(path, params, method) {

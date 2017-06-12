@@ -16,9 +16,6 @@
     </head>
     <body>
         <div class="wrapper">
-            <div class="background-container">
-                <div class="background"></div>
-            </div>
             <br><br><br>
             <div id="header">
                 <div class="slideshow-container">
@@ -49,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <br><br><br>
+            <br>
             <div id="content">
                 <div class="poll-container">
                     

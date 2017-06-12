@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- *
+ * This class is used to keep load the data of a message in a accessible way
  * @author Bert
  */
 public class Message {
@@ -21,6 +21,15 @@ public class Message {
     private String date;
     private String userName;
     
+    /**
+     * This on of the constructors for this class it assigns the values of the 
+     * parameters to the fields with the corresponding names
+     * @param uid
+     * @param userName
+     * @param groupNumber
+     * @param content
+     * @param date 
+     */
     public Message(String uid, String userName, int groupNumber, String content, String date)
     {
         this.groupNumber = groupNumber;
@@ -30,6 +39,14 @@ public class Message {
         this.userName = userName;
     }
     
+    /**
+     * This on of the constructors for this class it assigns the values of the 
+     * parameters to the fields with the corresponding names
+     * @param uid
+     * @param groupNumber
+     * @param content
+     * @param date 
+     */
     public Message(String uid, int groupNumber, String content, String date)
     {
         this.groupNumber = groupNumber;
@@ -41,7 +58,7 @@ public class Message {
     /**
      * Get the value of groupNumber
      * 
-     * @return te value of groupNumber
+     * @return the value of groupNumber
      */
     public int getGroupNumber() {
         return groupNumber;

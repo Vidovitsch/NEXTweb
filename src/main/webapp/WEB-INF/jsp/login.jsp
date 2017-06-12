@@ -13,7 +13,7 @@
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <spring:url value="/css/container.css" var="containerCSS" />
+        <spring:url value="/css/container.css" var="ßainerCSS" />
         <spring:url value="/css/login.css" var="loginCSS" />
 
         <link href="${containerCSS}" rel="stylesheet" />

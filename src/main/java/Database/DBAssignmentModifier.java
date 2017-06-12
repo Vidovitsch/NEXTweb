@@ -10,6 +10,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
+
 /**
  *
  * @author Youri van der Ceelen
@@ -33,5 +34,4 @@ public class DBAssignmentModifier implements IModAssignment {
         linkRef.setValue(link);
         nameRef.setValue(email);
     }
-
 }

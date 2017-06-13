@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
 body {
     padding: 0;
     margin: 0;
@@ -14,27 +12,63 @@ body {
     width: 85%;
     margin: 0 auto;
     padding: 25px;
-}
-
-.poll-container {
-    width: 46%;
-    height: 400px;
-    float: left;
-    background-color: #FFF;
-    border-radius: 20px;
-    box-shadow: 5px 5px 3px #BBB;
-}
-
-.trailer-container {
-    width: 46%;
-    background-color: #FFF;
-    border-radius: 20px;
-    padding: 35px;
-    float: right;
     text-align: center;
-    box-shadow: 5px 5px 3px #BBB;
-    display: inline-block;
 }
+
+/* Content Blocks */
+#content table {
+    width: 100%;
+}
+
+#content td {
+    text-align: center; 
+    vertical-align: middle;
+}
+
+.content-block {
+    width: 90%;
+    height: 500px;
+    background-color: #FFF;
+    box-shadow: 5px 5px 3px #BBB;
+    border-radius: 10px;
+    margin: auto;
+}
+
+.content-block-header {
+    width: 100%;
+    height: 75px;
+    border-radius: 10px 10px 0px 0px;
+    top: 0;
+    left: 0;
+}
+
+/* Announcement Block */
+#content-block-header1 {
+    background-color: #577F92;
+}
+
+#megaphone-border {
+    width: 64px;
+    height: 64px;
+    border-radius: 100%;
+    background-color: #577F92;
+    margin: auto;
+}
+
+#megaphone-border img {
+    width: 64px;
+    height: 64px;
+}
+
+#content-block-header2 {
+    background-color: #A2B9B2;
+}
+
+#content-block-header3 {
+    background-color: #F6B067;
+}
+
+
 
 /* !Header! */
 #header {
@@ -42,7 +76,7 @@ body {
     width: 85%;
     height: 275px;
     text-align: center;
-    border-radius: 20px;
+   box-shadow: 5px 5px 3px #BBB;
     margin: 0 auto;
     padding: 25px;
     box-shadow: 5px 5px 3px #BBB;

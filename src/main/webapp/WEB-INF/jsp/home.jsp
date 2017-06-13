@@ -48,12 +48,31 @@
             </div>
             <br>
             <div id="content">
-                <div class="poll-container">
-                    
-                </div>
-                <div class='trailer-container'>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/hCFGCrE3k60" frameborder="0" allowfullscreen></iframe>
-                </div>
+                <table>
+                    <tr>
+                        <td>
+                            <div class="content-block">
+                                <div class="content-block-header" id="content-block-header1">
+                                    <div id="megaphone-border">
+                                        <img src="/images/megaphone.png" />
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="content-block">
+                                <div class="content-block-header" id="content-block-header2">
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="content-block">
+                                <div class="content-block-header" id="content-block-header3">
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <script>

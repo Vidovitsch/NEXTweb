@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * This is the controller used for the assignment screen
  * @author Youri van der Ceelen
  */
 @Controller

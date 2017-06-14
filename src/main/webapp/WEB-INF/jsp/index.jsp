@@ -13,6 +13,7 @@
     </head>
     <body>
         <div class="wrapper">
+            
             <div class="headline">Je ultieme ervaring begint hier</div>
             <a href="events.htm">Open workshop screen</a><br>
             <br>

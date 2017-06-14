@@ -43,12 +43,16 @@ public class scheduleController
     public ModelAndView initWorkshopmessageboardScreen(HttpServletRequest request)
     {
         //insertDummySchedule();
+        System.out.println("in controller");
         uid = getCurrentUID(request);
+        System.out.println("retreived uid");
         ModelAndView modelView = new ModelAndView("schedule");
         for (Map.Entry<String, List<Event>> e : getSchedule(uid).entrySet())
         {
+            System.out.println("in schedule loop");
             modelView.addObject(e.getKey(), e.getValue());
         }
+        System.out.println("out of loop");
         return modelView;
     }
 
@@ -85,7 +89,7 @@ public class scheduleController
 //    }
 
     public Map<String, List<Event>> getSchedule(String uid)
-    {
+    {System.out.println("in getSchedule");
         Map schedule = new HashMap<String, List<Event>>();
         addEvents(schedule, dbEvent.getEvents(uid));
         return schedule;

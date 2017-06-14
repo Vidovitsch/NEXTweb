@@ -98,7 +98,8 @@ public class DBGroupModifier implements IModGroup {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         
@@ -149,8 +150,8 @@ public class DBGroupModifier implements IModGroup {
 
                 @Override
                 public void onCancelled(DatabaseError fe) {
-                    System.out.println(fe.toException().toString());
-                }
+                    System.out.println(fe.toException().toString());                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage());                 }
             });
         }
         lockFXThread();
@@ -177,7 +178,8 @@ public class DBGroupModifier implements IModGroup {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();
@@ -205,7 +207,8 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();
@@ -228,7 +231,8 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();
@@ -295,7 +299,8 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         
@@ -320,7 +325,8 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         List<Integer> numbers = new ArrayList(groupNumbers);

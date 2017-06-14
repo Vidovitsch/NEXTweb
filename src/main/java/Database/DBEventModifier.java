@@ -63,7 +63,8 @@ public class DBEventModifier implements IModEvent {
 
             @Override
             public void onCancelled(DatabaseError de) {
-                System.out.println(de.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + de.getMessage()); 
             }
         });
 
@@ -114,7 +115,8 @@ public class DBEventModifier implements IModEvent {
 
             @Override
             public void onCancelled(DatabaseError de) {
-                System.out.println(de.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + de.getMessage()); 
             }
         });
 
@@ -165,7 +167,8 @@ public class DBEventModifier implements IModEvent {
 
             @Override
             public void onCancelled(DatabaseError de) {
-                System.out.println(de.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + de.getMessage()); 
             }
         });
         lockFXThread();
@@ -193,7 +196,8 @@ public class DBEventModifier implements IModEvent {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();
@@ -220,7 +224,8 @@ public class DBEventModifier implements IModEvent {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
 

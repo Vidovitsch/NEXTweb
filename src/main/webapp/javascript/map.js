@@ -1,119 +1,188 @@
-// Requires:
-// - Firebase
-// - mapcreation.jsp
-// - mapoptions.js for dynamic button elements
-// - mapcreation.js for elements list which are displayed on the mapcreation canvas
+/* 
+ * Reserved variables:
+ * - canvas
+ * - ctx
+ * - canvasOffset
+ * - offsetX
+ * - offsetY
+ * - locations
+ * - selectedLoc
+ * - mouseDown
+ * - clickDifX
+ * - clickDifY
+ * - venue (is the location variabele, location itself conflicts)
+ * - floor
+ * - room
+ * - circle
+ * - rectangle
+ */
 
-// Get a reference to the database service
-var database = firebase.database();
-// Create a variable components & tables
-var components = [];
-var tables = [];
-
-// Canvas and mapdrawing
+// Canvas + Context
 var canvas = document.getElementById("map");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+//canvas.width = window.innerWidth;
+//canvas.height = window.innerHeight;
 var ctx = canvas.getContext("2d");
-// offsets
 var canvasOffset = $("#map").offset();
 var offsetX = canvasOffset.left;
 var offsetY = canvasOffset.top;
 
-// FireBase
-function saveMapToDB() {
-    console.log("Saving to db...");
-    clearMapFromDB();
-    for (var i = 0; i < components.length; i++) {
-        database.ref('Map/' + components[i].id).set({
-            Object: components[i].toString()
-        });
+// Locations
+var locations = [];
+
+// Selection
+var selectedLoc = null;
+var mouseDown = false;
+var clickDifX, clickDifY;
+
+/*************
+ * Functions *
+ *************/
+function loadLocationList() {    
+    document.getElementById("option-location").options.length = 0;
+    var menu = document.getElementById("option-location");
+    for (var i = 0; i < locations.length; i++) {
+        var option = document.createElement("option");
+        option.value = locations[i].id;
+        option.text = locations[i].name;
+        menu.add(option);
+    }
+}
+function findLocation(id) { 
+    for (var i = 0; i < locations.length; i++) {
+        if (String(locations[i].id) == String(id)) {
+            selectedLoc = locations[i];
+            return true;
+        }
+    }
+    return false;
+}
+
+function clearFloorList() { 
+    document.getElementById("option-floor").options.length = 0;
+}
+function loadFloorList() { 
+    clearFloorList();
+    var menu = document.getElementById("option-floor");
+    for (var i = 0; i < selectedLoc.floors.length; i++) {
+        var option = document.createElement("option");
+        option.value = selectedLoc.floors[i].id;
+        option.text = selectedLoc.floors[i].name;
+        menu.add(option);
     }
 }
 
-// FireBase
-function loadMapFromDB() {
-    var mapRef = database.ref('Map');
-    components = [];
-    tables = [];
+// This function selects an element based on mouseX and mouseY coordinates
+function selectElement(x, y) {
+    if (!selectedLoc || !selectedLoc.selectedFloor) {
+        alert("No location/floor selected.");
+        return;
+    }
     
-    console.log("Loading from db...");
-    
-    mapRef.on("child_added", function(snapshot) {
-        var reference = snapshot.val();
-        var object = reference.Object; // type;x;y;dependantOnType
-        var values = object.replace("\"", "");
-        var values = values.split(";");
-
-        var key = snapshot.key; // id
-        console.log("Key value: " + key + " & Object: " + object);
-        console.log("Values: " + values);
-        console.log("Values[0]: " + values[0]);
-        if (values[0] == "circle") {
-            console.log("is circle");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = radius
-            components.push(new circle(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3])));
+    var elements = selectedLoc.selectedFloor.elements;
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].type == "table" && elements[i].isPointInside(x, y)) {
+            selectedLoc.selectedFloor.selectElement(elements[i]);
+            break;
+        } else {
+            clearElementSelection();
         }
-        else if (values[0] == "rectangle") {
-            console.log("is rectangle");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = width, values[4] = height
-            components.push(new rectangle(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3]), parseInt(values[4])));
-        }
-        else if (values[0] == "table") {
-            console.log("is table");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = width, values[4] = height, values[5] = number
-            tables.push(new table(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3]), parseInt(values[4]), parseInt(values[5])));
-        }
-        else if (values[0] == "line") {
-            console.log("is line");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = x2, values[4] = y2
-            components.push(new line(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3]), parseInt(values[4])));
-        }
-        else if (values[0] == "text") {
-            // Not implemented yet/
-        }
-        console.log("Components size: " + components.length);
-    });
-    drawMap();
+    }
 }
 
-// FireBase
-function clearMapFromDB() {
-    // Remove the Map reference in firebase
-    var mapRef = database.ref('Map');
-    mapRef.remove();
+/**
+ * This method will clear the selected element of the current floor.
+ * @returns {undefined}
+ */
+function clearElementSelection() {
+    // check if location and floor are both selected
+    if (!selectedLoc || !selectedLoc.selectedFloor) return; 
+    
+    selectedLoc.selectedFloor.selectElement(null);
 }
-
-function drawMap() {
-    console.log("Drawing");
+// This function clears the canvas
+function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (var i = 0; i < components.length; i++) {
-        components[i].draw();
-    }
-    for (var i = 0; i < tables.length; i++) {
-        tables[i].draw();
-    }
+}
+// This function redraws all the elements
+function redrawAll() {
+    clearCanvas();
+    if (!selectedLoc || !selectedLoc.selectedFloor) { 
+        return;
+    }  
+    selectedLoc.selectedFloor.drawElements();
 }
 
-function checkIfTable(mouseX, mouseY) {
-    for (var i = 0; i < tables.length; i++) {
-        if (tables[i].isPointInside(mouseX, mouseY)) {
-            alert("Table was selected");
-            // put code to show group here - just show it in the alert to prove a point
-            // the number can be requested by using: tables[i].number (might have to parseInt)
+/*********************
+ * Map-EventHandlers *
+ *********************/
+function handleMouseClick(e) {
+    if (!selectedLoc || !selectedLoc.selectedFloor) {
+        alert("No location/floor selected.");
+        return;
+    }
+    
+    // get the mouseX and mouseY location from the eventhandler
+    mouseX = parseInt(e.clientX - offsetX);
+    mouseY = parseInt(e.clientY - offsetY);
+
+    // attempt to select an element by pressing within the element's boundaries
+    selectElement(mouseX, mouseY);
+    // if an element was selected, the redrawAll function will now automatically show a red border
+    redrawAll();
+}
+
+// Bind the EventHandler functions to the Map control
+$("#map").click(handleMouseClick);
+
+/******************************************
+ * Location/Floor selection EventHandlers *
+ ******************************************/
+function onLocationChange() {
+    var result = document.getElementById("option-location");
+    redrawAll();
+    // Find location by ID
+    if (!findLocation(result.value)) {
+        return;
+    }
+    
+    // Load the designated floors in the list
+    loadFloorList();
+    onFloorChange();    
+    
+    // Reset floor selection 
+    selectedLoc.selectFloor(null);    
+}
+function changeLocation(location) {
+    var options = document.getElementById("option-location").options;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value === location.id) {
+            options.selectedIndex = i;
+            loadFloorList();
             break;
         }
     }
 }
 
-function handleMouseClick(e) {
-    mouseX = parseInt(e.clientX - offsetX);
-    mouseY = parseInt(e.clientY - offsetY);
+function onFloorChange() {
+    var result = document.getElementById("option-floor"); 
     
-    checkIfTable(mouseX, mouseY);
+    //console.log("Floor change: " + result.value);
+    //  Set the selected floor
+    selectedLoc.selectFloor(result.value);
+    //console.log("Selected floor... " + selectedLoc.selectedFloor);
+    
+    clearElementSelection();
+
+    // Redraw the current floor
+    redrawAll();
 }
-
-// Add eventhandler function to the map
-$("#map").click(handleMouseClick);
-
-loadMapFromDB();
+function changeFloor(floor) {
+    var options = document.getElementById("option-floor").options;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value === floor.id) {
+            options.selectedIndex = i;
+            redrawAll();
+            break;
+        }
+    }
+}

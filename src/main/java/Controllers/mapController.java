@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * This model is used to load the map screen
  * @author David
  */
 @Controller
 public class mapController {
-
+    /**
+     * this method is used to load the default map screen
+     * @return new ModelAndView("map")
+     */
     @RequestMapping("/map")
     public ModelAndView initMapScreen() {
         return new ModelAndView("map");

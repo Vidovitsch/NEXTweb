@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * This is the controller associated with the group screen 
  * @author mmjan
  */
 @Controller
@@ -26,6 +26,16 @@ public class groupController
     private IModGroup groupDB = new DBGroupModifier();
     private Group group;
     
+    /**
+     * This method is used to load the default view of the group screen
+     * it takes the current user from a cookie that is in the HtppServletRequest
+     * it uses this to user to determine for which user it has to retrieve the group
+     * data.
+     * In the case that the user is not found or part of a group the index screen is
+     * loaded instead of the group screen
+     * @param request
+     * @return modelAndView
+     */
     @RequestMapping(value = "/group", method = RequestMethod.GET)
     public ModelAndView initGroupScreen(HttpServletRequest request)
     {

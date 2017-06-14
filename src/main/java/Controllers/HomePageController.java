@@ -14,16 +14,16 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class HomePageController {
+public class homePageController {
 
     private IModAnnouncement modAnnouncement = new DBAnnouncementModifier();
     
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/home", method = RequestMethod.POST)
     public ModelAndView LoginRequest() {
-        ArrayList<Announcement> announcements = modAnnouncement.fetchAnnouncement();
+        ArrayList<Announcement> announcements = modAnnouncement.fetchAnnouncements();
         ModelAndView mav = new ModelAndView("home");
         mav.addObject("announcements", announcements);
         
-        return new ModelAndView("home");
+        return mav;
     }
 }

@@ -14,5 +14,5 @@ import java.util.ArrayList;
  */
 public interface IModAnnouncement {
     
-    public ArrayList<Announcement> fetchAnnouncement();
+    public ArrayList<Announcement> fetchAnnouncements();
 }

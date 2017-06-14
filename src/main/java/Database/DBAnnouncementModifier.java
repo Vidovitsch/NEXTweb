@@ -33,7 +33,7 @@ public class DBAnnouncementModifier implements IModAnnouncement {
     }
     
     @Override
-    public ArrayList<Announcement> fetchAnnouncement() {
+    public ArrayList<Announcement> fetchAnnouncements() {
         final ArrayList<Announcement> announcements = new ArrayList();
         DatabaseReference ref = firebase.child("Announcement");
         ref.addValueEventListener(new ValueEventListener() {
@@ -43,7 +43,6 @@ public class DBAnnouncementModifier implements IModAnnouncement {
                     String id = snapshot.getKey();
                     String content = String.valueOf(snapshot.child("Text").getValue());
                     announcements.add(new Announcement(id, content));
-                    System.out.println(id + ": added");
                 }
                 unlockFXThread();
             }

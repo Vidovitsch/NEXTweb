@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -56,11 +57,9 @@
                                     Announcement
                                 </div>
                                 <div class="content-block-content" id="content-block-content1">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                                        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-                                    </p>
+                                    <c:forEach var="ann" items="${announcements}">
+                                        <div class="announcement">${ann.content}</div>
+                                    </c:forEach>
                                 </div>
                             </div>
                         </td>

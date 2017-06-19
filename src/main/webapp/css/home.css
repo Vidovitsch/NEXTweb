@@ -19,18 +19,15 @@ body {
     width: 100%;
 }
 
-
-#contend td {
+.content-tabledata {
     width: 33%;
 }
 
 .content-block {
     width: 90%;
-    height: 500px;
     background-color: #FFF;
     box-shadow: 5px 5px 3px #BBB;
     margin: auto;
-
 }
 
 /* Content Block headers */
@@ -54,19 +51,18 @@ body {
     background-color: #A2B9B2;
 }
 
-#content-block-header3 {
-    background-color: #F6B067;
-}
-
 /* Content Block content */
 .content-block-content {
     padding: 20px;
+    height: 500px;
+    overflow-y: scroll;
 }
 
 /* Announcement-Block */
 .announcement {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
+    font-size: 1.2em;
 }
 
 /* Footer */
@@ -83,7 +79,7 @@ body {
     width: 85%;
     height: 275px;
     text-align: center;
-   box-shadow: 5px 5px 3px #BBB;
+    box-shadow: 5px 5px 3px #BBB;
     margin: 0 auto;
     padding: 25px;
     box-shadow: 5px 5px 3px #BBB;

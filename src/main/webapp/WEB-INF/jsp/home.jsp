@@ -51,36 +51,22 @@
             <div id="content">
                 <table>
                     <tr>
-                        <td>
+                        <td class="content-tabledata">
                             <div class="content-block">
                                 <div class="content-block-header" id="content-block-header1">
                                     Announcement
                                 </div>
                                 <div class="content-block-content" id="content-block-content1">
                                     <c:forEach var="ann" items="${announcements}">
-                                        <div class="announcement">${ann.content}</div>
+                                        <div class="announcement">${ann.content}</div><hr>
                                     </c:forEach>
                                 </div>
                             </div>
                         </td>
-                        <td>
+                        <td class="content-tabledata">
                             <div class="content-block">
                                 <div class="content-block-header" id="content-block-header2">
                                     Go any ideas?
-                                </div>
-                                <div class="content-block-content" id="content-block-content2">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                                        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-                                    </p>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="content-block">
-                                <div class="content-block-header" id="content-block-header3">
-                                    Hot Events
                                 </div>
                                 <div class="content-block-content" id="content-block-content2">
                                     <p>

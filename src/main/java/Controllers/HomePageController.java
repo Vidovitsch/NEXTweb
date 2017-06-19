@@ -21,6 +21,10 @@ public class homePageController {
     @RequestMapping(value = "/home", method = RequestMethod.POST)
     public ModelAndView LoginRequest() {
         ArrayList<Announcement> announcements = modAnnouncement.fetchAnnouncements();
+        announcements.addAll(modAnnouncement.fetchAnnouncements());
+        announcements.addAll(modAnnouncement.fetchAnnouncements());
+        announcements.addAll(modAnnouncement.fetchAnnouncements());
+        announcements.addAll(modAnnouncement.fetchAnnouncements());
         ModelAndView mav = new ModelAndView("home");
         mav.addObject("announcements", announcements);
         

@@ -5,15 +5,13 @@
  */
 package Database;
 
-import Models.Announcement;
-import java.util.TreeSet;
+import Models.Poll;
 
 /**
  *
  * @author David
  */
-public interface IModAnnouncement {
+public interface IModPoll {
     
-    // Fetches a sorted list (on date) of announcements from the database
-    public TreeSet<Announcement> fetchAnnouncements();
+    public Poll fetchPoll();
 }

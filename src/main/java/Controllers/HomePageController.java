@@ -1,8 +1,11 @@
 package Controllers;
 
 import Database.DBAnnouncementModifier;
+import Database.DBPollModifier;
 import Database.IModAnnouncement;
+import Database.IModPoll;
 import Models.Announcement;
+import Models.Poll;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class homePageController {
 
     private IModAnnouncement modAnnouncement = new DBAnnouncementModifier();
+    private IModPoll modPoll = new DBPollModifier();
     
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView initHomePageGET() {
@@ -37,8 +41,10 @@ public class homePageController {
     
     private ModelAndView newPageInstance() {
         TreeSet<Announcement> announcements = modAnnouncement.fetchAnnouncements();
-
+        Poll poll = modPoll.fetchPoll();
+        
         ModelAndView mav = new ModelAndView("home");
+        mav.addObject("poll", poll);
         mav.addObject("announcements", announcements);
         
         return mav;

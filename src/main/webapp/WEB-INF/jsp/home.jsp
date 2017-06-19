@@ -69,9 +69,7 @@
                         </td>
                         <td class="content-tabledata">
                             <div class="content-block">
-                                <div class="content-block-header" id="content-block-header2">
-                                    Got any ideas?
-                                </div>
+                                <div class="content-block-header" id="content-block-header2"></div>
                                 <div class="content-block-content" id="content-block-content2">
                                     <p>
                                         Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
@@ -196,7 +194,6 @@
             // Listens to the creation of announcements in firebase
             function announcementCreationListener() {
                 var path = "Announcement";
-                alert('begin listener');
                 database.ref(path).on("child_added", function(snapshot) {
                     var content = snapshot.val().Text;
                     
@@ -207,6 +204,29 @@
                         loadRecentAnnouncements();
                     }
                 });
+            }
+            
+            // ******* Poll ******* //
+            
+            setPoll();
+            
+            function setPoll() {
+                // Set the header of the poll content block
+                document.getElementById("content-block-header2").innerHTML += '${poll.header}';
+                
+                var phase = ${poll.phase};
+            }
+            
+            function phase0Element() {
+                
+            }
+            
+            function phase1Element() {
+                
+            }
+            
+            function phase2Element() {
+                
             }
         </script>
     </body>

@@ -7,6 +7,7 @@ package Database;
 
 import Models.Announcement;
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 /**
  *
@@ -14,5 +15,5 @@ import java.util.ArrayList;
  */
 public interface IModAnnouncement {
     
-    public ArrayList<Announcement> fetchAnnouncements();
+    public TreeSet<Announcement> fetchAnnouncements();
 }

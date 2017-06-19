@@ -11,7 +11,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,8 +37,8 @@ public class DBAnnouncementModifier implements IModAnnouncement {
     }
     
     @Override
-    public ArrayList<Announcement> fetchAnnouncements() {
-        final ArrayList<Announcement> announcements = new ArrayList();
+    public TreeSet<Announcement> fetchAnnouncements() {
+        final TreeSet<Announcement> announcements = new TreeSet(new AnnouncementComparator());
         DatabaseReference ref = firebase.child("Announcement");
         ref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -42,7 +46,8 @@ public class DBAnnouncementModifier implements IModAnnouncement {
                 for (DataSnapshot snapshot : ds.getChildren()) {
                     String id = snapshot.getKey();
                     String content = String.valueOf(snapshot.child("Text").getValue());
-                    announcements.add(new Announcement(id, content));
+                    String dateTime = String.valueOf(snapshot.child("DateTime").getValue());
+                    announcements.add(new Announcement(id, content, dateTime));
                 }
                 unlockFXThread();
             }
@@ -55,6 +60,23 @@ public class DBAnnouncementModifier implements IModAnnouncement {
         lockFXThread();
         
         return announcements;
+    }
+    
+    private class AnnouncementComparator implements Comparator<Announcement> {
+
+        @Override
+        public int compare(Announcement o1, Announcement o2) {
+            try {
+                Date date1 = o1.toDate(o1.getDateTime());
+                Date date2 = o2.toDate(o2.getDateTime());
+                
+                return date2.compareTo(date1);
+            } catch (ParseException ex) {
+                //Exception has been thrown, returns a non-existant comparable value (-2)
+                Logger.getLogger(Announcement.class.getName()).log(Level.SEVERE, null, ex);
+                return 0;
+            }
+        }
     }
     
     /**

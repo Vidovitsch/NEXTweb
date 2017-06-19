@@ -7,7 +7,17 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-/* Content */
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+/* body */
 #content {
     width: 88%;
     margin: 0 auto;
@@ -20,7 +30,7 @@ body {
 }
 
 .content-tabledata {
-    width: 33%;
+    width: 50%;
 }
 
 .content-block {
@@ -51,18 +61,54 @@ body {
     background-color: #A2B9B2;
 }
 
-/* Content Block content */
+/* General Content Block Content */
+
 .content-block-content {
-    padding: 20px;
-    height: 500px;
-    overflow-y: scroll;
+    padding: 15px 20px 20px 15px;
+    height: 235px;
 }
 
-/* Announcement-Block */
+/* Announcement Block */
+
 .announcement {
     width: 100%;
     padding: 10px;
     font-size: 1.2em;
+    transition: all .15s ease-in-out;
+}
+
+.announcement:hover {
+    -webkit-transform: translateX(25px); 
+    -moz-transform: translateX(25px); 
+    -ms-transform: translateX(25px); 
+    -o-transform: translateX(25px); 
+    transform: translateX(25px); 
+}
+
+.content-block-content1-navigation {
+    color: #405D6B;
+    font-weight: bold;
+    width: 100%;
+}
+
+#nav-recent {
+    text-align: right;
+    font-size: 1.1em;
+}
+
+#nav-older {
+    text-align: center;
+    font-size: 1.4em;
+    padding-top: 10px;
+}
+
+#recent:hover, #older:hover {
+    cursor: pointer;
+    color: #577F92;
+}
+
+#announcement-list:hover {
+    cursor: pointer;
 }
 
 /* Footer */
@@ -74,6 +120,7 @@ body {
 }
 
 /* Header */
+
 #header {
     background-color: #FFF;
     width: 85%;

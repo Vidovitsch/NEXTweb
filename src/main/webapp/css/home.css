@@ -1,23 +1,135 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
-
 body {
     padding: 0;
     margin: 0;
     border: 0;
     overflow-x: hidden;
-    background-color: #EEEEEE;
+    background-color: #DDD;
     -webkit-font-smoothing: antialiased;
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+/* body */
+#content {
+    width: 88%;
+    margin: 0 auto;
+    padding: 30px;
+    text-align: center;
+}
+
+#content table {
+    width: 100%;
+}
+
+.content-tabledata {
+    width: 50%;
+}
+
+.content-block {
+    width: 90%;
+    background-color: #FFF;
+    box-shadow: 5px 5px 3px #BBB;
+    margin: auto;
+}
+
+/* Content Block headers */
+
+.content-block-header {
+    width: 100%;
+    top: 0;
+    left: 0;
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding: 20px 0px 20px 0px;
+}
+
+#content-block-header1 {
+    background-color: #577F92;
+}
+
+#content-block-header2 {
+    background-color: #A2B9B2;
+}
+
+/* General Content Block Content */
+
+.content-block-content {
+    padding: 15px 20px 20px 15px;
+    height: 235px;
+}
+
+/* Announcement Block */
+
+.announcement {
+    width: 100%;
+    padding: 10px;
+    font-size: 1.2em;
+    transition: all .15s ease-in-out;
+}
+
+.announcement:hover {
+    -webkit-transform: translateX(25px); 
+    -moz-transform: translateX(25px); 
+    -ms-transform: translateX(25px); 
+    -o-transform: translateX(25px); 
+    transform: translateX(25px); 
+}
+
+.content-block-content1-navigation {
+    color: #405D6B;
+    font-weight: bold;
+    width: 100%;
+}
+
+#nav-recent {
+    text-align: right;
+    font-size: 1.1em;
+}
+
+#nav-older {
+    text-align: center;
+    font-size: 1.4em;
+    padding-top: 10px;
+}
+
+#recent:hover, #older:hover {
+    cursor: pointer;
+    color: #577F92;
+}
+
+#announcement-list:hover {
+    cursor: pointer;
+}
+
+/* Footer */
+#footer {
+    width: 100%;
+    height: 200px;
+    margin-top: 20px;
+    background-color: #A2B9B2;
+}
+
+/* Header */
+
 #header {
-    background-color: #FFFFFF;
+    background-color: #FFF;
     width: 85%;
     height: 275px;
     text-align: center;
-    border-radius: 20px;
+    box-shadow: 5px 5px 3px #BBB;
     margin: 0 auto;
     padding: 25px;
-    box-shadow: 5px 5px 3px #CCCCCC;
+    box-shadow: 5px 5px 3px #BBB;
 }
 
 .header-buttons {

@@ -92,7 +92,7 @@
                                 {
                                     window.location.href = "/pie/createworkshop.htm";
                                 } else {
-                                    post("loggedin", {currentemail: user.email});
+                                    post("home", {currentemail: user.email});
                                 }
                             }
                         });
@@ -149,7 +149,7 @@
                             if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user) {
-                                        post('loggedin', {currentemail: user.email});
+                                        post('home', {currentemail: user.email});
                                     }
                                 });
                                 firebase.auth().createUserWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {

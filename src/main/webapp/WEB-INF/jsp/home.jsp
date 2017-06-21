@@ -70,11 +70,7 @@
                         <td class="content-tabledata">
                             <div class="content-block">
                                 <div class="content-block-header" id="content-block-header2"></div>
-                                <div class="content-block-content" id="content-block-content2">
-                                    <div id="idea-context"> If you have a cool idea for the NEXT week? Post it here!</h3>
-                                    <textarea id="idea-input"></textarea>
-                                    <input id="idea-submit-button" type="submit" onclick="submitIdea();" value="Submit" />
-                                </div>
+                                <div class="content-block-content" id="content-block-content2"></div>
                             </div>
                         </td>
                     </tr>
@@ -86,6 +82,7 @@
         <script>
             var database = firebase.database();
             var uid = '${uid}';
+            var submitted = ${submitted};
             
             // ******* Promotions ******* //
             
@@ -210,36 +207,73 @@
             setPoll();
             
             function setPoll() {
-                // Set the header of the poll content block
-                document.getElementById("content-block-header2").innerHTML += '${poll.header}';
-                
                 var phase = ${poll.phase};
+                if (submitted === true) {
+                    submittedElement();
+                } else if (phase === 0) {
+                    // Set the header of the poll content block
+                    document.getElementById("content-block-header2").innerHTML += '${poll.header}';
+                    phase0Element();
+                } else if (phase === 1) {
+                    phase1Element();
+                } else {
+                    phase2Element();
+                }
             }
             
+            // Set html elements corresponding to phase 0 of the poll
             function phase0Element() {
-                
+                document.getElementById("content-block-content2").innerHTML = '';
+                document.getElementById("content-block-content2").innerHTML += 
+                '<div id="idea-context"> If you have a cool idea for the NEXT week? Post it here! (You can only post one)</h3>' +
+                    '<textarea id="idea-input"></textarea>' + 
+                    '<input id="idea-submit-button" type="submit" onclick="submitIdea();" value="Submit" />';
             }
             
+            // Set html elements corresponding to phase 1 of the poll
             function phase1Element() {
                 
             }
             
+            // Set html elements corresponding to phase 2 of the poll
             function phase2Element() {
                 
             }
             
+            // Set html elements when the user has already submitted an idea or a vote
+            function submittedElement() {
+                document.getElementById("content-block-header2").innerHTML += '';
+                document.getElementById("content-block-content2").innerHTML = '';
+                document.getElementById("content-block-header2").innerHTML += 'Trailer';
+                document.getElementById("content-block-content2").innerHTML += 
+                '<div id="iframe-wrapper">\n\
+                    <iframe width="500" height="235" src="https://www.youtube.com/embed/hCFGCrE3k60" frameborder="0" allowfullscreen></iframe>\n\
+                </div>';
+            }
+            
+            // Submit the new idea the current user has created
             function submitIdea() {
-                var input = document.getElementById("idea-input").textContent;
+                var input = document.getElementById("idea-input").value;
                 var postData = {
                     Content: input,
                     Votes: 0
                 };
+                
+                // Create new random key
                 var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
                 
+                // Submit the data
                 var updates = {};
                 updates['/Poll/Ideas/' + newKey] = postData;
                 firebase.database().ref().update(updates);
+                
+                setSubmitted(uid);
             }
+            
+            function setSubmitted(uid) {
+                firebase.database().ref('User/' + uid).update({ Submitted: 1 });
+            }
+            
         </script>
     </body>
 </html>

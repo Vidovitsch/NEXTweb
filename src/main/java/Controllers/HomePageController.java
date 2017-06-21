@@ -46,12 +46,15 @@ public class homePageController {
     
     private ModelAndView newPageInstance(HttpServletRequest request) {
         TreeSet<Announcement> announcements = modAnnouncement.fetchAnnouncements();
+        String uid = getCurrentUID(request);
         Poll poll = modPoll.fetchPoll();
-        
+        boolean submitted = modPoll.submitted(uid);
+                
         ModelAndView mav = new ModelAndView("home");
         mav.addObject("poll", poll);
         mav.addObject("announcements", announcements);
-        mav.addObject("uid", getCurrentUID(request));
+        mav.addObject("uid", uid);
+        mav.addObject("submitted", submitted);
         
         return mav;
     }

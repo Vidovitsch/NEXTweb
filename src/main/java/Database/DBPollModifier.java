@@ -30,6 +30,7 @@ public class DBPollModifier implements IModPoll {
     private Object lock;
     private boolean done = false;
     private Poll poll;
+    private boolean submitted;
     
     public DBPollModifier() {
         FBConnector connector = FBConnector.getInstance();
@@ -70,5 +71,31 @@ public class DBPollModifier implements IModPoll {
         
         Utility.lockFXThread();
         return this.poll;
+    }
+
+    @Override
+    public boolean submitted(String uid) {
+        DatabaseReference ref = firebase.child("User/" + uid + "/Submitted");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                int s = Integer.valueOf(String.valueOf(ds.getValue()));
+                if (s == 0) {
+                    submitted = false;
+                } else {
+                    submitted = true;
+                }
+                
+                Utility.unlockFXThread();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError de) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        
+        Utility.lockFXThread();
+        return submitted;
     }
 }

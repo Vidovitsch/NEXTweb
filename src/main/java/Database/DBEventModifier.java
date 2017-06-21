@@ -9,6 +9,7 @@ import Models.Event;
 import Models.Lecture;
 import Models.Performance;
 import Models.User;
+import Models.Utility;
 import Models.Workshop;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -58,7 +59,7 @@ public class DBEventModifier implements IModEvent {
                         break;
                     }
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -67,7 +68,7 @@ public class DBEventModifier implements IModEvent {
             }
         });
 
-        lockFXThread();
+        Utility.lockFXThread();
     }
 
     @Override
@@ -109,7 +110,7 @@ public class DBEventModifier implements IModEvent {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     events.add(dsToEvent(ds));
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -118,7 +119,7 @@ public class DBEventModifier implements IModEvent {
             }
         });
 
-        lockFXThread();
+        Utility.lockFXThread();
         return events;
     }
 
@@ -160,7 +161,7 @@ public class DBEventModifier implements IModEvent {
                     String eventUID = ds.getKey();
                     eventIDs.add(eventUID);
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -168,7 +169,7 @@ public class DBEventModifier implements IModEvent {
                 System.out.println(de.toException().toString());
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
 
         DatabaseReference eventRef = firebase.child("Event");
         eventRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -188,7 +189,7 @@ public class DBEventModifier implements IModEvent {
                     }
 
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -196,7 +197,7 @@ public class DBEventModifier implements IModEvent {
                 System.out.println(fe.toException().toString());
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         System.out.println("Na lock, returning events");
         return events;
     }
@@ -215,7 +216,7 @@ public class DBEventModifier implements IModEvent {
                     attendancy[0] = String.valueOf(snapshot.getChildrenCount());
                 }
 
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -224,7 +225,7 @@ public class DBEventModifier implements IModEvent {
             }
         });
 
-        lockFXThread();
+        Utility.lockFXThread();
         return attendancy;
     }
 
@@ -288,34 +289,5 @@ public class DBEventModifier implements IModEvent {
             users.add(new User(uid));
         }
         return users;
-    }
-
-    /**
-     * Tells a random object to wait while in a loop. The loop stops, and won't
-     * cause any unnecessary cpu use.
-     */
-    private void lockFXThread() {
-        lock = new Object();
-        synchronized (lock) {
-            while (!done) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(DBEventModifier.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        done = false;
-    }
-
-    /**
-     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed
-     * and break free.
-     */
-    private void unlockFXThread() {
-        synchronized (lock) {
-            done = true;
-            lock.notifyAll();
-        }
     }
 }

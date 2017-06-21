@@ -71,7 +71,8 @@
                             <div class="content-block">
                                 <div class="content-block-header" id="content-block-header2"></div>
                                 <div class="content-block-content" id="content-block-content2">
-                                    
+                                    <div id="idea-context"> If you have a cool idea for the NEXT week? Post it here!</h3>
+                                    <textarea id="idea-input"></textarea>
                                 </div>
                             </div>
                         </td>

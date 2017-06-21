@@ -28,9 +28,23 @@
             <select class="soflow" id="option-floor" onchange="onFloorChange()">
                 <!-- Data depends on location selection -->
             </select>
-            <canvas id="map" style="background-color: #F0F0F0" width="1600px" height="800px"></canvas>
+            
+            <div>
+                <div id="group" style="float: left; width: 300px; background-color: #E82C0C;">
+                    <div id="groupname" class="soflow-title">{ None }</div>
+                    <div id="groupinfo" class="soflow-regular-txt-wrapped">{ No Info }</div>
+                    <div id="groupmembers" style="background-color: #ED4E0C">
+                        <!--<div id="user.id" class="soflow-regular-txt-limited">TWAN@STUDENT.FONTYS.NL</div>
+                        <div id="user.id" class="soflow-regular-txt-limited">MICHIEL@STUDENT.FONTYS.NL</div>
+                        <div id="user.id" class="soflow-regular-txt-limited">DAVID@STUDENT.FONTYS.NL</div>-->
+                    </div>
+                </div>
+                <div id="canvaspro" style="overflow: auto">
+                    <canvas height="800px" width="1600px" id="map" style="background-color: #F0F0F0; "></canvas>
+                </div>
+            </div>
         </div>
-        
+            
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
         <script src="/javascript/map.js"></script>
         <script src="/javascript/circle.js"></script>

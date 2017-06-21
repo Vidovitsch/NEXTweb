@@ -14,7 +14,7 @@ var Group = (function () {
         this.members.push(member);
     }
     Group.prototype.toString = function() {
-        return String("");
+        return String(this.id + ". " + this.name + " - " + this.location + " and " + this.members.length + " members.");
     }
     return Group;
 })();

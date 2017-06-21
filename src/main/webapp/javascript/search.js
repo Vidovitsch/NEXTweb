@@ -87,6 +87,66 @@ function findGroups(searchTxt) {
     }
 }
 
+function findGroupById(id) {
+    var group = null;
+    if (!id) {
+        createGroupElement(group);
+        console.log("Id was invalid or empty.");
+        return;
+    }
+    
+    for (var i = 0; i < groups.length; i++) {
+        if (groups[i].id === id) {
+            console.log("Group found: " + groups[i].id);
+            group = groups[i];
+            break;
+        }
+    }
+    
+    createGroupElement(group);
+    /*var groupInfo = "";
+    if (group !== null) {
+        for (var i = 0; i < group.members.length; i++) {
+            groupInfo += group.members[i].mail;
+            groupInfo += "\n";
+            console.log("Looping through group members... " + i);
+        }
+    }
+    if (groupInfo !== "") {
+        alert(groupInfo);
+    }*/
+}
+function findGroupByTable(tableId) {
+    var group = null;
+    if (!tableId) {
+        createGroupElement(group);
+        console.log("Id was invalid or empty.");
+        return;
+    }
+    
+    for (var i = 0; i < groups.length; i++) {
+        console.log("Looping through groups: " + groups[i]);
+        if (groups[i].location !== undefined && String(groups[i].location) === String(tableId)) {
+            console.log("Group found: " + groups[i].id);
+            group = groups[i];
+            break;
+        }
+    }
+    
+    createGroupElement(group);
+    /*var groupInfo = "";
+    if (group !== null) {
+        for (var i = 0; i < group.members.length; i++) {
+            groupInfo += group.members[i].mail;
+            groupInfo += "\n";
+            console.log("Looping through group members... " + i);
+        }
+    }
+    if (groupInfo !== "") {
+        alert(groupInfo);
+    }*/
+}
+
 // This function selects a table element based on table number
 /*function selectElementTableNr(tableNr) {
     if (!selectedLoc || !selectedLoc.selectedFloor) {
@@ -107,6 +167,7 @@ function findGroups(searchTxt) {
 
 function selectTableById(groupId) {
     console.log("The given groupId is: " + groupId);
+    document.getElementById("tbsearchresults").style.display = "none";
     if (!groupId) { 
         alert("User table cannot be found!");
         return;
@@ -125,11 +186,12 @@ function selectTableById(groupId) {
     }
     console.log("Found tableId: " + tableId);
     if (!tableId) {
-        return;
+        alert("User/Group is not found at a group or table");
+        //return;
     }
     
     findTableById(tableId);
-    document.getElementById("tbsearchresults").style.display = "none";
+    findGroupById(groupId);
 }
 
 function findTableById(tableId) {
@@ -171,6 +233,23 @@ function findTableById(tableId) {
     }
 }
 
+function createGroupElement(group) {
+    var groupInfo = document.getElementById("groupinfo"); // none
+    var groupName = document.getElementById("groupname"); // no info
+    var groupMembers = document.getElementById("groupmembers");
+    if (group === null) {
+        groupName.innerHTML = "{ None }";
+        groupInfo.innerHTML = "{ No Info }";
+        groupMembers.innerHTML = "";
+    } else {
+        groupName.innerHTML = group.id + ". " + group.name;
+        groupInfo.innerHTML = "This group has " + group.members.length + " members.\nThe group can be found at " + group.location;
+        groupMembers.innerHTML = "";
+        for (var i = 0; i < group.members.length; i++) {
+            groupMembers.innerHTML += "<div id='" + group.members[i].id + "' class='soflow-regular-txt-limited'>" + group.members[i].mail + "</div>";
+        }
+    }
+}
 
 /**
  * Loads all the groups from firebase and stores them locally.
@@ -191,6 +270,7 @@ function loadGroups() {
             memberRef.forEach(function(m) {
                 var uid = m.key.toString();
                 var tempUser = loadUserById(uid);
+                console.log("tempUser: " + tempUser === null ? " success" : " failure");
                 tempGroup.addMember(tempUser);
                 console.log("Member pushed: " + tempGroup.members.length);
             });
@@ -205,7 +285,7 @@ function loadGroups() {
  * @returns User object or null
  */
 function loadUserById(id) {
-    var userRef = database.ref('User/' + id);
+    /*var userRef = database.ref('User/' + id);
     userRef.once("value", function(snapshot) {
         var course = snapshot.val().Course;
         var groupid = snapshot.val().GroupID;
@@ -218,7 +298,12 @@ function loadUserById(id) {
         var user = new User(id, fname, lname, mail, role, semester, status, course, groupid);
         console.log("Member: " + user.toString());
         return user;
-    });
+    });*/
+    for (var i = 0; i < users.length; i++) {
+        if (users[i].id === id) {
+            return users[i];
+        }
+    }
     return null;
 }
 /**
@@ -247,5 +332,5 @@ function loadUsers() {
 }
 
 // Perform the following methods on load:
-loadGroups();
 loadUsers();
+loadGroups();

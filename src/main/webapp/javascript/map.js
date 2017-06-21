@@ -78,15 +78,19 @@ function selectElement(x, y) {
         return;
     }
     
+    createGroupElement(null);
     var elements = selectedLoc.selectedFloor.elements;
     for (var i = 0; i < elements.length; i++) {
-        if (elements[i].type == "table" && elements[i].isPointInside(x, y)) {
+        if (elements[i].type === "table" && elements[i].isPointInside(x, y)) {
             selectedLoc.selectedFloor.selectElement(elements[i]);
+            findGroupByTable(elements[i].id);
+            console.log("Elements[i].id: " + elements[i].id);
             break;
         } else {
             clearElementSelection();
         }
     }
+    
 }
 
 /**
@@ -122,8 +126,8 @@ function handleMouseClick(e) {
     }
     
     // get the mouseX and mouseY location from the eventhandler
-    mouseX = parseInt(e.clientX - offsetX);
-    mouseY = parseInt(e.clientY - offsetY);
+    mouseX = parseInt(e.pageX - offsetX);
+    mouseY = parseInt(e.pageY - offsetY);
 
     // attempt to select an element by pressing within the element's boundaries
     selectElement(mouseX, mouseY);

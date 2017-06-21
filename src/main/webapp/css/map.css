@@ -267,6 +267,26 @@ body {
     font-size: 12px;
     padding: 5px;
 }
+.soflow-regular-txt-limited {
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 12px;
+    padding: 5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: inherit;
+    overflow: hidden;
+    border: 1px solid #000000;
+}
+.soflow-regular-txt-wrapped {
+    color: #ffffff !important;
+    font-weight: bold !important;
+    font-size: 12px;
+    padding: 5px;
+    word-wrap: break-word;
+    width: inherit;
+    border: 1px solid #000000;
+}
 .soflow-input-txt {
     border: 2px solid rgb(173, 204, 204);
     width: 60px;

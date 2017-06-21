@@ -73,6 +73,7 @@
                                 <div class="content-block-content" id="content-block-content2">
                                     <div id="idea-context"> If you have a cool idea for the NEXT week? Post it here!</h3>
                                     <textarea id="idea-input"></textarea>
+                                    <input id="idea-submit-button" type="submit" onclick="submitIdea();" value="Submit" />
                                 </div>
                             </div>
                         </td>
@@ -84,6 +85,7 @@
         
         <script>
             var database = firebase.database();
+            var uid = '${uid}';
             
             // ******* Promotions ******* //
             
@@ -224,6 +226,19 @@
             
             function phase2Element() {
                 
+            }
+            
+            function submitIdea() {
+                var input = document.getElementById("idea-input").textContent;
+                var postData = {
+                    Content: input,
+                    Votes: 0
+                };
+                var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
+                
+                var updates = {};
+                updates['/Poll/Ideas/' + newKey] = postData;
+                firebase.database().ref().update(updates);
             }
         </script>
     </body>

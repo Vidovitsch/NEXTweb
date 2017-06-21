@@ -17,7 +17,8 @@ body {
                                   supported by Chrome and Opera */
 }
 
-/* body */
+/* *****body***** */
+
 #content {
     width: 88%;
     margin: 0 auto;
@@ -40,7 +41,7 @@ body {
     margin: auto;
 }
 
-/* Content Block headers */
+/* *****Content Block headers***** */
 
 .content-block-header {
     width: 100%;
@@ -61,7 +62,7 @@ body {
     background-color: #A2B9B2;
 }
 
-/* General Content Block Content */
+/* *****General Content Block Content***** */
 
 .content-block-content {
     padding: 15px 20px 20px 15px;
@@ -70,7 +71,7 @@ body {
 
 /* *****Poll Block***** */
 
-
+/* phase 0 */
 #idea-input {
     width: 100%;
     height: 100px;
@@ -86,7 +87,11 @@ body {
     color: #405D6B;
 }
 
-/* Announcement Block */
+/* phase 1 */
+
+/* phase 2 */
+
+/* *****Announcement Block****** */
 
 .announcement {
     width: 100%;
@@ -96,11 +101,11 @@ body {
 }
 
 .announcement:hover {
-    -webkit-transform: translateX(25px); 
-    -moz-transform: translateX(25px); 
-    -ms-transform: translateX(25px); 
-    -o-transform: translateX(25px); 
-    transform: translateX(25px); 
+    -webkit-transform: translateX(25px);
+    -moz-transform: translateX(25px);
+    -ms-transform: translateX(25px);
+    -o-transform: translateX(25px);
+    transform: translateX(25px);
 }
 
 .content-block-content1-navigation {
@@ -129,7 +134,8 @@ body {
     cursor: pointer;
 }
 
-/* Footer */
+/* *****Footer***** */
+
 #footer {
     width: 100%;
     height: 200px;
@@ -137,7 +143,7 @@ body {
     background-color: #A2B9B2;
 }
 
-/* Header */
+/* *****Header***** */
 
 #header {
     background-color: #FFF;
@@ -251,7 +257,8 @@ body {
     padding-bottom: 50px;
 }
 
-/* Slideshow container */
+/* *****Slideshow container***** */
+
 .slideshow-container {
     float: left;
 }
@@ -269,7 +276,8 @@ body {
     height: 100%;
 }
 
-/* Fading animation */
+/* *****Fading animation***** */
+
 .fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 2.5s;

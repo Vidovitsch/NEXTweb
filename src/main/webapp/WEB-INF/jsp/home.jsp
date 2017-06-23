@@ -52,7 +52,7 @@
                 <table>
                     <tr>
                         <td class="content-tabledata">
-                            <div class="content-block">
+                            <div id="content-block1" class="content-block">
                                 <div class="content-block-header" id="content-block-header1">
                                     Announcements
                                 </div>
@@ -68,7 +68,7 @@
                             </div>
                         </td>
                         <td class="content-tabledata">
-                            <div class="content-block">
+                            <div id="content-block2" class="content-block">
                                 <div class="content-block-header" id="content-block-header2"></div>
                                 <div class="content-block-content" id="content-block-content2"></div>
                             </div>
@@ -225,8 +225,8 @@
             function phase0Element() {
                 document.getElementById("content-block-content2").innerHTML = '';
                 document.getElementById("content-block-content2").innerHTML += 
-                '<div id="idea-context"> If you have a cool idea for the NEXT week? Post it here! (You can only post one)</h3>' +
-                    '<textarea id="idea-input"></textarea>' + 
+                    '<div id="idea-info">Note: you can only submit once</div>' +
+                    '<textarea placeholder="Enter idea here..." id="idea-input"></textarea>' + 
                     '<input id="idea-submit-button" type="submit" onclick="submitIdea();" value="Submit" />';
             }
             
@@ -244,34 +244,37 @@
             function submittedElement() {
                 document.getElementById("content-block-header2").innerHTML += '';
                 document.getElementById("content-block-content2").innerHTML = '';
-                document.getElementById("content-block-header2").innerHTML += 'Trailer';
+                document.getElementById("content-block-header2").innerHTML += 'NEXT';
                 document.getElementById("content-block-content2").innerHTML += 
                 '<div id="iframe-wrapper">\n\
-                    <iframe width="500" height="235" src="https://www.youtube.com/embed/hCFGCrE3k60" frameborder="0" allowfullscreen></iframe>\n\
+                    <iframe width="550" height="235" src="https://www.youtube.com/embed/hCFGCrE3k60?autoplay=1" frameborder="0" allowfullscreen></iframe>\n\
                 </div>';
             }
             
             // Submit the new idea the current user has created
             function submitIdea() {
                 var input = document.getElementById("idea-input").value;
-                var postData = {
-                    Content: input,
-                    Votes: 0
-                };
-                
-                // Create new random key
-                var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
-                
-                // Submit the data
-                var updates = {};
-                updates['/Poll/Ideas/' + newKey] = postData;
-                firebase.database().ref().update(updates);
-                
-                setSubmitted(uid);
+                if (input !== '') {
+                    var postData = {
+                        Content: input,
+                        Votes: 0
+                    };
+
+                    // Create new random key
+                    var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
+
+                    // Submit the data
+                    var updates = {};
+                    updates['/Poll/Ideas/' + newKey] = postData;
+                    firebase.database().ref().update(updates);
+
+                    setSubmitted(uid);
+                }
             }
             
             function setSubmitted(uid) {
                 firebase.database().ref('User/' + uid).update({ Submitted: 1 });
+                submittedElement();
             }
             
         </script>

@@ -213,6 +213,7 @@
                     var idea = new Array();
                     idea.push('${idea.ideaId}');
                     idea.push('${idea.content}');
+                    idea.push('${idea.votes}');
                     ideas.push(idea);
                 </c:forEach>
             }
@@ -258,7 +259,13 @@
             
             // Set html elements corresponding to phase 2 of the poll
             function phase2Element() {
-                
+                document.getElementById("content-block-content2").innerHTML = '';
+                for (var i = 0; i < 6; i++) {
+                    var content = formatIdea(ideas[i][1], 45);
+                    document.getElementById("content-block-content2").innerHTML +=
+                        '<div id="idea-votable"><span id="idea-content" onclick="showPopUp(&quot;' + ideas[i][1] + '&quot;);">' + (i + 1).toString() + '. ' + content + '</span>\n\
+                        <div id="idea-vote-result">' + ideas[i][2] + ' votes</div></div><br>';
+                }
             }
             
             // Set html elements when the user has already submitted an idea or a vote

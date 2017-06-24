@@ -109,13 +109,7 @@ public class DBPollModifier implements IModPoll {
         public int compare(PollIdea o1, PollIdea o2) {
             int v1 = o1.getVotes();
             int v2 = o2.getVotes();
-            if (v1 < v2) {
-                return 1;
-            } else if (v2 > v1) {
-                return -1;
-            } else {
-                return 0;
-            }
+            return Integer.compare(v2, v1);
         }
     }
 }

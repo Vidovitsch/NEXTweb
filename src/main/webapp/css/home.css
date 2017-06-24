@@ -142,6 +142,13 @@ body {
 
 /* phase 2 */
 
+#idea-vote-result {
+    float: right;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #D99B5B;
+}
+
 /* *****Announcement Block****** */
 
 .announcement {
@@ -363,7 +370,6 @@ body {
     position: relative;
     transition: all 5s ease-in-out;
     text-align: left;
-    padding-left: 15px;
 }
 
 .popup .close {
@@ -383,6 +389,7 @@ body {
 .popup .content {
     max-height: 30%;
     overflow: auto;
+    margin-left: 15px;
 }
 
 @-webkit-keyframes fade {

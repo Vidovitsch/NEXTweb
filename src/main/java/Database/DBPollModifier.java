@@ -14,7 +14,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,8 +62,8 @@ public class DBPollModifier implements IModPoll {
                 }
                 
                 poll = new Poll(phase);
+                Collections.sort(ideas, new PollIdeaComparator());
                 poll.setIdeas(ideas);
-                
                 Utility.unlockFXThread();
             }
 
@@ -97,5 +101,21 @@ public class DBPollModifier implements IModPoll {
         
         Utility.lockFXThread();
         return submitted;
+    }
+    
+    private class PollIdeaComparator implements Comparator<PollIdea> {
+
+        @Override
+        public int compare(PollIdea o1, PollIdea o2) {
+            int v1 = o1.getVotes();
+            int v2 = o2.getVotes();
+            if (v1 < v2) {
+                return 1;
+            } else if (v2 > v1) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
     }
 }

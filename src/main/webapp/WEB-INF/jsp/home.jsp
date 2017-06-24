@@ -204,7 +204,18 @@
             
             // ******* Poll ******* //
             
+            var ideas = new Array();
+            fillIdeaList();
             setPoll();
+            
+            function fillIdeaList() {
+                <c:forEach var="idea" items="${poll.ideas}">
+                    var idea = new Array();
+                    idea.push('${idea.ideaId}');
+                    idea.push('${idea.content}');
+                    ideas.push(idea);
+                </c:forEach>
+            }
             
             function setPoll() {
                 var phase = ${poll.phase};
@@ -215,8 +226,12 @@
                     document.getElementById("content-block-header2").innerHTML += '${poll.header}';
                     phase0Element();
                 } else if (phase === 1) {
+                    // Set the header of the poll content block
+                    document.getElementById("content-block-header2").innerHTML += '${poll.header}';
                     phase1Element();
                 } else {
+                    // Set the header of the poll content block
+                    document.getElementById("content-block-header2").innerHTML += '${poll.header}';
                     phase2Element();
                 }
             }
@@ -232,7 +247,13 @@
             
             // Set html elements corresponding to phase 1 of the poll
             function phase1Element() {
-                
+                document.getElementById("content-block-content2").innerHTML = '';
+                for (var i = 0; i < 6; i++) {
+                    var content = formatIdea(ideas[i][1], 50);
+                    document.getElementById("content-block-content2").innerHTML +=
+                        '<div id="idea-votable"><span id="idea-content" onclick="showPopUp(&quot;' + ideas[i][1] + '&quot;);">' + (i + 1).toString() + '. ' + content + '</span>\n\
+                        <div id="idea-vote" onclick="voteForIdea(&quot;' + ideas[i][0] + '&quot;);">Vote</div></div><br>';
+                }
             }
             
             // Set html elements corresponding to phase 2 of the poll
@@ -251,24 +272,43 @@
                 </div>';
             }
             
-            // Submit the new idea the current user has created
-            function submitIdea() {
-                var input = document.getElementById("idea-input").value;
-                if (input !== '') {
-                    var postData = {
-                        Content: input,
-                        Votes: 0
-                    };
-
-                    // Create new random key
-                    var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
-
-                    // Submit the data
-                    var updates = {};
-                    updates['/Poll/Ideas/' + newKey] = postData;
-                    firebase.database().ref().update(updates);
+            function voteForIdea(ideaId) {
+                if (confirm('Are you sure you want to vote for this idea?')) {
+                    firebase.database().ref("Poll/Ideas/"+ideaId+"/Votes").once("value", function(snapshot) {
+                        var votes = snapshot.val();
+                        votes++;
+                        firebase.database().ref("Poll/Ideas/"+ideaId).update({ Votes: votes });
+                    });
 
                     setSubmitted(uid);
+                } else {
+                    // Do nothing!
+                }
+            }
+            
+            // Submit the new idea the current user has created
+            function submitIdea() {
+                if (confirm('Are you sure you want to submit this idea?')) {
+                    var input = document.getElementById("idea-input").value;
+                    input.replace('/n', ';');
+                    if (input !== '') {
+                        var postData = {
+                            Content: input,
+                            Votes: 0
+                        };
+
+                        // Create new random key
+                        var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
+
+                        // Submit the data
+                        var updates = {};
+                        updates['/Poll/Ideas/' + newKey] = postData;
+                        firebase.database().ref().update(updates);
+
+                        setSubmitted(uid);
+                    }
+                } else {
+                    // Do nothing!
                 }
             }
             
@@ -277,6 +317,40 @@
                 submittedElement();
             }
             
+            function formatIdea(content, maxLength) {
+                var formatted;
+                if (content.length > maxLength) {
+                    formatted = content.substring(0, maxLength) + '...';
+                    return formatted;
+                } else {
+                    var index = content.indexOf(';');
+                    if (index > -1) {
+                        formatted = content.substring(0, index) + '...';
+                        return formatted;  
+                    }
+                    return content;
+                }
+            }
+            
+            function showPopUp(content) {
+                content = content.replace(';', '<br>');
+                document.getElementById('content').innerHTML += 
+                    '<div id="popup-content" class="overlay"> \
+                        <div class="popup"> \
+                            <div id="popup-wrapper"> \
+                                <span class="close" onclick="removePopUp(); return false">Close</span><br><br> \
+                                <div class="content"> \
+                                    ' + content + ' \
+                                </div> \
+                            </div> \
+                        </div> \
+                    </div>'; 
+            }
+            
+            function removePopUp() {
+                var popup = document.getElementById("popup-content");
+                popup.parentNode.removeChild(popup);
+            }
         </script>
     </body>
 </html>

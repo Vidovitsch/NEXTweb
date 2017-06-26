@@ -1,119 +1,262 @@
-// Requires:
-// - Firebase
-// - mapcreation.jsp
-// - mapoptions.js for dynamic button elements
-// - mapcreation.js for elements list which are displayed on the mapcreation canvas
+/* 
+ * Reserved variables:
+ * - canvas
+ * - ctx
+ * - canvasOffset
+ * - offsetX
+ * - offsetY
+ * - locations
+ * - selectedLoc
+ * - mouseDown
+ * - clickDifX
+ * - clickDifY
+ * - venue (is the location variabele, location itself conflicts)
+ * - floor
+ * - room
+ * - circle
+ * - rectangle
+ */
 
-// Get a reference to the database service
-var database = firebase.database();
-// Create a variable components & tables
-var components = [];
-var tables = [];
-
-// Canvas and mapdrawing
+// Canvas + Context
 var canvas = document.getElementById("map");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+//canvas.width = window.innerWidth;
+//canvas.height = window.innerHeight;
 var ctx = canvas.getContext("2d");
-// offsets
 var canvasOffset = $("#map").offset();
 var offsetX = canvasOffset.left;
 var offsetY = canvasOffset.top;
 
-// FireBase
-function saveMapToDB() {
-    console.log("Saving to db...");
-    clearMapFromDB();
-    for (var i = 0; i < components.length; i++) {
-        database.ref('Map/' + components[i].id).set({
-            Object: components[i].toString()
-        });
+// Locations
+var locations = [];
+
+// Selection
+var selectedLoc = null;
+var mouseDown = false;
+var clickDifX, clickDifY;
+
+/*************
+ * Functions *
+ *************/
+/**
+ * This method fills the selection menu with all the existing locations.
+ * @returns {undefined}
+ */
+function loadLocationList() {    
+    document.getElementById("option-location").options.length = 0;
+    var menu = document.getElementById("option-location");
+    for (var i = 0; i < locations.length; i++) {
+        var option = document.createElement("option");
+        option.value = locations[i].id;
+        option.text = locations[i].name;
+        menu.add(option);
+    }
+}
+/**
+ * This method finds and selects a location based on ID. 
+ * If no matching ID can be found in the locations list, false will be returned.
+ * Else, the location matching the ID will be selected and true will be returned.
+ * @param {type} id
+ * @returns {Boolean}
+ */
+function findLocation(id) { 
+    for (var i = 0; i < locations.length; i++) {
+        if (String(locations[i].id) == String(id)) {
+            selectedLoc = locations[i];
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * This method clears the current floor selection menu by setting the length value to 0.
+ * @returns {undefined}
+ */
+function clearFloorList() { 
+    document.getElementById("option-floor").options.length = 0;
+}
+/**
+ * This method will load all the floors of a location in the Floor selection menu.
+ * The floors cannot be loaded if no existing location has been selected.
+ * @returns {undefined}
+ */
+function loadFloorList() { 
+    clearFloorList();
+    var menu = document.getElementById("option-floor");
+    for (var i = 0; i < selectedLoc.floors.length; i++) {
+        var option = document.createElement("option");
+        option.value = selectedLoc.floors[i].id;
+        option.text = selectedLoc.floors[i].name;
+        menu.add(option);
     }
 }
 
-// FireBase
-function loadMapFromDB() {
-    var mapRef = database.ref('Map');
-    components = [];
-    tables = [];
+/**
+ * This method selects an element by X and Y coördinate.
+ * Selecting an element is only possible if an existing location and existing floor are selected.
+ * If the X and Y coördinates aren't within any of the elements boundaries, the selected element will be cleared or no element will be selected.
+ * @param {type} x
+ * @param {type} y
+ * @returns {undefined}
+ */
+function selectElement(x, y) {
+    if (!selectedLoc || !selectedLoc.selectedFloor) {
+        alert("No location/floor selected.");
+        return;
+    }
     
-    console.log("Loading from db...");
+    createGroupElement(null);
+    var elements = selectedLoc.selectedFloor.elements;
+    for (var i = 0; i < elements.length; i++) {
+        if (elements[i].type === "table" && elements[i].isPointInside(x, y)) {
+            selectedLoc.selectedFloor.selectElement(elements[i]);
+            findGroupByTable(elements[i].id);
+            console.log("Elements[i].id: " + elements[i].id);
+            break;
+        } else {
+            clearElementSelection();
+        }
+    }
     
-    mapRef.on("child_added", function(snapshot) {
-        var reference = snapshot.val();
-        var object = reference.Object; // type;x;y;dependantOnType
-        var values = object.replace("\"", "");
-        var values = values.split(";");
-
-        var key = snapshot.key; // id
-        console.log("Key value: " + key + " & Object: " + object);
-        console.log("Values: " + values);
-        console.log("Values[0]: " + values[0]);
-        if (values[0] == "circle") {
-            console.log("is circle");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = radius
-            components.push(new circle(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3])));
-        }
-        else if (values[0] == "rectangle") {
-            console.log("is rectangle");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = width, values[4] = height
-            components.push(new rectangle(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3]), parseInt(values[4])));
-        }
-        else if (values[0] == "table") {
-            console.log("is table");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = width, values[4] = height, values[5] = number
-            tables.push(new table(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3]), parseInt(values[4]), parseInt(values[5])));
-        }
-        else if (values[0] == "line") {
-            console.log("is line");
-            // values[0] = type, values[1] = x, values[2] = y, values[3] = x2, values[4] = y2
-            components.push(new line(String(key), parseInt(values[1]), parseInt(values[2]), parseInt(values[3]), parseInt(values[4])));
-        }
-        else if (values[0] == "text") {
-            // Not implemented yet/
-        }
-        console.log("Components size: " + components.length);
-    });
-    drawMap();
 }
 
-// FireBase
-function clearMapFromDB() {
-    // Remove the Map reference in firebase
-    var mapRef = database.ref('Map');
-    mapRef.remove();
+/**
+ * This method will clear the selected element of the current floor.
+ * @returns {undefined}
+ */
+function clearElementSelection() {
+    // check if location and floor are both selected
+    if (!selectedLoc || !selectedLoc.selectedFloor) return; 
+    
+    selectedLoc.selectedFloor.selectElement(null);
 }
-
-function drawMap() {
-    console.log("Drawing");
+/**
+ * This method clears the canvas. 
+ * This method can be very useful for actions which require you to redraw elements on the map as it will remove the error of drawing over existing objects.
+ * @returns {undefined}
+ */
+function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    for (var i = 0; i < components.length; i++) {
-        components[i].draw();
-    }
-    for (var i = 0; i < tables.length; i++) {
-        tables[i].draw();
-    }
+}
+/**
+ * This method redraws all the elements of the currently selected floor on the currently selected location.
+ * Before drawing, the canvas will be cleared.
+ * @returns {undefined}
+ */
+function redrawAll() {
+    clearCanvas();
+    if (!selectedLoc || !selectedLoc.selectedFloor) { 
+        return;
+    }  
+    selectedLoc.selectedFloor.drawElements();
 }
 
-function checkIfTable(mouseX, mouseY) {
-    for (var i = 0; i < tables.length; i++) {
-        if (tables[i].isPointInside(mouseX, mouseY)) {
-            alert("Table was selected");
-            // put code to show group here - just show it in the alert to prove a point
-            // the number can be requested by using: tables[i].number (might have to parseInt)
+/*********************
+ * Map-EventHandlers *
+ *********************/
+/**
+ * This method acts as an event handler for a mouseclick event.
+ * Based on the mouseclick the X and Y coördinates will be received by the event for pageX and pageY to set the mouseX and mouseY coördinates.
+ * If successfully selecting an element, the element will be highlighted and the element specific options will be shown in the top menu.
+ * Selecting an element only works for tables.
+ * @param {type} e
+ * @returns {undefined}
+ */
+function handleMouseClick(e) {
+    if (!selectedLoc || !selectedLoc.selectedFloor) {
+        alert("No location/floor selected.");
+        return;
+    }
+    
+    // get the mouseX and mouseY location from the eventhandler
+    mouseX = parseInt(e.pageX - offsetX);
+    mouseY = parseInt(e.pageY - offsetY);
+
+    // attempt to select an element by pressing within the element's boundaries
+    selectElement(mouseX, mouseY);
+    // if an element was selected, the redrawAll function will now automatically show a red border
+    redrawAll();
+}
+
+// Bind the EventHandler functions to the Map control
+$("#map").click(handleMouseClick);
+
+/******************************************
+ * Location/Floor selection EventHandlers *
+ ******************************************/
+/**
+ * This method changes the current location and also loads all the floors from that location.
+ * Also onFloorChange() will be called to load the right item menu (containing a list of elements of that floor) and all these elements will also be drawn on the canvas.
+ * @returns {undefined}
+ */
+function onLocationChange() {
+    var result = document.getElementById("option-location");
+    redrawAll();
+    // Find location by ID
+    if (!findLocation(result.value)) {
+        return;
+    }
+    
+    // Load the designated floors in the list
+    loadFloorList();
+    onFloorChange();    
+    
+    // Reset floor selection 
+    selectedLoc.selectFloor(null);    
+}
+/**
+ * This method changes a Location.
+ * This location change will be visually shown in the selection menu.
+ * Also the floors for the selected location will be loaded.
+ * @param {type} location
+ * @returns {undefined}
+ */
+function changeLocation(location) {
+    var options = document.getElementById("option-location").options;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value === location.id) {
+            options.selectedIndex = i;
+            loadFloorList();
             break;
         }
     }
 }
 
-function handleMouseClick(e) {
-    mouseX = parseInt(e.clientX - offsetX);
-    mouseY = parseInt(e.clientY - offsetY);
+/**
+ * This method changes the floor based on selection menu value.
+ * The selection menu value will be used to select the floor from the current location. 
+ * After selecting a floor on the current location, the item menu (which contains all elements of a floor) will be reloaded.
+ * Element selection will be cleared so selection should be "none" which means that no element is selected.
+ * Also all the elements of the selected floor will be redrawn on the canvas.
+ * @returns {undefined}
+ */
+function onFloorChange() {
+    var result = document.getElementById("option-floor"); 
     
-    checkIfTable(mouseX, mouseY);
+    //console.log("Floor change: " + result.value);
+    //  Set the selected floor
+    selectedLoc.selectFloor(result.value);
+    //console.log("Selected floor... " + selectedLoc.selectedFloor);
+    
+    clearElementSelection();
+
+    // Redraw the current floor
+    redrawAll();
 }
-
-// Add eventhandler function to the map
-$("#map").click(handleMouseClick);
-
-loadMapFromDB();
+/**
+ * This method changes a Floor.
+ * This floor change will be visually shown in the selection menu.
+ * Also the elements for the selected floor will be redrawn.
+ * @param {type} floor
+ * @returns {undefined}
+ */
+function changeFloor(floor) {
+    var options = document.getElementById("option-floor").options;
+    for (var i = 0; i < options.length; i++) {
+        if (options[i].value === floor.id) {
+            options.selectedIndex = i;
+            redrawAll();
+            break;
+        }
+    }
+}

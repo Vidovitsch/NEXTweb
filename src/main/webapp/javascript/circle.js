@@ -1,9 +1,16 @@
 /****************
  * Circle class *
  ****************/
-var circle = (function () {
-    // constructor
-    function circle(id, x, y, radius) {
+var Circle = (function () {
+    /**
+     * This is the constructor of the Circle class.
+     * @param {type} id
+     * @param {type} x
+     * @param {type} y
+     * @param {type} radius
+     * @returns {circle_L4.Circle}
+     */
+    function Circle(id, x, y, radius) {
         this.id = id;
         this.x = x;
         this.y = y;
@@ -17,22 +24,24 @@ var circle = (function () {
         this.redraw(this.x, this.y);
         return (this);
     }
-	// Redraw the rectangle - makes use of Draw
-    circle.prototype.redraw = function (x, y) {
+    /**
+     * This method redraws the Circle on the canvas.
+     * Makes use of the draw method of this class.
+     * @param {type} x
+     * @param {type} y
+     * @returns {circle_L4.Circle.prototype}
+     */
+    Circle.prototype.redraw = function (x, y) {
         this.x = x || this.x;
         this.y = y || this.y;
         this.draw();
         return (this);
     }
-    // 
-    circle.prototype.highlight = function (x, y) {
-        this.x = x || this.x;
-        this.y = y || this.y;
-        this.draw();
-        return (this);
-    }
-    // Draw the rectangle
-    circle.prototype.draw = function () {
+    /**
+     * This method draws the Circle on the canvas.
+     * @returns {undefined}
+     */
+    Circle.prototype.draw = function () {
         ctx.save();
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -41,8 +50,14 @@ var circle = (function () {
         ctx.stroke();
         ctx.restore();
     }
-    // Check if the click is close enough
-    circle.prototype.checkCloseEnough = function(mouseX, mouseY) {
+    /**
+     * This method is used for checking if the mouseX and mouseY coördinate of your input are close enough to the border.
+     * @param {type} mouseX
+     * @param {type} mouseY
+     * @param {type} doSelect
+     * @returns {Boolean}
+     */
+    Circle.prototype.checkCloseEnough = function(mouseX, mouseY) {
         // Check if the border is selected
         var distanceX = mouseX - this.x;
         var distanceY = mouseY - this.y;
@@ -58,23 +73,40 @@ var circle = (function () {
         }
         //console.log("border selected: " + this.borderSelected);
     }
-    // Move the circle
-    circle.prototype.moveTo = function(mouseX, mouseY) {
+    /**
+     * This method moves the X and Y coördinate to the newly given mouseX and mouseY coördinate of your input.
+     * @param {type} mouseX
+     * @param {type} mouseY
+     * @returns {circle_L4.Circle.prototype}
+     */
+    Circle.prototype.moveTo = function(mouseX, mouseY) {
         this.x = mouseX; 
         this.y = mouseY; 
 
         this.draw();
         return (this);
     }	
-    // Check if a point is inside the rectangle
-    circle.prototype.isPointInside = function (mouseX, mouseY) {
+    /**
+     * This method checks if the mouseX and mouseY coördinate of your input are within the boundaries of the Circle's border.
+     * @param {type} mouseX
+     * @param {type} mouseY
+     * @returns {Boolean}
+     */
+    Circle.prototype.isPointInside = function (mouseX, mouseY) {
         var bool = Math.pow(mouseX - this.x, 2) + Math.pow(mouseY - this.y, 2) < Math.pow(this.radius, 2);
         //console.log(Math.pow(mouseX - this.x, 2) + Math.pow(mouseY - this.y, 2));
         //console.log(Math.pow(this.radius, 2));
         return bool;
     }
-    // Resize the rectangle
-    circle.prototype.resizeTo = function(mouseX, mouseY) {
+    /**
+     * This method resizes the Circle depending if the border is selected.
+     * In order to resize, checkCloseEnough should be used with the doSelect parameter as true.
+     * This will enable the radius, if close enough, to be resizable.
+     * @param {type} mouseX
+     * @param {type} mouseY
+     * @returns {circle_L4.Circle.prototype}
+     */
+    Circle.prototype.resizeTo = function(mouseX, mouseY) {
         // Calculate the difference for the new radius
         var distanceX = mouseX - this.x;
         var distanceY = mouseY - this.y;
@@ -83,18 +115,28 @@ var circle = (function () {
         this.draw();
         return (this);
     }
-    // Set the resizing values on false again
-    circle.prototype.stopResize = function() {
+    /**
+     * This method disables resizing by putting the border selection value back to false.
+     * @returns {undefined}
+     */
+    Circle.prototype.stopResize = function() {
         this.borderSelected = false;
     }
-    // Check if currently resizing the circle
-    circle.prototype.isResizing = function() {
+    /**
+     * This method checks whether the border is enabled for resizing.
+     * @returns {Boolean}
+     */
+    Circle.prototype.isResizing = function() {
         if (this.borderSelected) return true;
         else return false;
     }
-    // toString() value for writing to the firebase
-    circle.prototype.toString = function() {
+    /**
+     * This method returns a toString value for better readability.
+     * This can be very useful for debugging or quickly showing values of the raw Circle objects.
+     * @returns {unresolved}
+     */
+    Circle.prototype.toString = function() {
         return String(this.type + ";" + this.x + ";" + this.y + ";" + this.radius);
     }
-    return circle;
+    return Circle;
 })();

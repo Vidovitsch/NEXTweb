@@ -212,7 +212,16 @@
                 <c:forEach var="idea" items="${poll.ideas}">
                     var idea = new Array();
                     idea.push('${idea.ideaId}');
-                    idea.push('${idea.content}');
+                    
+                    // search for quotes in content, if so, quote gets temporary replaced
+                    var content = '${idea.content}';
+                    if (content.indexOf('\'') !== -1) {
+                        content = content.replace('\'', '%%%');
+                    } else if (content.indexOf('"') !== -1) {
+                        content = content.replace('"', '%%$');
+                    }
+                    
+                    idea.push(content);
                     idea.push('${idea.votes}');
                     ideas.push(idea);
                 </c:forEach>
@@ -250,7 +259,11 @@
             function phase1Element() {
                 document.getElementById("content-block-content2").innerHTML = '';
                 for (var i = 0; i < 6; i++) {
-                    var content = formatIdea(ideas[i][1], 50);
+                    // Format the database data to the visual data
+                    var formatted = formatIdea(ideas[i][1], 50);
+                    var content = formatted.replace('%%%', "\'");
+                    content = content.replace('%%$', '"');
+                    
                     document.getElementById("content-block-content2").innerHTML +=
                         '<div id="idea-votable"><span id="idea-content" onclick="showPopUp(&quot;' + ideas[i][1] + '&quot;);">' + (i + 1).toString() + '. ' + content + '</span>\n\
                         <div id="idea-vote" onclick="voteForIdea(&quot;' + ideas[i][0] + '&quot;);">Vote</div></div><br>';
@@ -261,7 +274,11 @@
             function phase2Element() {
                 document.getElementById("content-block-content2").innerHTML = '';
                 for (var i = 0; i < 6; i++) {
-                    var content = formatIdea(ideas[i][1], 45);
+                    // Format the database data to the visual data
+                    var formatted = formatIdea(ideas[i][1], 50);
+                    var content = formatted.replace('%%%', "\'");
+                    content = content.replace('%%$', '"');
+                    
                     document.getElementById("content-block-content2").innerHTML +=
                         '<div id="idea-votable"><span id="idea-content" onclick="showPopUp(&quot;' + ideas[i][1] + '&quot;);">' + (i + 1).toString() + '. ' + content + '</span>\n\
                         <div id="idea-vote-result">' + ideas[i][2] + ' votes</div></div><br>';
@@ -297,7 +314,12 @@
             function submitIdea() {
                 if (confirm('Are you sure you want to submit this idea?')) {
                     var input = document.getElementById("idea-input").value;
-                    input.replace('/n', ';');
+                    
+                    // Replace unreadable characters with readable characters
+                    input = input.replace('/n', ';');
+                    input = input.replace(/[']/g, "%%%");
+                    input = input.replace(/["]/g, "%%$");
+                    
                     if (input !== '') {
                         var postData = {
                             Content: input,

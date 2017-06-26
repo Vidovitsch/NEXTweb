@@ -10,6 +10,15 @@ var v;
 var f;
 
 /* Loading */
+/**
+ * This method loads the map from firebase.
+ * All locations will be loaded. The locations will be shown in a selection menu.
+ * Within a location all assigned floors will be loaded. The floors will be shown in a selection menu (dynamically loaded by location selection)
+ * Within a floor all assigned elements will be loaded. The elements will be shown on the map.
+ * If several locations have been loaded from firebase, the very first location will be selected along with the first floor.
+ * The elements for the selected location and floor combination will be shown on the map.
+ * @returns {undefined} void
+ */
 function loadMap() {
     //Search foor locations
     var locRef = database.ref('Map');
@@ -53,6 +62,11 @@ function loadMap() {
         }
     });
 }
+/**
+ * This method acts as a help function for receiving the right type of element based on it's type.
+ * @param {type} elem
+ * @returns {Rectangle|Room|Wall|Table|Circle}
+ */
 function loadElement(elem) {
     var id = elem.key.toString();
     var type = elem.val().Type;

@@ -16,7 +16,14 @@ var studentResults = [];
     search();
 }*/
 
-
+/**
+ * This method searches for Users and Groups.
+ * All the results will be shown in a result list which is split up in 2 sections.
+ * Section ==USER==: If 1 or more Users are found, the User result list will be shown.
+ * Section ==GROUP==: If 1 or more Groups are found, the Group result list will be shown.
+ * If no users are found, no user result list will be shown. Same for groups.
+ * @returns {undefined}
+ */
 function search() {
     var input = document.getElementById('searchText').value;
     console.log("Input: " + input);
@@ -52,6 +59,13 @@ function search() {
     }
 }
 
+/**
+ * This method finds users based on the given input string.
+ * The input string will be compared to usernames, lastnames or mails.
+ * Every matching student will be added to the studentResults list.
+ * @param {type} searchTxt
+ * @returns {undefined}
+ */
 function findUsers(searchTxt) {
     studentResults = [];
     console.log("[FU] Check searchTxt: " + searchTxt + "(" + searchTxt.length + ")");
@@ -72,6 +86,13 @@ function findUsers(searchTxt) {
         }
     }
 }
+/**
+ * This methods finds groups based on the given input string.
+ * The input string will be compared to groupnumber or groupname.
+ * Every matching group will be added to the groupResults list.
+ * @param {type} searchTxt
+ * @returns {undefined}
+ */
 function findGroups(searchTxt) {
     groupResults = [];
     console.log("[FG] Check searchTxt: " + searchTxt + "(" + searchTxt.length + ")");
@@ -87,6 +108,14 @@ function findGroups(searchTxt) {
     }
 }
 
+/**
+ * This method finds groups by looking up the ID.
+ * The GUI element will be created depending on the group which is found.
+ * If no group can be found, the GUI element will be empty.
+ * Else the group information, including members, will be shown.
+ * @param {type} id
+ * @returns {undefined}
+ */
 function findGroupById(id) {
     var group = null;
     if (!id) {
@@ -116,6 +145,14 @@ function findGroupById(id) {
         alert(groupInfo);
     }*/
 }
+/**
+ * This method finds a group by looking up the tableId.
+ * The GUI element will be created depending on the group which is found.
+ * If no group can be found, the GUI element will be empty.
+ * Else the group information, including members, will be shown.
+ * @param {type} tableId
+ * @returns {undefined}
+ */
 function findGroupByTable(tableId) {
     var group = null;
     if (!tableId) {
@@ -165,6 +202,14 @@ function findGroupByTable(tableId) {
     }
 }*/
 
+/**
+ * This method selects a table by group ID.
+ * Based on group ID the tableId will be received. 
+ * Afterwards, based on TableID the right table will be selected. (red border on map if found)
+ * And based on group ID, the group will be selected.
+ * @param {type} groupId
+ * @returns {undefined}
+ */
 function selectTableById(groupId) {
     console.log("The given groupId is: " + groupId);
     document.getElementById("tbsearchresults").style.display = "none";
@@ -193,7 +238,13 @@ function selectTableById(groupId) {
     findTableById(tableId);
     findGroupById(groupId);
 }
-
+/**
+ * This method looks up a table based on tableId.
+ * If a table was found, it will be redrawn. 
+ * Also, the right floor and location will be selected in order to match the found table.
+ * @param {type} tableId
+ * @returns {undefined}
+ */
 function findTableById(tableId) {
     var found = false;
     console.log("Looping through locations...");
@@ -232,7 +283,12 @@ function findTableById(tableId) {
         }
     }
 }
-
+/**
+ * This method is a help method for creating a group GUI element.
+ * Every GUI element for the group has a groupname, groupinfo and 0 or more groupmembers.
+ * @param {type} group
+ * @returns {undefined}
+ */
 function createGroupElement(group) {
     var groupInfo = document.getElementById("groupinfo"); // none
     var groupName = document.getElementById("groupname"); // no info

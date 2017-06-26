@@ -7,6 +7,7 @@
 package Models;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 
 /**
@@ -51,11 +52,14 @@ public class Poll {
     private void setTitleByPhase(int phase) {
         switch (phase) {
             case 1:
-                header = "What's the top idea?";
+                header = "Vote for the best idea";
+                break;
             case 2:
                 header = "Results of the poll";
+                break;
             default:
                 header = "Got any ideas?";
+                break;
         }
     }
 }

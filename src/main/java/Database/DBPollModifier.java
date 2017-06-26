@@ -9,11 +9,16 @@ package Database;
 import Models.Announcement;
 import Models.Poll;
 import Models.PollIdea;
+import Models.Utility;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,6 +34,7 @@ public class DBPollModifier implements IModPoll {
     private Object lock;
     private boolean done = false;
     private Poll poll;
+    private boolean submitted;
     
     public DBPollModifier() {
         FBConnector connector = FBConnector.getInstance();
@@ -56,9 +62,9 @@ public class DBPollModifier implements IModPoll {
                 }
                 
                 poll = new Poll(phase);
+                Collections.sort(ideas, new PollIdeaComparator());
                 poll.setIdeas(ideas);
-                
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -67,36 +73,43 @@ public class DBPollModifier implements IModPoll {
             }
         });
         
-        lockFXThread();
+        Utility.lockFXThread();
         return this.poll;
     }
-    
-    /**
-     * Tells a random object to wait while in a loop. The loop stops, and won't
-     * cause any unnecessary cpu use.
-     */
-    private void lockFXThread() {
-        lock = new Object();
-        synchronized (lock) {
-            while (!done) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(DBEventModifier.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        done = false;
-    }
 
-    /**
-     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed
-     * and break free.
-     */
-    private void unlockFXThread() {
-        synchronized (lock) {
-            done = true;
-            lock.notifyAll();
+    @Override
+    public boolean submitted(String uid) {
+        DatabaseReference ref = firebase.child("User/" + uid + "/Submitted");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                int s = Integer.valueOf(String.valueOf(ds.getValue()));
+                if (s == 0) {
+                    submitted = false;
+                } else {
+                    submitted = true;
+                }
+                
+                Utility.unlockFXThread();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError de) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+        
+        Utility.lockFXThread();
+        return submitted;
+    }
+    
+    private class PollIdeaComparator implements Comparator<PollIdea> {
+
+        @Override
+        public int compare(PollIdea o1, PollIdea o2) {
+            int v1 = o1.getVotes();
+            int v2 = o2.getVotes();
+            return Integer.compare(v2, v1);
         }
     }
 }

@@ -17,7 +17,8 @@ body {
                                   supported by Chrome and Opera */
 }
 
-/* body */
+/* *****body***** */
+
 #content {
     width: 88%;
     margin: 0 auto;
@@ -34,13 +35,20 @@ body {
 }
 
 .content-block {
-    width: 90%;
+    width: 95%;
     background-color: #FFF;
     box-shadow: 5px 5px 3px #BBB;
-    margin: auto;
 }
 
-/* Content Block headers */
+#content-block1 {
+    float: left;
+}
+
+#content-block2 {
+    float: right;
+}
+
+/* *****Content Block headers***** */
 
 .content-block-header {
     width: 100%;
@@ -58,17 +66,90 @@ body {
 }
 
 #content-block-header2 {
-    background-color: #A2B9B2;
+    background-color: #F6B067;
 }
 
-/* General Content Block Content */
+/* *****General Content Block Content***** */
 
 .content-block-content {
     padding: 15px 20px 20px 15px;
     height: 235px;
 }
 
-/* Announcement Block */
+/* *****Poll Block***** */
+
+#iframe-wrapper {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}
+
+/* phase 0 */
+#idea-input {
+    width: 100%;
+    height: 100px;
+    resize: none;
+    margin-top: 40px;
+    padding: 5px 10px 5px 10px;
+    font-family: helvetica;
+}
+
+#idea-submit-button {
+    width: 20%;
+    color: white;
+    background-color: #F6B067;
+    border-radius: 5px;
+    font-size: 1.1em;
+    border: none;
+    padding: 10px 25px 10px 25px;
+    margin-top: 10px;
+}
+
+#idea-submit-button:hover {
+    cursor: pointer;
+    background-color: #FFC384;
+}
+
+/* phase 1 */
+
+#idea-votable {
+    padding: 10px;
+    width: 100%;
+}
+
+#idea-content:hover {
+    cursor: pointer;
+    color: #D99B5B;
+}
+
+#idea-vote {
+    float: right;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #D99B5B;
+} 
+
+#idea-vote:hover {
+    cursor: pointer;
+    color: #E3A25F;
+}
+
+
+#idea-content {
+    float: left;
+    font-size: 1.1em;
+}
+
+/* phase 2 */
+
+#idea-vote-result {
+    float: right;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #D99B5B;
+}
+
+/* *****Announcement Block****** */
 
 .announcement {
     width: 100%;
@@ -78,11 +159,11 @@ body {
 }
 
 .announcement:hover {
-    -webkit-transform: translateX(25px); 
-    -moz-transform: translateX(25px); 
-    -ms-transform: translateX(25px); 
-    -o-transform: translateX(25px); 
-    transform: translateX(25px); 
+    -webkit-transform: translateX(25px);
+    -moz-transform: translateX(25px);
+    -ms-transform: translateX(25px);
+    -o-transform: translateX(25px);
+    transform: translateX(25px);
 }
 
 .content-block-content1-navigation {
@@ -111,7 +192,8 @@ body {
     cursor: pointer;
 }
 
-/* Footer */
+/* *****Footer***** */
+
 #footer {
     width: 100%;
     height: 200px;
@@ -119,7 +201,7 @@ body {
     background-color: #A2B9B2;
 }
 
-/* Header */
+/* *****Header***** */
 
 #header {
     background-color: #FFF;
@@ -233,7 +315,8 @@ body {
     padding-bottom: 50px;
 }
 
-/* Slideshow container */
+/* *****Slideshow container***** */
+
 .slideshow-container {
     float: left;
 }
@@ -251,12 +334,62 @@ body {
     height: 100%;
 }
 
-/* Fading animation */
+/* *****Fading animation***** */
+
 .fade {
   -webkit-animation-name: fade;
   -webkit-animation-duration: 2.5s;
   animation-name: fade;
   animation-duration: 2.5s;
+}
+
+/* Pop up */
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.overlay:target {
+    visibility: visible;
+    opacity: 1;
+}
+
+.popup {
+    overflow: hidden;
+    padding: 0.5% 20px 20px 0px;
+    margin: auto;
+    top: 40%;
+    background: #fff;
+    border-radius: 5px;
+    width: 30%;
+    position: relative;
+    transition: all 5s ease-in-out;
+    text-align: left;
+}
+
+.popup .close {
+    position: absolute;
+    top: 10px;
+    right: 30px;
+    transition: all 200ms;
+    font-size: 12px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+}
+.popup .close:hover {
+    color: #06D85F;
+    cursor: pointer;
+}
+.popup .content {
+    max-height: 30%;
+    overflow: auto;
+    margin-left: 15px;
 }
 
 @-webkit-keyframes fade {

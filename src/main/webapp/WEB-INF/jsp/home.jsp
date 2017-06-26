@@ -52,7 +52,7 @@
                 <table>
                     <tr>
                         <td class="content-tabledata">
-                            <div class="content-block">
+                            <div id="content-block1" class="content-block">
                                 <div class="content-block-header" id="content-block-header1">
                                     Announcements
                                 </div>
@@ -68,15 +68,9 @@
                             </div>
                         </td>
                         <td class="content-tabledata">
-                            <div class="content-block">
+                            <div id="content-block2" class="content-block">
                                 <div class="content-block-header" id="content-block-header2"></div>
-                                <div class="content-block-content" id="content-block-content2">
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-                                        Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-                                        Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-                                    </p>
-                                </div>
+                                <div class="content-block-content" id="content-block-content2"></div>
                             </div>
                         </td>
                     </tr>
@@ -87,6 +81,8 @@
         
         <script>
             var database = firebase.database();
+            var uid = '${uid}';
+            var submitted = ${submitted};
             
             // ******* Promotions ******* //
             
@@ -208,25 +204,181 @@
             
             // ******* Poll ******* //
             
+            var ideas = new Array();
+            fillIdeaList();
             setPoll();
             
+            function fillIdeaList() {
+                <c:forEach var="idea" items="${poll.ideas}">
+                    var idea = new Array();
+                    idea.push('${idea.ideaId}');
+                    
+                    // search for quotes in content, if so, quote gets temporary replaced
+                    var content = '${idea.content}';
+                    if (content.indexOf('\'') !== -1) {
+                        content = content.replace('\'', '%%%');
+                    } else if (content.indexOf('"') !== -1) {
+                        content = content.replace('"', '%%$');
+                    }
+                    
+                    idea.push(content);
+                    idea.push('${idea.votes}');
+                    ideas.push(idea);
+                </c:forEach>
+            }
+            
             function setPoll() {
-                // Set the header of the poll content block
-                document.getElementById("content-block-header2").innerHTML += '${poll.header}';
-                
                 var phase = ${poll.phase};
+                if (submitted === true) {
+                    submittedElement();
+                } else if (phase === 0) {
+                    // Set the header of the poll content block
+                    document.getElementById("content-block-header2").innerHTML += '${poll.header}';
+                    phase0Element();
+                } else if (phase === 1) {
+                    // Set the header of the poll content block
+                    document.getElementById("content-block-header2").innerHTML += '${poll.header}';
+                    phase1Element();
+                } else {
+                    // Set the header of the poll content block
+                    document.getElementById("content-block-header2").innerHTML += '${poll.header}';
+                    phase2Element();
+                }
             }
             
+            // Set html elements corresponding to phase 0 of the poll
             function phase0Element() {
-                
+                document.getElementById("content-block-content2").innerHTML = '';
+                document.getElementById("content-block-content2").innerHTML += 
+                    '<div id="idea-info">Note: you can only submit once</div>' +
+                    '<textarea placeholder="Enter idea here..." id="idea-input"></textarea>' + 
+                    '<input id="idea-submit-button" type="submit" onclick="submitIdea();" value="Submit" />';
             }
             
+            // Set html elements corresponding to phase 1 of the poll
             function phase1Element() {
-                
+                document.getElementById("content-block-content2").innerHTML = '';
+                for (var i = 0; i < 6; i++) {
+                    // Format the database data to the visual data
+                    var formatted = formatIdea(ideas[i][1], 50);
+                    var content = formatted.replace('%%%', "\'");
+                    content = content.replace('%%$', '"');
+                    
+                    document.getElementById("content-block-content2").innerHTML +=
+                        '<div id="idea-votable"><span id="idea-content" onclick="showPopUp(&quot;' + ideas[i][1] + '&quot;);">' + (i + 1).toString() + '. ' + content + '</span>\n\
+                        <div id="idea-vote" onclick="voteForIdea(&quot;' + ideas[i][0] + '&quot;);">Vote</div></div><br>';
+                }
             }
             
+            // Set html elements corresponding to phase 2 of the poll
             function phase2Element() {
-                
+                document.getElementById("content-block-content2").innerHTML = '';
+                for (var i = 0; i < 6; i++) {
+                    // Format the database data to the visual data
+                    var formatted = formatIdea(ideas[i][1], 50);
+                    var content = formatted.replace('%%%', "\'");
+                    content = content.replace('%%$', '"');
+                    
+                    document.getElementById("content-block-content2").innerHTML +=
+                        '<div id="idea-votable"><span id="idea-content" onclick="showPopUp(&quot;' + ideas[i][1] + '&quot;);">' + (i + 1).toString() + '. ' + content + '</span>\n\
+                        <div id="idea-vote-result">' + ideas[i][2] + ' votes</div></div><br>';
+                }
+            }
+            
+            // Set html elements when the user has already submitted an idea or a vote
+            function submittedElement() {
+                document.getElementById("content-block-header2").innerHTML += '';
+                document.getElementById("content-block-content2").innerHTML = '';
+                document.getElementById("content-block-header2").innerHTML += 'NEXT';
+                document.getElementById("content-block-content2").innerHTML += 
+                '<div id="iframe-wrapper">\n\
+                    <iframe width="550" height="235" src="https://www.youtube.com/embed/hCFGCrE3k60?autoplay=1" frameborder="0" allowfullscreen></iframe>\n\
+                </div>';
+            }
+            
+            function voteForIdea(ideaId) {
+                if (confirm('Are you sure you want to vote for this idea?')) {
+                    firebase.database().ref("Poll/Ideas/"+ideaId+"/Votes").once("value", function(snapshot) {
+                        var votes = snapshot.val();
+                        votes++;
+                        firebase.database().ref("Poll/Ideas/"+ideaId).update({ Votes: votes });
+                    });
+
+                    setSubmitted(uid);
+                } else {
+                    // Do nothing!
+                }
+            }
+            
+            // Submit the new idea the current user has created
+            function submitIdea() {
+                if (confirm('Are you sure you want to submit this idea?')) {
+                    var input = document.getElementById("idea-input").value;
+                    
+                    // Replace unreadable characters with readable characters
+                    input = input.replace('/n', ';');
+                    input = input.replace(/[']/g, "%%%");
+                    input = input.replace(/["]/g, "%%$");
+                    
+                    if (input !== '') {
+                        var postData = {
+                            Content: input,
+                            Votes: 0
+                        };
+
+                        // Create new random key
+                        var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
+
+                        // Submit the data
+                        var updates = {};
+                        updates['/Poll/Ideas/' + newKey] = postData;
+                        firebase.database().ref().update(updates);
+
+                        setSubmitted(uid);
+                    }
+                } else {
+                    // Do nothing!
+                }
+            }
+            
+            function setSubmitted(uid) {
+                firebase.database().ref('User/' + uid).update({ Submitted: 1 });
+                submittedElement();
+            }
+            
+            function formatIdea(content, maxLength) {
+                var formatted;
+                if (content.length > maxLength) {
+                    formatted = content.substring(0, maxLength) + '...';
+                    return formatted;
+                } else {
+                    var index = content.indexOf(';');
+                    if (index > -1) {
+                        formatted = content.substring(0, index) + '...';
+                        return formatted;  
+                    }
+                    return content;
+                }
+            }
+            
+            function showPopUp(content) {
+                content = content.replace(';', '<br>');
+                document.getElementById('content').innerHTML += 
+                    '<div id="popup-content" class="overlay"> \
+                        <div class="popup"> \
+                            <div id="popup-wrapper"> \
+                                <span class="close" onclick="removePopUp(); return false">Close</span><br><br> \
+                                <div class="content"> \
+                                    ' + content + ' \
+                                </div> \
+                            </div> \
+                        </div> \
+                    </div>'; 
+            }
+            
+            function removePopUp() {
+                var popup = document.getElementById("popup-content");
+                popup.parentNode.removeChild(popup);
             }
         </script>
     </body>

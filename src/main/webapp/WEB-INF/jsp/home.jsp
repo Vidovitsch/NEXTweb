@@ -326,12 +326,10 @@
                             Votes: 0
                         };
 
-                        // Create new random key
-                        var newKey = firebase.database().ref().child('Poll/Ideas').push().key;
 
                         // Submit the data
                         var updates = {};
-                        updates['/Poll/Ideas/' + newKey] = postData;
+                        updates['/Poll/Ideas/' + uid] = postData;
                         firebase.database().ref().update(updates);
 
                         setSubmitted(uid);

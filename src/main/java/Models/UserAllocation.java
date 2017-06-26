@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- *
+ * This class is used to allocate all users that have signed up for the event
+ * into different user groups. this is called when the event is about to start
+ * to create the initial groups
  * @author David
  */
 

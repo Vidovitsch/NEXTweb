@@ -6,7 +6,7 @@
 package Enums;
 
 /**
- *
+ * this enum contains all work unique workdays in the fromat of the 2 first letters
  * @author David
  */
 public enum Day {
@@ -17,6 +17,11 @@ public enum Day {
     Do,
     Vr;
     
+    /**
+     * used to filter specific days checks the day for a date
+     * @param date
+     * @return 
+     */
     public Day dateToDate(String date) {
         if (date.equals("11-11-2017")) {
             return Day.Ma;

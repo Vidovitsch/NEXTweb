@@ -19,7 +19,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * This class is used to comunicate with the firebase,
+ * specifically the child User implements IModUser
  * @author David
  */
 public class DBUserModifier implements IModUser {
@@ -29,16 +30,27 @@ public class DBUserModifier implements IModUser {
     private boolean done = false;
     private User user;
 
+    /**
+     * The constructor of the DBUserModifier class, The method takes no arguments.
+     * It initiates the field firebase by creating a connection using the FBConnector class
+     */
     public DBUserModifier() {
-
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
         firebase = (DatabaseReference) connector.getConnectionObject();
 
     }
 
+    /**
+     * This method is used to add a new user to the firebase
+     * The method takes the parameter user which contains the data of the user that has to be added
+     */
     @Override
     public void insertUser(User user) {
+        if(user == null || "".equals(user.getUid())){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried adding user null to firebase");
+        }
         Map<String, String> data = new HashMap();
         data.put("Mail", user.getEmail());
         data.put("Name", user.getName());
@@ -51,14 +63,33 @@ public class DBUserModifier implements IModUser {
         ref.setValue(data);
     }
 
+    /**
+     * This method is used to remove a specific user from the firebase
+     * it takes a parameter user that specifies the user to be deleted
+     * if the uid field of the user instance is null an exception is thrown
+     * @param user not null
+     */
     @Override
     public void removeUser(User user) {
+        if(user == null || "".equals(user.getUid())){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " Tried removing user null from firebase");
+        }
         DatabaseReference ref = firebase.child("User").child(user.getUid());
         ref.removeValue();
     }
 
+    /**
+     * This method is used to retrive a user instance from the firebase using a uid
+     * @param uid
+     * @return 
+     */
     @Override
     public User getUser(final String uid) {
+        if(uid.isEmpty()){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried to retrieve user null from firebase");
+        }
         user = null;
         DatabaseReference ref = firebase.child("User");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -91,7 +122,8 @@ public class DBUserModifier implements IModUser {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
 

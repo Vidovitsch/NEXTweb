@@ -12,8 +12,6 @@ import Database.IModDay;
 import Database.IModEvent;
 import Database.IModGroup;
 import Models.Event;
-import Models.EventDate;
-import Models.EventDay;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,23 +24,30 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * This Controller is used to load the different pages for the Schedule screen
  * @author Arno Dekkers Los
  */
 @Controller
 public class scheduleController
 {
-
     private String uid;
     
     private IModEvent dbEvent = new DBEventModifier();
     private IModDay dbDay = new DBDayModifier();
     private IModGroup groupDB = new DBGroupModifier();
     
+    /**
+     * This method is used to load the default event screen
+     * it takes a parameter of the type HttpServletRequest from which it takes
+     * the uid from the signed in user. with this uid it calls the getSchedule
+     * method to get a list of all Events for the signed user. this list is
+     * added to the modelView
+     * @param request
+     * @return modelView
+     */
     @RequestMapping(value = "/schedule", method = RequestMethod.GET)
     public ModelAndView initWorkshopmessageboardScreen(HttpServletRequest request)
     {
-        //insertDummySchedule();
         uid = getCurrentUID(request);
         ModelAndView modelView = new ModelAndView("schedule");
         for (Map.Entry<String, List<Event>> e : getSchedule(uid).entrySet())
@@ -52,38 +57,14 @@ public class scheduleController
         return modelView;
     }
 
-//    //Ik het de setDescription verplaatst naar de klasse 'Event', omdat die
-//    //zo beter bereikbaar is voor jsp en firebase. Ook past het meer bij
-//    //het event zelf dat bij een event dag.
-//    private void insertDummySchedule()
-//    {
-//        EventDay day1 = new EventDay("dinsdag NextSpy");
-//        day1.setStartTime("09:00");
-//        day1.setEndTime("17:00");
-//        day1.setDate("07-11-2017");
-//        day1.setLocationName("Hier");
-//        day1.setDescription("hier komt dan die shit voor dinsdag nextspy");
-//        //day1.setDescription("De geplande dinsdag van de NextWeek");
-//        EventDay day2 = new EventDay("donderdag NextSpy");
-//        day2.setStartTime("10:50");
-//        day2.setEndTime("17:00");
-//        day2.setDate("09-11-2017");
-//        day2.setLocationName("Hier");
-//        day2.setDescription("hier komt dan die shit voor donderdag nextspy");
-//        //day2.setDescription("De geplande donderdag van de NextWeek");
-//        EventDay day3 = new EventDay("vrijdag NextSpy");
-//        day3.setStartTime("10:00");
-//        day3.setEndTime("17:20");
-//        day3.setDate("10-11-2017");
-//        day3.setLocationName("Hier");
-//        day3.setDescription("hier komt dan die shit voor vrijdag nextspy");
-//        //day3.setDescription("De geplande vrijdag van de NextWeek");
-//
-//        dbDay.insertDay(day1);
-//        dbDay.insertDay(day2);
-//        dbDay.insertDay(day3);
-//    }
-
+    /**
+     * This method is used to get the schedule for a specific user
+     * it takes a parameter uid which specifies the user
+     * the objects retrieved from the firebase are added to a
+     * list Map<String, List<Event>> by using the addEvents method
+     * @param uid
+     * @return 
+     */
     public Map<String, List<Event>> getSchedule(String uid)
     {
         Map schedule = new HashMap<String, List<Event>>();
@@ -91,6 +72,15 @@ public class scheduleController
         return schedule;
     }
 
+    /**
+     * This method is used to fill Map<String, List<Event>> with a List
+     * it takes these 2 objects as parameters. 
+     * It loops through all tie items in the scheduleItems list and
+     * adds these to the Map schedule. the days are added to the Map using
+     * the day they take place on as key
+     * @param schedule
+     * @param scheduleItems 
+     */
     private void addEvents(Map<String, List<Event>> schedule, List scheduleItems)
     {
         List<Event> temp;
@@ -109,6 +99,11 @@ public class scheduleController
         }
     }
     
+    /**
+     * this method is used to retrieve the current uid from a HttpServletRequest instance
+     * @param request
+     * @return uid
+     */
     private String getCurrentUID(HttpServletRequest request) {
         uid = null;
         Cookie[] cookies = request.getCookies();

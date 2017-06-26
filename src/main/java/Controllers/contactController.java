@@ -11,12 +11,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * This controller is used by the contact screen
  * @author Youri van der Ceelen
  */
 @Controller
 public class contactController {
-        @RequestMapping(value = "/contact", method = RequestMethod.GET)
+    /**
+     * This method is used to load the default screen of the contact screen
+     * @return new ModelAndView("contact")
+     */
+    @RequestMapping(value = "/contact", method = RequestMethod.GET)
     public ModelAndView LoginRequest()
     {
         return new ModelAndView("contact");

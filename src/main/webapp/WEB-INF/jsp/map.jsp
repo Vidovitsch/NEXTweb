@@ -58,6 +58,5 @@
         <script src="/javascript/group.js"></script>
         <script src="/javascript/user.js"></script>
         <script src="/javascript/search.js"></script>
-        
     </body>
 </html>

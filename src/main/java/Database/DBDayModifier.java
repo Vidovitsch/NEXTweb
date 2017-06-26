@@ -6,6 +6,7 @@
 package Database;
 
 import Models.EventDay;
+import Models.Utility;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -130,7 +131,7 @@ public class DBDayModifier implements IModDay {
                 for (DataSnapshot ds : snapshot.getChildren()) {
                     days.add(dsToEventDay(ds));
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -140,7 +141,7 @@ public class DBDayModifier implements IModDay {
             }
         });
         System.out.println("locking fxthread");
-        lockFXThread();
+        Utility.lockFXThread();
         System.out.println("returning days");
         return days;
     }
@@ -191,7 +192,7 @@ public class DBDayModifier implements IModDay {
                 EventDay day = dsToEventDay(snapshot);
                 day.setId(id);
                 days.add(day);
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -200,36 +201,7 @@ public class DBDayModifier implements IModDay {
                         " " + fe.getMessage()); 
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         return days.get(0);
-    }
-    
-    /**
-     * Tells a random object to wait while in a loop. The loop stops, and won't
-     * cause any unnecessary cpu use.
-     */
-    private void lockFXThread() {
-        lock = new Object();
-        synchronized (lock) {
-            while (!done) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(DBEventModifier.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        }
-        done = false;
-    }
-
-    /**
-     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed
-     * and break free.
-     */
-    private void unlockFXThread() {
-        synchronized (lock) {
-            done = true;
-            lock.notifyAll();
-        }
     }
 }

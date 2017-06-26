@@ -10,6 +10,7 @@ import Enums.Course;
 import Models.Group;
 import Models.Message;
 import Models.User;
+import Models.Utility;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -142,7 +143,7 @@ public class DBGroupModifier implements IModGroup {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 groupNumber = String.valueOf(snapshot.child(uid).child("GroupID").getValue());
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -152,7 +153,7 @@ public class DBGroupModifier implements IModGroup {
             }
         });
         
-        lockFXThread();
+        Utility.lockFXThread();
         
         final List<String> uidLst = new ArrayList<String>();
         final ArrayList<User> members = new ArrayList<User>();
@@ -169,7 +170,7 @@ public class DBGroupModifier implements IModGroup {
                     String groupNumber = (String) ds.getKey();
                     if (groupNumber.equals("-1"))
                     {
-                        unlockFXThread();
+                        Utility.unlockFXThread();
                         return;
                     }
                     int location=  Integer.valueOf(String.valueOf(ds.child("Location").getValue()));
@@ -194,7 +195,7 @@ public class DBGroupModifier implements IModGroup {
                     group.setGroupName(groupName);
                     group.setMessages(messages);
                     group.setLocation(location);
-                    unlockFXThread();
+                    Utility.unlockFXThread();
                 }
 
                 @Override
@@ -203,7 +204,7 @@ public class DBGroupModifier implements IModGroup {
                         " " + fe.getMessage());                 }
             });
         }
-        lockFXThread();
+        Utility.lockFXThread();
         if (groupNumber.equals("-1"))
         {
             return null;
@@ -222,7 +223,7 @@ public class DBGroupModifier implements IModGroup {
                     u.setSemester(Integer.valueOf(String.valueOf(ss.child("Semester").getValue())));
                     members.add(u);
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
@@ -231,7 +232,7 @@ public class DBGroupModifier implements IModGroup {
                         " " + fe.getMessage()); 
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         
         group.setUsers(members);
         return group;
@@ -261,7 +262,7 @@ public class DBGroupModifier implements IModGroup {
                         uid = ds.getKey();
                     }
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
@@ -270,7 +271,7 @@ public class DBGroupModifier implements IModGroup {
                         " " + fe.getMessage()); 
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         return uid;
     }
     
@@ -295,7 +296,7 @@ public class DBGroupModifier implements IModGroup {
                 {
                     msg.setUserName(String.valueOf(snapshot.child(msg.getUid()).child("Name").getValue()));
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
@@ -304,7 +305,7 @@ public class DBGroupModifier implements IModGroup {
                         " " + fe.getMessage()); 
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         return messages;
     }
     
@@ -380,7 +381,7 @@ public class DBGroupModifier implements IModGroup {
                     
                     groups.add(g);
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
@@ -390,7 +391,7 @@ public class DBGroupModifier implements IModGroup {
             }
         });
         
-        lockFXThread();
+        Utility.lockFXThread();
         return groups;
     }
     
@@ -410,7 +411,7 @@ public class DBGroupModifier implements IModGroup {
                     int groupNumber = Integer.valueOf((String) ds.getKey());
                     groupNumbers.add(groupNumber);
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
@@ -421,33 +422,5 @@ public class DBGroupModifier implements IModGroup {
         });
         List<Integer> numbers = new ArrayList(groupNumbers);
         return numbers.get(numbers.size() - 1);
-    }
-    
-    /**
-     * Tells a random object to wait while in a loop.
-     * The loop stops, and won't cause any unnecessary cpu use.
-     */
-    private void lockFXThread() {
-        lock = new Object();
-        synchronized (lock) {
-            while (!done) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(DBEventModifier.class.getName()).log(Level.SEVERE, null, ex);
-                } 
-            }
-        }
-        done = false;
-    }
-    
-    /**
-     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed and break free.
-     */
-    private void unlockFXThread() {
-        synchronized (lock) {
-            done = true;
-            lock.notifyAll();
-        }
     }
 }

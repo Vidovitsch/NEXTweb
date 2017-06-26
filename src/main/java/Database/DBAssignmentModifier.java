@@ -5,10 +5,13 @@
  */
 package Database;
 
+import Models.Utility;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 /**
@@ -19,8 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 public class DBAssignmentModifier implements IModAssignment {
 
     private static DatabaseReference firebase;
-    private Object lock;
-    private boolean done = false;
+    private String groupId;
 
     /**
      * The constructor of the DBAssignmentModifier class, The method takes no arguments.
@@ -58,7 +60,28 @@ public class DBAssignmentModifier implements IModAssignment {
         }
         DatabaseReference nameRef = firebase.child("Assignment").child(name).child("Submissions").child(uid).child("Name");
         DatabaseReference linkRef = firebase.child("Assignment").child(name).child("Submissions").child(uid).child("Link");
+        String gId = getGroup(uid);
+
         linkRef.setValue(link);
         nameRef.setValue(email);
+    }
+    
+    private String getGroup(String uid) {
+        DatabaseReference ref = firebase.child("User/" + uid + "/GroupID");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot ds) {
+                groupId = String.valueOf(ds.getValue());
+                Utility.unlockFXThread();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError de) {
+                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            }
+        });
+                
+        Utility.lockFXThread();
+        return groupId;
     }
 }

@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * This class is used for loading the home screen
  * @author David
  */
 @Controller
 public class HomePageController {
-
+    /**
+     * This method returs the standard ModelAndView for the homescreen
+     * @return new ModelAnDView("home")
+     */
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public ModelAndView LoginRequest() {
         return new ModelAndView("home");

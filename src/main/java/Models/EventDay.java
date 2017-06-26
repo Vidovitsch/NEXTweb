@@ -8,7 +8,7 @@ package Models;
 import Enums.EventType;
 
 /**
- *
+ * This class is used by scheduled school days. so the regular schedule that every student attentds
  * @author Arno Dekkers Los
  */
 public class EventDay extends EventDate {
@@ -26,12 +26,21 @@ public class EventDay extends EventDate {
         return EventType.None;
     }
 
+    /**
+     * Get the value of id
+     *
+     * @return the value of id
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Set the value of id
+     *
+     * @param id new value of id
+     */
     public void setId(String id) {
         this.id = id;
     }
-    
-    public String getId(){
-        return id;
-    }
-    
 }

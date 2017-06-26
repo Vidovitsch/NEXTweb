@@ -12,13 +12,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
 /**
- *
+ * This Controller is used to load the index screen
  * @author Michiel van Eijkeren
  */
 @Controller
 public class indexController
 {
+    /**
+     * This method is used to load the standard view of the index screen
+     * @return new ModelAndView("index")
+     */
     @RequestMapping(value = "/index", method = RequestMethod.GET)
     public ModelAndView LoginRequest()
     {

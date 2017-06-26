@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * This is the controller used for the assignment screen
  * @author Youri van der Ceelen
  */
 @Controller
@@ -28,6 +28,11 @@ public class assignmentController {
     private IModGroup groupDB = new DBGroupModifier();
     private IModAssignment dbAssignment = new DBAssignmentModifier();
 
+    /**
+     * This method is used to load the standard assignment screen
+     * @param request
+     * @return modelAndView
+     */
     @RequestMapping(value = "/assignments", method = RequestMethod.GET)
     public ModelAndView AssignmentRequest(HttpServletRequest request) {
         ModelAndView modelView = new ModelAndView("assignments");
@@ -48,6 +53,15 @@ public class assignmentController {
         return modelView;
     }
 
+    /**
+     * Once a user tries to submit an assignment this method is called.
+     * the AssignmentModel that is passed to this method contains the information
+     * that the user has entered and is used to call the database method for storing
+     * the submission
+     * @param request
+     * @param model
+     * @return new ModelAndView("assigments")
+     */
     @RequestMapping(value = "/submitassignment", method = RequestMethod.POST)
     public ModelAndView SubmitAssignment(HttpServletRequest request, AssignmentModel model) {
         ModelAndView modelView = new ModelAndView("assignments");

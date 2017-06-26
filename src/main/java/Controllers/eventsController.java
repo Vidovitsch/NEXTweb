@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 
 /**
- *
+ * This Controller is used by the events screen 
  * @author David
  */
 @Controller
@@ -47,7 +47,12 @@ public class eventsController {
     private final static int ROWNUMBER = 3;
     private IModEvent dbEvent = new DBEventModifier();
     private IModGroup groupDB = new DBGroupModifier();
-            
+           
+    /**
+     * This method is used to load the default events screen
+     * @param request
+     * @return modelView
+     */
     @RequestMapping(value = "/events", method = RequestMethod.GET)
     public ModelAndView initWorkshopScreen(HttpServletRequest request) {
         uid = getCurrentUID(request);
@@ -60,6 +65,17 @@ public class eventsController {
         return modelView;
     }
     
+    /**
+     * upon creating a new event this method is used. it takes EventViewModel
+     * which is to pass the information that the user entered in to GUI to the 
+     * business layer. the information from the eventViewModel is sent to the
+     * appropriate database method
+     * The parameter request is used to get the uid from the current user
+     * @param eventViewModel
+     * @param model
+     * @param request
+     * @return 
+     */
     @RequestMapping(value = "/events", method = RequestMethod.POST)
     public ModelAndView updateEvent(@ModelAttribute("SpringWeb") EventViewModel eventViewModel,
             ModelMap model, HttpServletRequest request) {
@@ -90,6 +106,11 @@ public class eventsController {
         return messageView;
     }
     
+    /**
+     * This method is used to load a filtered events screen containing only
+     * the events that take place on Monday
+     * @return modelView
+     */
     @RequestMapping(value = "/events/ma", method = RequestMethod.GET)
     public ModelAndView mondayEvents() {
         ModelAndView modelView = new ModelAndView("events");
@@ -101,6 +122,11 @@ public class eventsController {
         return modelView;
     }
     
+    /**
+     * This method is used to load a filtered events screen containing only
+     * the events that take place on Tuesday
+     * @return modelView
+     */
     @RequestMapping(value = "/events/di", method = RequestMethod.GET)
     public ModelAndView tuesdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
@@ -112,6 +138,11 @@ public class eventsController {
         return modelView;
     }
     
+    /**
+     * This method is used to load a filtered events screen containing only
+     * the events that take place on Wednesday
+     * @return modelView
+     */
     @RequestMapping(value = "/events/wo", method = RequestMethod.GET)
     public ModelAndView wednessdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
@@ -123,6 +154,11 @@ public class eventsController {
         return modelView;
     }
     
+    /**
+     * This method is used to load a filtered events screen containing only
+     * the events that take place on Thursday
+     * @return modelView
+     */
     @RequestMapping(value = "/events/do", method = RequestMethod.GET)
     public ModelAndView thursdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
@@ -134,6 +170,11 @@ public class eventsController {
         return modelView;
     }
     
+    /**
+     * This method is used to load a filtered events screen containing only
+     * the events that take place on Friday
+     * @return modelView
+     */
     @RequestMapping(value = "/events/vr", method = RequestMethod.GET)
     public ModelAndView fridayEvents() {
         ModelAndView modelView = new ModelAndView("events");
@@ -173,6 +214,14 @@ public class eventsController {
         return orderedEvents;
     }
     
+    /**
+     * This method is used to filter the list events to only contain events from a certaint day
+     * it takes an argument Day which specifies the day it has to filter and an ArrayList<Events>
+     * which contains all the events not yet filtered for days
+     * @param day
+     * @param events
+     * @return filtered
+     */
     private ArrayList<ArrayList<Event>> filterOnDay(Day day, ArrayList<Event> events) {
         ArrayList<Event> filtered = new ArrayList();
         for (Event e : events) {
@@ -199,9 +248,5 @@ public class eventsController {
                 }
             }
         return uid;
-    }
-    
-    private void setAttending(Workshop ws) {
-        
     }
 }

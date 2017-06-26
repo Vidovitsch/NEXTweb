@@ -147,7 +147,8 @@ public class DBGroupModifier implements IModGroup {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         
@@ -198,8 +199,8 @@ public class DBGroupModifier implements IModGroup {
 
                 @Override
                 public void onCancelled(DatabaseError fe) {
-                    System.out.println(fe.toException().toString());
-                }
+                    System.out.println(fe.toException().toString());                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage());                 }
             });
         }
         lockFXThread();
@@ -226,7 +227,8 @@ public class DBGroupModifier implements IModGroup {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();
@@ -264,7 +266,8 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();
@@ -297,7 +300,8 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();
@@ -381,7 +385,8 @@ public class DBGroupModifier implements IModGroup {
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         
@@ -390,12 +395,32 @@ public class DBGroupModifier implements IModGroup {
     }
     
     /**
-     * 
+     * This method fetches the max groupnumber from the groups branche of firebase.
      * @return 
      */
     @Override
     public int getMaxGroupNumber() {
-        throw new UnsupportedOperationException("This method still has to be filled in for group allocation");
+        final Set<Integer> groupNumbers = new TreeSet();
+        DatabaseReference ref = firebase.child("Group");
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+            
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    int groupNumber = Integer.valueOf((String) ds.getKey());
+                    groupNumbers.add(groupNumber);
+                }
+                unlockFXThread();
+            }
+            
+            @Override
+            public void onCancelled(DatabaseError fe) {
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
+            }
+        });
+        List<Integer> numbers = new ArrayList(groupNumbers);
+        return numbers.get(numbers.size() - 1);
     }
     
     /**

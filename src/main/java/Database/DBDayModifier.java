@@ -119,7 +119,8 @@ public class DBDayModifier implements IModDay {
 
             @Override
             public void onCancelled(DatabaseError de) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + de.getMessage()); 
             }
         });
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -134,8 +135,8 @@ public class DBDayModifier implements IModDay {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println("in oncancelled");
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         System.out.println("locking fxthread");
@@ -195,7 +196,8 @@ public class DBDayModifier implements IModDay {
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         lockFXThread();

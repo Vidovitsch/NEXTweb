@@ -28,7 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class homePageController {
+public class HomePageController {
 
     private IModAnnouncement modAnnouncement = new DBAnnouncementModifier();
     private IModPoll modPoll = new DBPollModifier();

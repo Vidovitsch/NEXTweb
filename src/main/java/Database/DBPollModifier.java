@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package Database;
 
 import Models.Announcement;
@@ -23,7 +22,6 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author David
@@ -35,13 +33,13 @@ public class DBPollModifier implements IModPoll {
     private boolean done = false;
     private Poll poll;
     private boolean submitted;
-    
+
     public DBPollModifier() {
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
         firebase = (DatabaseReference) connector.getConnectionObject();
     }
-    
+
     @Override
     public Poll fetchPoll() {
         final ArrayList<PollIdea> ideas = new ArrayList();
@@ -60,7 +58,7 @@ public class DBPollModifier implements IModPoll {
                     idea.setVotes(votes);
                     ideas.add(idea);
                 }
-                
+
                 poll = new Poll(phase);
                 Collections.sort(ideas, new PollIdeaComparator());
                 poll.setIdeas(ideas);
@@ -72,25 +70,44 @@ public class DBPollModifier implements IModPoll {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        
+
         Utility.lockFXThread();
         return this.poll;
     }
 
     @Override
-    public boolean submitted(String uid) {
-        DatabaseReference ref = firebase.child("User/" + uid + "/Submitted");
-        ref.addValueEventListener(new ValueEventListener() {
+    public boolean submitted(String UID) {
+        final String uid = UID;
+        DatabaseReference checkRef = firebase.child("User/" + uid);
+        checkRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot ds) {
-                int s = Integer.valueOf(String.valueOf(ds.getValue()));
-                if (s == 0) {
-                    submitted = false;
-                } else {
-                    submitted = true;
+                if (ds.hasChild("Submitted")) {
+                    DatabaseReference ref = firebase.child("User/" + uid + "/Submitted");
+                    System.out.println(ref.getKey());
+                    ref.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot ds) {
+                            int s = Integer.valueOf(String.valueOf(ds.getValue()));
+                            if (s == 0) {
+                                submitted = false;
+                            } else {
+                                submitted = true;
+                            }
+                            Utility.unlockFXThread();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError de) {
+                            submitted = false;
+                            Utility.unlockFXThread();
+                        }
+                    });  
                 }
-                
-                Utility.unlockFXThread();
+                else{
+                    submitted = false;
+                    Utility.unlockFXThread();
+                }
             }
 
             @Override
@@ -98,11 +115,10 @@ public class DBPollModifier implements IModPoll {
                 throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
             }
         });
-        
         Utility.lockFXThread();
         return submitted;
     }
-    
+
     private class PollIdeaComparator implements Comparator<PollIdea> {
 
         @Override

@@ -27,7 +27,7 @@
         </head>
         <body>
             <div id="next-header">
-                <a href="createworkshop.htm"><img id="nav-logo" src="/images/next_logo.png" /></a>
+                <a href="partnerpage.htm"><img id="nav-logo" src="/images/next_logo.png" /></a>
                 <ul class="nav-list">
                     <li class="nav-item"><a href="../login.htm">Log out</a></li>
                 </ul>

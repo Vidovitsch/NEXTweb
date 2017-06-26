@@ -31,7 +31,7 @@ public class pieController {
     private DBEventModifier eventModifier;
     private DBDayModifier dayModifier;
 
-    @RequestMapping(value = "/createworkshop", method = RequestMethod.GET)
+    @RequestMapping(value = "/partnerpage", method={org.springframework.web.bind.annotation.RequestMethod.GET})
     public ModelAndView pieRequest() {
 
         return createModelAndView();
@@ -40,7 +40,7 @@ public class pieController {
     private ModelAndView createModelAndView() {
         eventModifier = new DBEventModifier();
         dayModifier = new DBDayModifier();
-        ModelAndView modelView = new ModelAndView("createworkshop");
+        ModelAndView modelView = new ModelAndView("partnerpage");
         modelView.addObject("types", getEventTypes());
         modelView.addObject("fields", getPossibleFields());
         return modelView;

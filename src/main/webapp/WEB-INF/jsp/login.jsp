@@ -29,7 +29,7 @@
                     <form>
                         <div class="form-section">
                             <span>E-mail:</span> </br>
-                            <input class="form-control" type="text" id="email" name="email" required value="t.berkvens@student.fontys.nl"></br>
+                            <input class="form-control" type="text" id="email" name="email" required value="twan_berkvens@live.nl"></br>
                         </div>
                         <div class="form-section" id="passwordstuff">
                             <span>Password:</span> </br>
@@ -90,7 +90,7 @@
                                 document.cookie = "username=" + user.email;
                                 if (user.email.indexOf("student.fontys.nl") == -1)
                                 {
-                                    window.location.href = "/pie/createworkshop.htm";
+                                    window.location.href = "/pie/partnerpage.htm";
                                 } else {
                                     post("home", {currentemail: user.email});
                                 }

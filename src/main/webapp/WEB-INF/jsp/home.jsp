@@ -19,17 +19,7 @@
         <div class="wrapper">
             <br><br><br>
             <div id="header">
-                <div class="slideshow-container">
-                    <div class="mySlides fade">
-                        <img src="/images/default_workshop.jpg" style="width:100%">
-                    </div>
-                    <div class="mySlides fade">
-                        <img src="/images/map.jpg" style="width:100%">
-                    </div>
-                    <div class="mySlides fade">
-                        <img src="/images/default_workshop.jpg" style="width:100%">
-                    </div>
-                </div>
+                <div id="slideshow-container-id" class="slideshow-container"></div>
                 <div class="header-container">
                     <h1>Welcome to NEXT</h1>
                     <div class="header-buttons">
@@ -87,7 +77,8 @@
             // ******* Promotions ******* //
             
             var slideIndex = 0;
-            showSlides();
+            var promotions = new Array();
+            fetchPromotions();
             
             // Automatic slide change
             function showSlides() {
@@ -101,7 +92,58 @@
                     slideIndex = 1;
                 } 
                 slides[slideIndex - 1].style.display = "block"; 
-                setTimeout(showSlides, 6000); // Change image every 5 seconds
+                setTimeout(showSlides, 5000); // Change image every 5 seconds
+            }
+            
+            function setRandomPromotions() {
+                var length = promotions.length;
+                promotions = shuffle(promotions);
+                for (var i = 0; i < length; i++) {
+                    var promotion = promotions[i];
+                    document.getElementById("slideshow-container-id").innerHTML += 
+                        '<div class="mySlides fade">' +
+                            '<img onclick="showPromotionInfo(&quot;' + promotion[1] + '&quot;);" src="' + promotion[0] + '" style="width:100%">' +
+                        '</div>';
+                }
+                showSlides();
+            }
+            
+            function showPromotionInfo(eventUid) {
+                // For navigation to the worksop information
+            }
+            
+            function shuffle(array) {
+                var currentIndex = array.length, temporaryValue, randomIndex;
+
+                // While there remain elements to shuffle...
+                while (0 !== currentIndex) {
+
+                    // Pick a remaining element...
+                    randomIndex = Math.floor(Math.random() * currentIndex);
+                    currentIndex -= 1;
+
+                    // And swap it with the current element.
+                    temporaryValue = array[currentIndex];
+                    array[currentIndex] = array[randomIndex];
+                    array[randomIndex] = temporaryValue;
+                }
+
+                return array;
+            }
+            
+            function fetchPromotions() {
+                database.ref('Promotion').on("value", function(snapshot) {
+                    snapshot.forEach(function (snapshot) {
+                        var promotion = new Array();
+                        var imageUrl = snapshot.val().imageUrl;
+                        var eventUid = snapshot.val().eventUid;
+                        promotion.push(imageUrl);
+                        promotion.push(eventUid);
+                        
+                        promotions.push(promotion);
+                    });
+                    setRandomPromotions();
+                });
             }
             
             // ******* Announcements ******* //
@@ -377,7 +419,7 @@
             function removePopUp() {
                 var popup = document.getElementById("popup-content");
                 popup.parentNode.removeChild(popup);
-            }
+            }  
         </script>
     </body>
 </html>

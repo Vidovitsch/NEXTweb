@@ -1,5 +1,5 @@
 <%-- 
-    Document   : createworkshop
+    Document   : partnerpage
     Created on : May 22, 2017, 9:56:50 AM
     Author     : Youri van der Ceelen
 --%>
@@ -12,34 +12,53 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="/css/partnerpage.css" />
         <title>JSP Page</title>
     </head>
     <body>
         <div class="wrapper">
-
-            <div class="create-modify-event">
-                <div class="createType">
-                    <span class="fieldSpan" style="padding-left: 5%; height: 50px; display: inline-block;">Create Workshop :</span>
-
-                </div>
-                <c:forEach var="row" items="${fields}">
-                    <div class="${row}div fieldDiv" id="${row}div" style="padding-left: 5%;">
-                        <span class="fieldSpan" style="width: 150px; height: 20px; display: inline-block;">${row}:</span>
-                        <input class="form-control fieldInput" type="text" id="${row}" name="${row}" required></br>
+            <div class="leftpart">
+                <div class="create-modify-event bordereddiv">
+                    <h3> Create workshop</h3>
+                    <c:forEach var="row" items="${fields}">
+                        <div class="inputarea">
+                            <span class="fieldspan">${row}:</span>
+                            <input class="fieldInput" type="text" id="${row}" name="${row}" required></br>
+                        </div>
+                    </c:forEach>   
+                    <div class="inputarea">
+                        <span class="fieldspan">Description:</span><br>
+                        <textarea class="textarea" id="descriptionworkshop" name="description"></textarea></br>
                     </div>
-                </c:forEach>    
-                <div class="descriptiondiv fieldDiv" id="descriptiondiv" style="padding-left: 5%;">
-                    <span class="descriptionSpan">Description:</span><br>
-                    <textarea class="form-control" id="description" name="description"></textarea></br>
+                    <div class="btnwrapper">
+                        <br>
+                        <input id="create-buttonworkshop" class="button_base b01_simple_rollover" type="submit" value="create workshop"/>  
+                    </div>
                 </div>
-                <div style="padding-left:5%;">
-                    <input id="create-button" class="form-control" type="submit" value="createEvent"/>  
+            </div>
+            <div class="rightpart">
+                <div id='workshops' class="bordereddiv">
+                    <h3 id="selectedworkshop">workshops</h3>
+                    <ol id="workshoplist" class="borderedlist" type="1">
+                    </ol>
+                </div>
+                <div class="createPromotion bordereddiv">
+                    <h3 id="promotionheader"> Create promotion</h3>
+                    <div class="inputarea">
+                        <span class="fieldspan">Image URL:</span><br>
+                        <input class="fieldInput" type="text" id="imageurl" name="imageurl" required></br>
+                    </div>
+                    <div class="btnwrapper">
+                        <br>
+                        <input id="create-buttonpromotion" class="button_base b01_simple_rollover" type="submit" value="create promotion" onclick="createPromotion()"/>  
+                    </div>
                 </div>
             </div>
         </div>
         <script>
-
-
+            
+            var selectedWorkshop = null;
+            
             function validateEventDateFields(eventName, startTime, endTime, date, locationName, description) {
                 var re = /^0[0-9]|1[0-9]|2[0-3]:[0-5][0-9]$/;
                 if (eventName === "") {
@@ -72,8 +91,60 @@
                 }
                 return false;
             }
+            
+            function loadworkshops() {
+                var elworkshop = document.getElementById('workshoplist');
+                elworkshop.innerHTML = "";
+                firebase.database().ref('/Event').once("value", function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        console.log(childSnapshot.val().EventType);
+                        if (childSnapshot.val().EventType == ("Workshop"))
+                        {
+                             elworkshop.innerHTML += "<li id='" + childSnapshot.key + "' onclick='liWorkshopClicked(this)'>" + childSnapshot.val().EventName + "</li>";
+                        }
+                    });
+                });
+            }
+            loadworkshops();
+            
+            function liWorkshopClicked(el) {
+                selectedWorkshop = el.id;
+                document.getElementById("promotionheader").innerHTML = "Create promotion for " + el.innerHTML;
+            }
+            
+            function createPromotion() {
+                var imageUrl = document.getElementById("imageurl").value;
+                console.log(selectedWorkshop);
+                if (selectedWorkshop !== null)
+                {console.log("passed" + selectedWorkshop);
+                    if (!imageUrl)
+                    {
+                        alert("Can't create promotion without image URL.");
+                        return;
+                    }
+                    var newPromotionRef = firebase.database().ref('/Promotion').push({
+                      imageUrl: imageUrl,
+                      eventUid: selectedWorkshop
+                    });
+                    // Get the unique ID generated by push() by accessing its key
+                    var announcementUID = newPromotionRef.key;
+                    var promotion = {
+                        URL: imageUrl,
+                        UID: selectedWorkshop,
+                        getlistitemhtml: function () {
+                            return "<li id='"+this.uid+"' onclick='liPromotionClicked(this)'>" + this.text + "</li>";
+                        }
+                    };
+                    selectedWorkshop = null;
+                    document.getElementById("imageurl").value = "";
+                    document.getElementById("promotionheader").innerHTML = "Create promotion";
+                    alert("Promotion created!");
+                }else{
+                    alert("Please select a Workshop.");
+                }
+            }
 
-            document.getElementById("create-button").onclick = function () {
+            document.getElementById("create-buttonworkshop").onclick = function () {
                 var eventName = document.getElementById("eventName").value;
                 var startTime = document.getElementById("startTime").value;
                 var endTime = document.getElementById("endTime").value;
@@ -99,6 +170,7 @@
 
                     
                 }
+                loadworkshops();
             }
 
             function post(path, params, method) {
@@ -120,6 +192,7 @@
                 document.body.appendChild(form);
                 form.submit();
             }
+            
 
         </script>
     </body>

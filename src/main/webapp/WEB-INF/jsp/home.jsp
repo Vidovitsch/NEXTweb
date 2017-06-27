@@ -23,17 +23,17 @@
                 <div class="header-container">
                     <h1>Welcome to NEXT</h1>
                     <div class="header-buttons">
-                        <div class="button_base b03_skewed_slide_in">
+                        <a href="/events"><div class="button_base b03_skewed_slide_in">
                             <div>Go to Events</div>
                             <div></div>
                             <div>Go to Events</div>
-                        </div>
+                        </div></a>
                         <br><br>
-                        <div class="button_base b03_skewed_slide_in">
+                        <a href="/map"><div class="button_base b03_skewed_slide_in">
                             <div>Go to Map</div>
                             <div></div>
                             <div>Go to Map</div>
-                        </div>
+                        </div></a>
                     </div>
                 </div>
             </div>

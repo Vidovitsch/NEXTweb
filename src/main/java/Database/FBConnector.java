@@ -27,6 +27,11 @@ public class FBConnector implements IDatabase {
     private String firebase_url = null;
     private DatabaseReference databaseReference;
 
+    /**
+     * This method is used to get the instance this class in case that the instance
+     * is still null a new instance of FBConnector get's created
+     * @return instance
+     */
     public static FBConnector getInstance() {
         System.out.println("in FBConnector getinstance");
         if (instance == null) {
@@ -35,21 +40,28 @@ public class FBConnector implements IDatabase {
         return instance;
     }
 
+    /**
+     * private constructor for this singleton can only be called from getInstance
+     */
     public FBConnector() {
         this.databaseReference = null;
     }
 
+    /**
+     * This methods connects the firebase field to the firebase
+     * It has a check whether or not the connection has been made yet
+     */
     @Override
     public void connect() {
         System.out.println("trying to connnect in FBConnector");
         if (databaseReference == null) {
             FileInputStream serviceAccount = null;
             try {
-                serviceAccount = new FileInputStream("src/main/java/Database/NextWeekDev-f084f8ebd419.json");
+                serviceAccount = new FileInputStream("src/main/java/Database/NextWeek-e50906a6dd28.json");
                 System.out.println("setting FirebaseOptions");
                 FirebaseOptions options = new FirebaseOptions.Builder()
                         .setCredential(FirebaseCredentials.fromCertificate(serviceAccount))
-                        .setDatabaseUrl("https://nextweekdev.firebaseio.com/")
+                        .setDatabaseUrl("https://nextweek-b9a58.firebaseio.com/")
                         .build();
                 System.out.println("initializing FirebaseApp");
                 FirebaseApp.initializeApp(options);
@@ -76,6 +88,11 @@ public class FBConnector implements IDatabase {
         }
     }
 
+    /**
+     * this method is used to check wheather or not the firebase field has been initiated yet
+     * @return firebase
+     * @throws NullPointerException if firebase equals null 
+     */
     @Override
     public Object getConnectionObject() throws NullPointerException {
         if (databaseReference != null) {
@@ -86,6 +103,10 @@ public class FBConnector implements IDatabase {
         }
     }
 
+    /**
+     * this method returns a boolean whether or not the firebase instance doesn't equal null
+     * @return 
+     */
     @Override
     public boolean checkConnection() {
         //Is changeable

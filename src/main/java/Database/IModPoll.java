@@ -14,4 +14,6 @@ import Models.Poll;
 public interface IModPoll {
     
     public Poll fetchPoll();
+    
+    public boolean submitted(String uid);
 }

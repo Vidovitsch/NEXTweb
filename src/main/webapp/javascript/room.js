@@ -1,27 +1,31 @@
-/*******************
- * Rectangle Class *
- *******************/
-var Rectangle = (function () {
+/**************
+ * Room Class *
+ **************/
+var Room = (function () {
     /**
-     * This is the constructor of the Rectangle class.
+     * This is the constructor of the Room class.
      * @param {type} id
      * @param {type} x
      * @param {type} y
      * @param {type} width
      * @param {type} height
-     * @returns {rectangle_L4.Rectangle}
+     * @param {type} capacity
+     * @param {type} name
+     * @returns {room_L4.Room}
      */
-    function Rectangle(id, x, y, width, height) {
+    function Room(id, x, y, width, height, capacity, name) {
         this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.type = "rectangle";
+        this.capacity = capacity;
+        this.roomname = name;
+        this.type = "room";
 
         this.strokeStyle = '#000000';
-        this.minWidth = 24;
-        this.minHeight = 24;
+        this.minWidth = 96;
+        this.minHeight = 96;
 
         this.topLeft = false;
         this.topRight = false;
@@ -32,26 +36,29 @@ var Rectangle = (function () {
         return (this);
     }
     /**
-     * This method redraws the Rectangle on the canvas.
+     * This method redraws the Room on the canvas.
      * Makes use of the draw method of this class.
      * @param {type} x
      * @param {type} y
-     * @returns {rectangle_L4.Rectangle.prototype}
+     * @returns {table_L4.Table.prototype}
      */
-    Rectangle.prototype.redraw = function (x, y) {
+    Room.prototype.redraw = function (x, y) {
         this.x = x || this.x;
         this.y = y || this.y;
         this.draw();
         return (this);
     }
     /**
-     * This method draws the room on the canvas.
+     * This method draws the Room on the canvas.
      * @returns {undefined}
      */
-    Rectangle.prototype.draw = function () {
+    Room.prototype.draw = function () {
         ctx.save();
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.font = "18px Arial";
+        ctx.fillText(this.roomname, (this.x + 5), (this.y + 20));
+        ctx.fillText("Cap.: " + this.capacity, (this.x + 5), (this.y + 40));
         ctx.strokeStyle = this.strokeStyle;
         ctx.lineWidth = 5;
         ctx.stroke();
@@ -66,7 +73,7 @@ var Rectangle = (function () {
      * @param {type} doSelect
      * @returns {Boolean}
      */
-    Rectangle.prototype.checkCloseEnough = function(mouseX, mouseY) {
+    Room.prototype.checkCloseEnough = function(mouseX, mouseY) {
         // Top left corner check
         if (Math.abs(mouseX - this.x) < 2 && Math.abs(mouseY - this.y) < 2) {
             this.topLeft = true;
@@ -89,8 +96,8 @@ var Rectangle = (function () {
      * @param {type} mouseX
      * @param {type} mouseY
      * @returns {table_L4.Table.prototype}
-     */    
-    Rectangle.prototype.moveTo = function(mouseX, mouseY) {
+     */
+    Room.prototype.moveTo = function(mouseX, mouseY) {
         this.x = mouseX; 
         this.y = mouseY; 
 
@@ -98,23 +105,23 @@ var Rectangle = (function () {
         return (this);
     }
     /**
-     * This method checks if the the mouseX and mouseY coördinate of your input are within the boundaries of the Rectangle element.
+     * This method checks if the the mouseX and mouseY coördinate of your input are within the boundaries of the Room element.
      * @param {type} mouseX
      * @param {type} mouseY
      * @returns {Boolean}
-     */    
-    Rectangle.prototype.isPointInside = function (x, y) {
+     */
+    Room.prototype.isPointInside = function (x, y) {
         return (x >= this.x && x <= this.x + this.width && y >= this.y && y <= this.y + this.height);
     }
     /**
-     * This method checks resizes the Rectangle depending on the selected corner.
+     * This method resizes the Room depending on the selected corner.
      * In order to resize, checkCloseEnough should be used with the doSelect parameter as true. 
      * This will enable the selected corner, if close enough, to be resizable.
      * @param {type} mouseX
      * @param {type} mouseY
      * @returns {table_L4.Table.prototype}
-     */  
-    Rectangle.prototype.resizeTo = function (mouseX, mouseY) {
+     */
+    Room.prototype.resizeTo = function (mouseX, mouseY) {
         if (this.topLeft) {
             this.width += this.x - mouseX;
             this.height += this.y - mouseY;
@@ -142,15 +149,15 @@ var Rectangle = (function () {
         if (this.height < this.minHeight) {
             this.height = this.minHeight;
         }
-
+        
         this.draw();
         return (this);
     }
     /**
      * This method disables resizing by putting every corner back to the default false value.
      * @returns {undefined}
-     */  
-    Rectangle.prototype.stopResize = function() {
+     */
+    Room.prototype.stopResize = function() {
         this.topLeft = false;
         this.topRight = false;
         this.botLeft = false;
@@ -159,18 +166,18 @@ var Rectangle = (function () {
     /**
      * This method checks whether one of the corners is enabled for resizing.
      * @returns {Boolean}
-     */    
-    Rectangle.prototype.isResizing = function() {
+     */
+    Room.prototype.isResizing = function() {
         if (this.topLeft || this.topRight || this.botLeft || this.botRight) return true;
         else return false;
     }
     /**
      * This method returns a toString value for better readability.
-     * This can be very useful for debugging or quickly showing values of the raw Rectangle objects.
+     * This can be very useful for debugging or quickly showing values of the raw Room objects.
      * @returns {unresolved}
-     */   
-    Rectangle.prototype.toString = function() {
-        return String(this.type + ";" + this.x + ";" + this.y + ";" + this.width + ";" + this.height);
+     */
+    Room.prototype.toString = function() {
+        return String(this.type + ";" + this.x + ";" + this.y + ";" + this.width + ";" + this.height + ";" + this.capacity + ";" + this.roomname);
     }
-    return Rectangle;
+    return Room;
 })();

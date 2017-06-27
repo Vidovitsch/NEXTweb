@@ -10,6 +10,7 @@ import Enums.Course;
 import Models.Group;
 import Models.Message;
 import Models.User;
+import Models.Utility;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +26,8 @@ import java.util.logging.Logger;
 
 
 /**
- *
+ * This method is used as a connection between the application and the firebase
+ * specifically the Group branch
  * @author David
  */
 public class DBGroupModifier implements IModGroup {
@@ -37,14 +39,27 @@ public class DBGroupModifier implements IModGroup {
     private String uid = "";
     private String groupNumber = "";
     
+    /**
+     * The constructor of the DBGroupModifier class, The method takes no arguments.
+     * It initiates the field firebase by creating a connection using the FBConnector class
+     */
     public DBGroupModifier() {
         FBConnector connector = FBConnector.getInstance();
         connector.connect();
         firebase = (DatabaseReference) connector.getConnectionObject();
     }
 
+    /**
+     * This method is used to to add a new group to the Firebase database.
+     * As parameters it takes the Group object that it has to add
+     * @param group not null
+     */
     @Override
     public void insertGroup(Group group) {
+        if(group == null){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried adding group null to firebase");
+        }
         //Adding a group to firebase
         Map<String, String> data = new HashMap();
         data.put("Name", group.getGroupName());
@@ -71,38 +86,74 @@ public class DBGroupModifier implements IModGroup {
         }
     }
 
+    /**
+     * This method is used to add a specific new user to a specific group
+     * it takes the parameters group which specifies the group and a user which specifies the user
+     * @param group
+     * @param user 
+     */
     @Override
     public void addUser(Group group, User user) {
+        if(group == null || group.getGroupName().isEmpty()){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried adding an user to group null");
+        }else if(user == null || user.getUid().isEmpty()){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried adding an user null to a group");
+        }
         DatabaseReference ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
                 .child("Members").child(user.getUid());
         ref.setValue("NS");
     }
 
+    /**
+     * This method tries to remove a specific user from a specific group
+     * it takes a parameter group which specifies the group and user which specifies the user
+     * @param group not null
+     * @param user not null
+     */
     @Override
     public void removeUser(Group group, User user) {
+        if(group == null || group.getGroupName().isEmpty()){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried removing an user from group null");
+        }else if(user == null || user.getUid().isEmpty()){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried removing user null from a group");
+        }
         DatabaseReference ref = firebase.child("Group").child(String.valueOf(group.getGroupNumber()))
                 .child("Members").child(user.getUid());
         ref.removeValue();
     }
 	
-
+    /**
+     * This method is used to fetch the group of a specific user
+     * it takes a parameter uid that specifies the user
+     * @param uid not null
+     * @return groups
+     */
     @Override
     public Group getGroup(final String uid) {
+        if(uid.isEmpty()){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried selecting the group for user null");
+        }
         DatabaseReference refUser = firebase.child("User");
         refUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
                 groupNumber = String.valueOf(snapshot.child(uid).child("GroupID").getValue());
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         
-        lockFXThread();
+        Utility.lockFXThread();
         
         final List<String> uidLst = new ArrayList<String>();
         final ArrayList<User> members = new ArrayList<User>();
@@ -119,7 +170,7 @@ public class DBGroupModifier implements IModGroup {
                     String groupNumber = (String) ds.getKey();
                     if (groupNumber.equals("-1"))
                     {
-                        unlockFXThread();
+                        Utility.unlockFXThread();
                         return;
                     }
                     int location=  Integer.valueOf(String.valueOf(ds.child("Location").getValue()));
@@ -144,16 +195,16 @@ public class DBGroupModifier implements IModGroup {
                     group.setGroupName(groupName);
                     group.setMessages(messages);
                     group.setLocation(location);
-                    unlockFXThread();
+                    Utility.unlockFXThread();
                 }
 
                 @Override
                 public void onCancelled(DatabaseError fe) {
-                    System.out.println(fe.toException().toString());
-                }
+                    System.out.println(fe.toException().toString());                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage());                 }
             });
         }
-        lockFXThread();
+        Utility.lockFXThread();
         if (groupNumber.equals("-1"))
         {
             return null;
@@ -172,23 +223,34 @@ public class DBGroupModifier implements IModGroup {
                     u.setSemester(Integer.valueOf(String.valueOf(ss.child("Semester").getValue())));
                     members.add(u);
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
 
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         
         group.setUsers(members);
         return group;
     }
     
+    /**
+     * this method is used to fetch the uid from user with the given email
+     * it takes the parameter email which specifies the email 
+     * @param email not null
+     * @return 
+     */
     @Override
     public String getUid(final String email)
     {
+        if(email.isEmpty()){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried selecting uid for the user with email null");
+        }
         DatabaseReference ref = firebase.child("User");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -200,20 +262,31 @@ public class DBGroupModifier implements IModGroup {
                         uid = ds.getKey();
                     }
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         return uid;
     }
     
+    /**
+     * this method fetches all messages for the uid that is saved on top of this class
+     * it takes a List<Message> to which it adds the found messages
+     * @param messages not null
+     * @return 
+     */
     @Override
     public List<Message> addNamesToMessages(final List<Message> messages) {
+        if(messages == null){
+            throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                    " tried adding Messages to a null instance");
+        }
         DatabaseReference ref = firebase.child("User");
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -223,20 +296,31 @@ public class DBGroupModifier implements IModGroup {
                 {
                     msg.setUserName(String.valueOf(snapshot.child(msg.getUid()).child("Name").getValue()));
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
-        lockFXThread();
+        Utility.lockFXThread();
         return messages;
     }
-
+    
+    /**
+     * This method is used to add a new message to the firebase
+     * it takes the parameter message, in the message object a group id can be found
+     * which specifies the group the message has to be added too
+     * @param message not null
+     */
     @Override
     public void addMessage(Message message) {
+        if(message==null){
+        throw new IllegalArgumentException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                " tried adding message null to the firebase");
+        }
         DatabaseReference ref = firebase.child("Group").child(String.valueOf(message.getGroupNumber())).
                 child("Messages").child(String.valueOf(message.getDate()));
         Map<String, String> msgData = new HashMap();
@@ -246,6 +330,13 @@ public class DBGroupModifier implements IModGroup {
         ref.setValue(msgData);
     }
     
+    /**
+     * This method is used to fetch all the existing childs from the group branch from the firebase.
+     * the data is loaded in an ArrayList<Group> events. 
+     * to stop the FXThread until the method is finished loading loading the method uses 
+     * the lockFXThread and unlockFXThread methods
+     * @return groups
+     */
     @Override
     public ArrayList<Group> getGroups() {
         final ArrayList<Group> groups = new ArrayList();
@@ -290,19 +381,24 @@ public class DBGroupModifier implements IModGroup {
                     
                     groups.add(g);
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         
-        lockFXThread();
+        Utility.lockFXThread();
         return groups;
     }
     
+    /**
+     * This method fetches the max groupnumber from the groups branche of firebase.
+     * @return 
+     */
     @Override
     public int getMaxGroupNumber() {
         final Set<Integer> groupNumbers = new TreeSet();
@@ -315,43 +411,16 @@ public class DBGroupModifier implements IModGroup {
                     int groupNumber = Integer.valueOf((String) ds.getKey());
                     groupNumbers.add(groupNumber);
                 }
-                unlockFXThread();
+                Utility.unlockFXThread();
             }
             
             @Override
             public void onCancelled(DatabaseError fe) {
-                System.out.println(fe.toException().toString());
+                throw new UnsupportedOperationException(getClass().getName() + "." + Thread.currentThread().getStackTrace()[1].getMethodName() + 
+                        " " + fe.getMessage()); 
             }
         });
         List<Integer> numbers = new ArrayList(groupNumbers);
         return numbers.get(numbers.size() - 1);
-    }
-    
-    /**
-     * Tells a random object to wait while in a loop.
-     * The loop stops, and won't cause any unnecessary cpu use.
-     */
-    private void lockFXThread() {
-        lock = new Object();
-        synchronized (lock) {
-            while (!done) {
-                try {
-                    lock.wait();
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(DBEventModifier.class.getName()).log(Level.SEVERE, null, ex);
-                } 
-            }
-        }
-        done = false;
-    }
-    
-    /**
-     * Wakes the lock. The while loop in the method 'lockFXThread' will proceed and break free.
-     */
-    private void unlockFXThread() {
-        synchronized (lock) {
-            done = true;
-            lock.notifyAll();
-        }
     }
 }

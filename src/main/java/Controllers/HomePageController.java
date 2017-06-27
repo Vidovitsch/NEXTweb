@@ -8,14 +8,7 @@ import Database.IModGroup;
 import Database.IModPoll;
 import Models.Announcement;
 import Models.Poll;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
 import java.util.TreeSet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -28,7 +21,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author David
  */
 @Controller
-public class HomePageController {
+public class homePageController {
     /**
      * This method returs the standard ModelAndView for the homescreen
      * @return new ModelAnDView("home")

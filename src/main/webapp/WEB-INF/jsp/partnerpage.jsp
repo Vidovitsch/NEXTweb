@@ -115,7 +115,7 @@
             function createPromotion() {
                 var imageUrl = document.getElementById("imageurl").value;
                 console.log(selectedWorkshop);
-                if (selectedWorkshop.length != 0)
+                if (selectedWorkshop !== null)
                 {console.log("passed" + selectedWorkshop);
                     if (!imageUrl)
                     {
@@ -139,6 +139,8 @@
                     document.getElementById("imageurl").value = "";
                     document.getElementById("promotionheader").innerHTML = "Create promotion";
                     alert("Promotion created!");
+                }else{
+                    alert("Please select a Workshop.");
                 }
             }
 

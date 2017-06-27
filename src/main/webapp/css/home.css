@@ -334,6 +334,10 @@ body {
     height: 100%;
 }
 
+.mySlides img:hover {
+    cursor: pointer;
+}
+
 /* *****Fading animation***** */
 
 .fade {

@@ -64,20 +64,20 @@
             function showPopUp(hexColor, eventType, eventName, start, end, location, description, id, attending) {
                 document.getElementById(id).innerHTML += 
                         '<div id="event" class="overlay"> \
-                                <div class="popup"> \
-                                    <span style="background-color: ' + hexColor + '" \
-                                          id="popup-event-type"><b>' + eventType + '</b></span> \
-                                        <div id="popup-wrapper"> \
-                                            <span id="popup-event-name"><b>' + eventName + '</b></span></br> \
-                                            <span id="popup-event-time">' + start + ' - ' + end + '</span></br> \
-                                            <span id="popup-event-location">' + location + '</span></br></br> \
-                                            <span class="close" onclick="removePopUp(); return false">Close</span> \
-                                            <div class="content"> \
-                                                ' + description + ' \
-                                            </div> \
+                            <div class="popup"> \
+                                <span style="background-color: ' + hexColor + '" \
+                                      id="popup-event-type"><b>' + eventType + '</b></span> \
+                                    <div id="popup-wrapper"> \
+                                        <span id="popup-event-name"><b>' + eventName + '</b></span></br> \
+                                        <span id="popup-event-time">' + start + ' - ' + end + '</span></br> \
+                                        <span id="popup-event-location">' + location + '</span></br></br> \
+                                        <span class="close" onclick="removePopUp(); return false">Close</span> \
+                                        <div class="content"> \
+                                            ' + description + ' \
                                         </div> \
-                                </div> \
-                            </div>'; 
+                                    </div> \
+                            </div> \
+                        </div>'; 
 
                 if (eventType === "Workshop") {
                     var eventID = id;

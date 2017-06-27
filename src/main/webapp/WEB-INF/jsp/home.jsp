@@ -92,7 +92,7 @@
                     slideIndex = 1;
                 } 
                 slides[slideIndex - 1].style.display = "block"; 
-                setTimeout(showSlides, 6000); // Change image every 5 seconds
+                setTimeout(showSlides, 5000); // Change image every 5 seconds
             }
             
             function setRandomPromotions() {
@@ -100,7 +100,7 @@
                 promotions = shuffle(promotions);
                 for (var i = 0; i < length; i++) {
                     var promotion = promotions[i];
-                    document.getElementById("slideshow-container-id").innerHTML = 
+                    document.getElementById("slideshow-container-id").innerHTML += 
                         '<div class="mySlides fade">' +
                             '<img onclick="showPromotionInfo(&quot;' + promotion[1] + '&quot;);" src="' + promotion[0] + '" style="width:100%">' +
                         '</div>';

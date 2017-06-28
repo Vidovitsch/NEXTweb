@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import Database.IModEvent;
 import Database.IModGroup;
-import Enums.Day;
 import Models.EventViewModel;
 import Models.LoginModel;
 import javax.servlet.http.Cookie;
@@ -114,8 +113,7 @@ public class eventsController {
     @RequestMapping(value = "/events/ma", method = RequestMethod.GET)
     public ModelAndView mondayEvents() {
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", filterOnDay(Day.Ma, dbEvent.getEvents()));
-        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject("events", filterOnDay("Monday", dbEvent.getEvents()));
         modelView.addObject(new EventViewModel());
         modelView.addObject("message", "null");
         
@@ -130,8 +128,7 @@ public class eventsController {
     @RequestMapping(value = "/events/di", method = RequestMethod.GET)
     public ModelAndView tuesdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", filterOnDay(Day.Di, dbEvent.getEvents()));
-        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject("events", filterOnDay("Tuesday", dbEvent.getEvents()));
         modelView.addObject(new EventViewModel());
         modelView.addObject("message", "null");
         
@@ -146,8 +143,7 @@ public class eventsController {
     @RequestMapping(value = "/events/wo", method = RequestMethod.GET)
     public ModelAndView wednessdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", filterOnDay(Day.Wo, dbEvent.getEvents()));
-        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject("events", filterOnDay("Wednesday", dbEvent.getEvents()));
         modelView.addObject(new EventViewModel());
         modelView.addObject("message", "null");
         
@@ -162,8 +158,7 @@ public class eventsController {
     @RequestMapping(value = "/events/do", method = RequestMethod.GET)
     public ModelAndView thursdayEvents() {
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", filterOnDay(Day.Do, dbEvent.getEvents()));
-        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject("events", filterOnDay("Thursday", dbEvent.getEvents()));
         modelView.addObject(new EventViewModel());
         modelView.addObject("message", "null");
         
@@ -178,8 +173,7 @@ public class eventsController {
     @RequestMapping(value = "/events/vr", method = RequestMethod.GET)
     public ModelAndView fridayEvents() {
         ModelAndView modelView = new ModelAndView("events");
-        modelView.addObject("events", filterOnDay(Day.Vr, dbEvent.getEvents()));
-        modelView.addObject("events", initEvents(dbEvent.getEvents()));
+        modelView.addObject("events", filterOnDay("Friday", dbEvent.getEvents()));
         modelView.addObject(new EventViewModel());
         modelView.addObject("message", "null");
         
@@ -222,10 +216,10 @@ public class eventsController {
      * @param events
      * @return filtered
      */
-    private ArrayList<ArrayList<Event>> filterOnDay(Day day, ArrayList<Event> events) {
+    public ArrayList<ArrayList<Event>> filterOnDay(String day, ArrayList<Event> events) {
         ArrayList<Event> filtered = new ArrayList();
         for (Event e : events) {
-            if (day.equals(day.dateToDate(e.getDate()))) {
+            if (day.equals(e.getDay())) {
                 filtered.add(e);
             }
         }

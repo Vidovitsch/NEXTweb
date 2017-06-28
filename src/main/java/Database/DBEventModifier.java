@@ -121,7 +121,9 @@ public class DBEventModifier implements IModEvent {
                     " tried removing attending user with uid null from an event");
         }
         DatabaseReference ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
+        DatabaseReference userRef = firebase.child("User").child(uid).child("Attending").child(eventID);
         ref.removeValue();
+        userRef.removeValue();
     }
 
     /**

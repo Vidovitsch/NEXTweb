@@ -58,7 +58,10 @@ public class DBEventModifier implements IModEvent {
                     " tried adding attending user with uid null to an event");
         }
         DatabaseReference ref = firebase.child("Event").child(eventID).child("Attending").child(uid);
+        DatabaseReference userRef = firebase.child("User").child(uid).child("Attending").child(eventID);
+
         ref.setValue("Attending");
+        userRef.setValue("Attending");
     }
 
     /**

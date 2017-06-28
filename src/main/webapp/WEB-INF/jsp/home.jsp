@@ -29,11 +29,11 @@
                             <div>Go to Events</div>
                         </div></a>
                         <br><br>
-                        <a href="/map"><div class="button_base b03_skewed_slide_in">
-                            <div>Go to Map</div>
+                        <div onclick="logout();" id="logout-button" class="button_base b03_skewed_slide_in">
+                            <div>Log Out</div>
                             <div></div>
-                            <div>Go to Map</div>
-                        </div></a>
+                            <div>Log Out</div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -419,7 +419,38 @@
             function removePopUp() {
                 var popup = document.getElementById("popup-content");
                 popup.parentNode.removeChild(popup);
-            }  
+            }
+            
+            // *****Log Out***** //
+            
+            function logout() {
+                firebase.auth().signOut().then(function () {
+                    post("login.htm", null, "get");
+                }).catch(function (error) {
+                        // An error happened.
+                });
+            }
+            
+            function post(path, params, method) {
+                method = method || "post"; // Set method to post by default if not specified.
+
+                // The rest of this code assumes you are not using a library.
+                // It can be made less wordy if you use one.
+                var form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+                for (var key in params) {
+                    if (params.hasOwnProperty(key)) {
+                        var hiddenField = document.createElement("input");
+                        hiddenField.setAttribute("type", "hidden");
+                        hiddenField.setAttribute("name", key);
+                        hiddenField.setAttribute("value", params[key]);
+                        form.appendChild(hiddenField);
+                    }
+                }
+                document.body.appendChild(form);
+                form.submit();
+            }
         </script>
     </body>
 </html>

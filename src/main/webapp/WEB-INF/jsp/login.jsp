@@ -33,7 +33,7 @@
                         </div>
                         <div class="form-section" id="passwordstuff">
                             <span>Password:</span> </br>
-                            <input class="form-control" id="password" type="password" name="password" required value="test1234"></br>
+                            <input class="form-control" id="password" type="password" name="password" required value="qwerqwer"></br>
                             <div id="passwordwrapper">
                                 <input id="login-button" class="form-control" type="submit" value="Login" />
                                 <input id="register-button" class="form-control" type="submit" value="Register" />

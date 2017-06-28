@@ -19,7 +19,7 @@ public class Group {
     private String groupName;
     private ArrayList<User> users;
     private ArrayList<Message> messages;
-    private int location = 0;
+    private String location = null;
     
     /**
      * This is the constructor of the Group class as argument it takes a groupNumber
@@ -108,7 +108,7 @@ public class Group {
      * 
      * @return group location (table number)
      */
-    public int getLocation() {
+    public String getLocation() {
         return location;
     }
 
@@ -117,7 +117,7 @@ public class Group {
      * 
      * @param groupLocation
      */
-    public void setLocation(int groupLocation) {
+    public void setLocation(String groupLocation) {
         this.location = groupLocation;
     }
 }

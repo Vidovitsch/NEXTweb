@@ -54,7 +54,7 @@ public class groupController
                         modelView.addObject("group", group);
                     }
                 }
-            }       
+            }
         }
         catch (Exception ex)
         {

@@ -61,6 +61,7 @@
             
             function validateEventDateFields(eventName, startTime, endTime, date, locationName, description) {
                 var re = /^0[0-9]|1[0-9]|2[0-3]:[0-5][0-9]$/;
+                var timestamp = Date.parse(date);
                 if (eventName === "") {
                     alert("EventName cannot be null");
                 } else if (description === "") {
@@ -77,7 +78,9 @@
                     alert("The format of the endtime should be hh:mm");
                 } else if (new Date("November 13, 2013 " + startTime) > new Date("November 13, 2013 " + endTime)) {
                     alert("The startTime should be before the EndTime");
-                }else {
+                } else if (isNaN(timestamp)) {
+                    alert("Invalid date");
+                } else {
                     return true;
                 }
                 return false;
@@ -97,7 +100,6 @@
                 elworkshop.innerHTML = "";
                 firebase.database().ref('/Event').once("value", function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
-                        console.log(childSnapshot.val().EventType);
                         if (childSnapshot.val().EventType == ("Workshop"))
                         {
                              elworkshop.innerHTML += "<li id='" + childSnapshot.key + "' onclick='liWorkshopClicked(this)'>" + childSnapshot.val().EventName + "</li>";
@@ -114,9 +116,8 @@
             
             function createPromotion() {
                 var imageUrl = document.getElementById("imageurl").value;
-                console.log(selectedWorkshop);
                 if (selectedWorkshop !== null)
-                {console.log("passed" + selectedWorkshop);
+                {
                     if (!imageUrl)
                     {
                         alert("Can't create promotion without image URL.");
@@ -153,22 +154,20 @@
                 var imageURL = document.getElementById("imageURL").value;
                 var presenter = document.getElementById("presenter").value;
                 var maxUsers = document.getElementById("maxUsers").value;
-                var description = document.getElementById("description").value;
+                var description = document.getElementById("descriptionworkshop").value;
                 if (validateEventDateFields(eventName, startTime, endTime, date, locationName, description)) {
-                        if (validateEventFields(imageURL)) {
-                            if (presenter === "") {
-                                alert("enter the name of the one presenting the workshop.");
-                            } else if (maxUsers === "") {
-                                alert("enter the maximal amount of people that can attend the workshop");
-                            } else if (!isFinite(String(maxUsers))) {
-                                alert("enter a number in the maxUsers field");
-                            } else {
-                                alert("event is being created");
-                                post('createWorkshop', {eventName: eventName, description: description, startTime: startTime, endTime: endTime, date: date, locationName: locationName, imageURL: imageURL, presenter: presenter, maxUsers: maxUsers});
-                            }
+                    if (validateEventFields(imageURL)) {
+                        if (presenter === "") {
+                            alert("enter the name of the one presenting the workshop.");
+                        } else if (maxUsers === "") {
+                            alert("enter the maximal amount of people that can attend the workshop");
+                        } else if (!isFinite(String(maxUsers))) {
+                            alert("enter a number in the maxUsers field");
+                        } else {
+                            alert("event is being created");
+                            post('createWorkshop', {eventName: eventName, description: description, startTime: startTime, endTime: endTime, date: date, locationName: locationName, imageURL: imageURL, presenter: presenter, maxUsers: maxUsers});
                         }
-
-                    
+                    }
                 }
                 loadworkshops();
             }

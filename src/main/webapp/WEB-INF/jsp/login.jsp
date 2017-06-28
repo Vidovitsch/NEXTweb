@@ -149,7 +149,8 @@
                             if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user) {
-                                        post('index', {currentemail: user.email});
+                                        alert("Registration successful");
+                                        post("login.htm", null, "get");
                                     }
                                 });
                                 firebase.auth().createUserWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {

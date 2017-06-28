@@ -168,12 +168,13 @@ public class DBGroupModifier implements IModGroup {
 
                     //Fetching other data
                     String groupNumber = (String) ds.getKey();
-                    if (groupNumber.equals("-1"))
-                    {
+
+                    if (groupNumber.equals("-1")) {
                         Utility.unlockFXThread();
                         return;
                     }
-                    int location=  Integer.valueOf(String.valueOf(ds.child("Location").getValue()));
+                    String location=  (String) ds.child("Location").getValue();
+                    
                     String groupName = (String) ds.child("Name").getValue();
                     
                     for (DataSnapshot ds2 : ds.child("Members").getChildren()) {

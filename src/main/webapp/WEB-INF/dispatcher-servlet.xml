@@ -37,7 +37,6 @@
                 <prop key="loginresult.htm">loginController</prop>
                 <prop key="contact.htm">contactController</prop>
                 <prop key="partnerpage.htm">pieController</prop>
-                <prop key="index.htm">indexController</prop>
                 <prop key="registeruser.htm">loginController</prop>
                 <prop key="assignments.htm">assignmentController</prop>
                 <prop key="/requestlogin">loginController</prop>
@@ -46,7 +45,7 @@
                 <prop key="/login">loginController</prop>
                 <prop key="/submitassignment">assignmentController</prop>
                 <prop key="/createWorkshop">pieController</prop>
-                <prop key="/home">homePageController</prop>
+                <prop key="/index">indexController</prop>
             </props>
         </property>
     </bean>
@@ -55,11 +54,4 @@
           class="org.springframework.web.servlet.view.InternalResourceViewResolver"
           p:prefix="/WEB-INF/jsp/"
           p:suffix=".jsp" />
-
-    <!--
-    The index controller.
-    -->
-    <bean name="indexController"
-          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-          p:viewName="index" />
 </beans>

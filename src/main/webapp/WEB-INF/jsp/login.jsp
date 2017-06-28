@@ -92,7 +92,7 @@
                                 {
                                     window.location.href = "/pie/partnerpage.htm";
                                 } else {
-                                    post("home", {currentemail: user.email});
+                                    post("index", {currentemail: user.email});
                                 }
                             }
                         });
@@ -149,7 +149,7 @@
                             if (password.checkValidity() === true && email.checkValidity() === true && confirm_password.checkValidity() === true) {
                                 firebase.auth().onAuthStateChanged(function (user) {
                                     if (user) {
-                                        post('home', {currentemail: user.email});
+                                        post('index', {currentemail: user.email});
                                     }
                                 });
                                 firebase.auth().createUserWithEmailAndPassword(emailvalue, passwordvalue).catch(function (error) {

@@ -29,11 +29,11 @@
                     <form>
                         <div class="form-section">
                             <span>E-mail:</span> </br>
-                            <input class="form-control" type="text" id="email" name="email" required value="twan_berkvens@live.nl"></br>
+                            <input class="form-control" type="text" id="email" name="email" required value="m.vaneijkeren@student.fontys.nl"</br>
                         </div>
                         <div class="form-section" id="passwordstuff">
                             <span>Password:</span> </br>
-                            <input class="form-control" id="password" type="password" name="password" required value="qwer1234"></br>
+                            <input class="form-control" id="password" type="password" name="password" required value="test1234"></br>
                             <div id="passwordwrapper">
                                 <input id="login-button" class="form-control" type="submit" value="Login" />
                                 <input id="register-button" class="form-control" type="submit" value="Register" />
